@@ -4,7 +4,7 @@ The application uses:
   - `maven` to build the project
   - `thymeleaf` for templating
   - `flyway` to manage `postgres` db migrations
-  - `selenium` for feature testing
+  - `playwright` for feature testing
   - `faker` to generate fake names for testing
   - `junit4` for unit testing
   - `auth0` and `spring-security` for authentication and user management
@@ -52,7 +52,6 @@ Your Mac might refuse to open Chromedriver because it's from an unidentified dev
 This app already has a few basic features
 * A user can sign up using Auth0
 * A signed up user can sign in
-* A signed in user can create posts at `/posts`
 * A signed in user can sign out at `/logout`
 
 ### What is Auth0?
