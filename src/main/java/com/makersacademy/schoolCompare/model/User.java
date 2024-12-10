@@ -11,21 +11,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String username;
+<<<<<<< HEAD
 
     private boolean enabled;
+=======
+>>>>>>> 8de5d321d5902199913837f8a547f8192f02923f
 
     public User() {
-        this.enabled = TRUE;
+
     }
 
     public User(String username) {
         this.username = username;
-        this.enabled = TRUE;
     }
 
     public User(String username, boolean enabled) {
         this.username = username;
-        this.enabled = enabled;
     }
     public Long getId() {
         return id;

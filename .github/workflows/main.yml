@@ -52,7 +52,7 @@ jobs:
           echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_TEST_CLIENT_SECRET }}" >> $GITHUB_ENV
           echo "OKTA_ISSUER=${{ secrets.OKTA_TEST_ISSUER }}" >> $GITHUB_ENV
           echo "POSTGRES_URL=${{ secrets.POSTGRES_URL_TEST }}" >> $GITHUB_ENV  # Set the test DB URL
-          echo "API_URL=${{ secrets.TEST_API_URL }}" >> $GITHUB_ENV  # Set the test API URL
+          
 
       - name: Verify environment variables
         run: |
@@ -60,7 +60,7 @@ jobs:
           echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
           echo "OKTA_ISSUER=$OKTA_ISSUER"
           echo "POSTGRES_URL=$POSTGRES_URL"
-          echo "API_URL=$API_URL"
+          
 
       # Run tests with maven
       - name: Setup db and run server in background
