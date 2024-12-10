@@ -68,7 +68,6 @@ jobs:
           PGPASSWORD: postgres
         run: |
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development_test
-          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development
 
       - name: Test with maven
         run: |
