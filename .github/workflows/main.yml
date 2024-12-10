@@ -41,7 +41,7 @@ jobs:
           java-version: '21'
           distribution: 'temurin'
 
-      - name: Install Dependencies
+      - name: Install playwright
         run: |
           mvn -B install -D skipTests -ntp
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps chromium"
