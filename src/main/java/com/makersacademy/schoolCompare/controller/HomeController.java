@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 
 @Controller
 public class HomeController {
-	@Value("${MAPBOX_API_TOKEN}")
+	@Value("${MAPBOX_API_TOKEN:}")
 	private String mapboxToken;
 
 	@GetMapping(value = "/")
