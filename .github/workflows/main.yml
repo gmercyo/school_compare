@@ -46,25 +46,29 @@ jobs:
           mvn -B install -D skipTests -ntp
           mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps chromium"
 
-      - name: Set Auth0 environment variables
+      - name: Set Test Environment Variables
         run: |
-          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV
-          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_TEST_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_TEST_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_TEST_ISSUER }}" >> $GITHUB_ENV
+          echo "POSTGRES_URL=${{ secrets.POSTGRES_URL_TEST }}" >> $GITHUB_ENV  # Set the test DB URL
+          echo "API_URL=${{ secrets.TEST_API_URL }}" >> $GITHUB_ENV  # Set the test API URL
 
       - name: Verify environment variables
         run: |
           echo "OKTA_CLIENT_ID=$OKTA_CLIENT_ID"
           echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
           echo "OKTA_ISSUER=$OKTA_ISSUER"
+          echo "POSTGRES_URL=$POSTGRES_URL"
+          echo "API_URL=$API_URL"
 
       # Run tests with maven
       - name: Setup db and run server in background
         env:
           PGPASSWORD: postgres
         run: |
-          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development
           PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development_test
+          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development
 
       - name: Test with maven
         run: |
