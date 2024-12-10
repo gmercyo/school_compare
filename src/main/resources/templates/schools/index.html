@@ -1,14 +1,46 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org"-->
+<!--      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >-->
+<!--<head>-->
+<!--    <th:block th:replace="~{core/head :: head}">-->
+<!--        &lt;!&ndash; Your existing imported head content &ndash;&gt;-->
+<!--    </th:block>-->
+<!--    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">-->
+<!--    <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">-->
+<!--    <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>-->
+<!--</head>-->
+<!--<body>-->
+<!--    <h1>School Compare</h1>-->
+
+<!--    <div sec:authorize="isAuthenticated()" id="greeting">-->
+<!--        Signed in as <span sec:authentication="principal.attributes['email']"></span>-->
+<!--    </div>-->
+
+<!--</body>-->
+<!--</html>-->
+
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
-<head th:replace="~{core/head :: head}"></head>
+<head>
+    <th:block th:replace="~{core/head :: head}"></th:block>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+</head>
 <body>
-    <h1>School Compare</h1>
-
-    <div sec:authorize="isAuthenticated()" id="greeting">
-        Signed in as <span sec:authentication="principal.attributes['email']"></span>
+    <nav class="navbar"></nav>
+    <div class="container">
+        <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
     </div>
+<script>
+    mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
+    const map = new mapboxgl.Map({
+        container: 'map', // container ID
+        center: [-0.092479, 51.559350], // starting position [lng, lat]
+        zoom: 14 // starting zoom
+    });
+</script>
 
 </body>
 </html>
-
