@@ -4,8 +4,8 @@ CREATE TABLE schools (
 id bigserial PRIMARY KEY,
 name varchar(255),
 address varchar(255),
-latitude NUMERIC(8,6)
-longitude NUMERIC(8,6)
+latitude NUMERIC(8,6),
+longitude NUMERIC(8,6),
 catchment_radius JSONB,
 ofsted_rating int,
 ofsted_url varchar(255),
