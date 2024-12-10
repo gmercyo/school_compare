@@ -9,11 +9,7 @@ import org.springframework.web.servlet.view.RedirectView;
 @Controller
 public class HomeController {
 	@RequestMapping(value = "/")
-	@ResponseBody
 	public String index() {
-		String currentUser = SecurityContextHolder.getContext().getAuthentication().getName();
-
-
-		return "You are logged in as " + currentUser;
+		return "schools/index";
 	}
 }
