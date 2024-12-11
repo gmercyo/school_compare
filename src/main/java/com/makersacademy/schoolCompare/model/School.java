@@ -1,56 +1,61 @@
 package com.makersacademy.schoolCompare.model;
 
+import com.makersacademy.schoolCompare.pojo.CatchmentRadius;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "schools")
-public class School {
+public final class School {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column
     private String name;
 
-    @Column(nullable = false)
+    @Column
     private String address;
 
-    @Column(nullable = false)
-    private Double latitude;
-
-    @Column(nullable = false)
-    private Double longitude;
-
-    @Column(nullable = false)
-    private Double catchmentRadius; // in kilometers or miles
+    @Column
+    private BigDecimal latitude;
 
     @Column
-    private String ofstedRating;
+    private BigDecimal longitude;
+
+    @JdbcTypeCode(SqlTypes.JSON)
+    private CatchmentRadius catchmentRadius;
+
+    @Column
+    private int ofstedRating;
 
     @Column
     private String ofstedUrl;
 
-    @Column(nullable = false)
-    private String type; // e.g., primary, secondary, etc.
-
-    @Column(nullable = false)
-    private String gender; // e.g., mixed, boys, girls
-
-    @Column(nullable = false)
-    private Boolean senAvailability; // Special Educational Needs availability
+    @Column
+    private String type;
 
     @Column
-    private String religiousAffiliation; // e.g., Christian, Muslim, None
+    private String gender;
 
     @Column
-    private String website; // Official website URL of the school
+    private String senAvailability;
+
+    @Column
+    private String religiousAffiliation;
+
+    @Column
+    private String website;
 
     // Constructors
     public School() {}
 
-    public School(String name, String address, Double latitude, Double longitude, Double catchmentRadius,
-                  String ofstedRating, String ofstedUrl, String type, String gender, Boolean senAvailability,
+    public School(String name, String address, BigDecimal latitude, BigDecimal longitude, CatchmentRadius catchmentRadius,
+                  int ofstedRating, String ofstedUrl, String type, String gender, String senAvailability,
                   String religiousAffiliation, String website) {
 
         this.name = name;
@@ -91,35 +96,35 @@ public class School {
         this.address = address;
     }
 
-    public Double getLatitude() {
+    public BigDecimal getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(Double latitude) {
+    public void setLatitude(BigDecimal latitude) {
         this.latitude = latitude;
     }
 
-    public Double getLongitude() {
+    public BigDecimal getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(Double longitude) {
+    public void setLongitude(BigDecimal longitude) {
         this.longitude = longitude;
     }
 
-    public Double getCatchmentRadius() {
+    public CatchmentRadius getCatchmentRadius() {
         return catchmentRadius;
     }
 
-    public void setCatchmentRadius(Double catchmentRadius) {
+    public void setCatchmentRadius(CatchmentRadius catchmentRadius) {
         this.catchmentRadius = catchmentRadius;
     }
 
-    public String getOfstedRating() {
+    public int getOfstedRating() {
         return ofstedRating;
     }
 
-    public void setOfstedRating(String ofstedRating) {
+    public void setOfstedRating(int ofstedRating) {
         this.ofstedRating = ofstedRating;
     }
 
@@ -147,11 +152,11 @@ public class School {
         this.gender = gender;
     }
 
-    public Boolean getSenAvailability() {
+    public String getSenAvailability() {
         return senAvailability;
     }
 
-    public void setSenAvailability(Boolean senAvailability) {
+    public void setSenAvailability(String senAvailability) {
         this.senAvailability = senAvailability;
     }
 
