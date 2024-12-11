@@ -19,20 +19,14 @@
         <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
         <div class="map-filters">
             <h3>Filter schools by...</h3>
-<!--            <ul class="filter-options">-->
-<!--                <li>Age Range</li>-->
-<!--                <li>Gender</li>-->
-<!--                <li>Ofsted Rating</li>-->
-<!--                <li>Religious Affiliation</li>-->
-<!--            </ul>-->
-            <form>
+            <form id="filter-options">
                 <div class="filter-option">
                     <label for="ages">Ages: </label>
                     <select name="ages" id="ages">
                         <option value="all" selected="">All</option>
                         <option value="primary">Primary</option>
                         <option value="secondary">Secondary</option>
-                        <option value="sixth-form">Sixth-Form</option>
+                        <option value="sixth_form">Sixth-Form</option>
                     </select>
                 </div>
                 <div class="filter-option">
@@ -45,8 +39,8 @@
                 </div>
 
                 <div class="filter-option">
-                    <label for="ofsted_rating">Rating: </label>
-                    <select name="ofsted_rating" id="ofsted_rating">
+                    <label for="ofsted-rating">Rating: </label>
+                    <select name="ofsted_rating" id="ofsted-rating">
                         <option value="0" selected="">Any</option>
                         <option value="1">Outstanding</option>
                         <option value="2">Good</option>
@@ -69,8 +63,10 @@
             </form>
         </div>
     </div>
-
     <script>
+        const protocol = window.location.protocol;
+        const root = window.location.host;
+
         function fetchCoordinatesFromBrowser() {
             const defaultCoordinates = [-0.118092, 51.509865]; // London
 
@@ -104,7 +100,7 @@
                 zoom: 14
             });
 
-            const marker = new mapboxgl.Marker() // initialize a new marker
+            const homeMarker = new mapboxgl.Marker() // initialize a new marker
                 .setLngLat(coordinates)
                 .addTo(map);
 
@@ -124,16 +120,49 @@
 
             geocoder.on('result', (event) => {
                 const newCoordinates = event.result.geometry.coordinates;
-                marker.setLngLat(newCoordinates);
+                homeMarker.setLngLat(newCoordinates);
 
                 map.flyTo({
                     center: newCoordinates,
                     zoom: 14
                 });
             });
+            const filterCriteria = {
+                ages: document.getElementById('ages').value,
+                gender: document.getElementById('gender').value,
+                rating: parseInt(document.getElementById('ofsted-rating').value),
+                affiliation: document.getElementById('religious-affiliation').value
+            }
+
+            console.log(map);
+
+            fetch(`${protocol}//${root}/schools/api`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filterCriteria)
+            })
+            .then(response => response.json())
+            .then(schools => {
+                schools.forEach(school => {
+                    const coords = [school.longitude, school.latitude];
+                    console.log(`adding a new marker at lng-lat: ${coords}`);
+                    new mapboxgl.Marker() // initialize a new marker
+                        .setLngLat(coords)
+                        .addTo(map);
+                });
+            });
+            return map;
         }
 
-        initializeMap();
+        async function addSchoolMarkers(map) {
+            // To-do: make this its own function
+            return;
+        }
+
+        const map = initializeMap();
+        addSchoolMarkers(map);
     </script>
 
 </body>
