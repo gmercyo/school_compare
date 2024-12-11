@@ -17,72 +17,124 @@
     <nav class="navbar"></nav>
     <div class="container">
         <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
-        <script>
-            function fetchCoordinatesFromBrowser() {
-                const defaultCoordinates = [-0.118092, 51.509865]; // London
+        <div class="map-filters">
+            <h3>Filter schools by...</h3>
+<!--            <ul class="filter-options">-->
+<!--                <li>Age Range</li>-->
+<!--                <li>Gender</li>-->
+<!--                <li>Ofsted Rating</li>-->
+<!--                <li>Religious Affiliation</li>-->
+<!--            </ul>-->
+            <form>
+                <div class="filter-option">
+                    <label for="ages">Ages: </label>
+                    <select name="ages" id="ages">
+                        <option value="all" selected="">All</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="sixth-form">Sixth-Form</option>
+                    </select>
+                </div>
+                <div class="filter-option">
+                    <label for="gender">Gender: </label>
+                    <select name="gender" id="gender">
+                        <option value="mixed" selected="">Mixed</option>
+                        <option value="boys">Boys</option>
+                        <option value="girls">Girls</option>
+                    </select>
+                </div>
 
-                return new Promise((resolve, reject) => {
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                            (position) => {
-                                resolve([
-                                    position.coords.longitude,
-                                    position.coords.latitude
-                                ]);
-                            },
-                            (error) => {
-                                console.error('User refused to share location:', error);
-                                resolve(defaultCoordinates);
-                            }
-                        );
-                    } else {
-                        resolve(defaultCoordinates);
-                    }
-                });
-            }
+                <div class="filter-option">
+                    <label for="ofsted_rating">Rating: </label>
+                    <select name="ofsted_rating" id="ofsted_rating">
+                        <option value="0" selected="">Any</option>
+                        <option value="1">Outstanding</option>
+                        <option value="2">Good</option>
+                        <option value="3">Requires Improvement</option>
+                        <option value="4">Inadequate</option>
+                    </select>
+                </div>
 
-            async function initializeMap() {
-                mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
-                const coordinates = await fetchCoordinatesFromBrowser();
+                <div class="filter-option">
+                    <label for="religious-affiliation">Religious Affiliation: </label>
+                    <select name="religious-affiliation" id="religious-affiliation">
+                        <option value="any" selected="">Any</option>
+                        <option value="coe">Church of England</option>
+                        <option value="catholic">Catholic</option>
+                        <option value="jewish">Jewish</option>
+                        <option value="muslim">Muslim</option>
+                    </select>
+                </div>
 
-                const map = new mapboxgl.Map({
-                    container: 'map',
-                    center: coordinates,
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function fetchCoordinatesFromBrowser() {
+            const defaultCoordinates = [-0.118092, 51.509865]; // London
+
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve([
+                                position.coords.longitude,
+                                position.coords.latitude
+                            ]);
+                        },
+                        (error) => {
+                            console.error('User refused to share location:', error);
+                            resolve(defaultCoordinates);
+                        }
+                    );
+                } else {
+                    resolve(defaultCoordinates);
+                }
+            });
+        }
+
+        async function initializeMap() {
+            mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
+            const coordinates = await fetchCoordinatesFromBrowser();
+
+            const map = new mapboxgl.Map({
+                container: 'map',
+                center: coordinates,
+                zoom: 14
+            });
+
+            const marker = new mapboxgl.Marker() // initialize a new marker
+                .setLngLat(coordinates)
+                .addTo(map);
+
+            const geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken, // Set the access token
+                mapboxgl: mapboxgl, // Set the mapbox-gl instance
+                marker: false, // Do not use the default marker style
+                placeholder: 'Find schools near...',
+                bbox: [-0.489, 51.28, 0.236, 51.686], // Boundary for London
+                proximity: {
+                    longitude: -0.118092,
+                    latitude: 51.509865
+                } // Coordinates for Islington
+            });
+
+            map.addControl(geocoder);
+
+            geocoder.on('result', (event) => {
+                const newCoordinates = event.result.geometry.coordinates;
+                marker.setLngLat(newCoordinates);
+
+                map.flyTo({
+                    center: newCoordinates,
                     zoom: 14
                 });
+            });
+        }
 
-                const marker = new mapboxgl.Marker() // initialize a new marker
-                    .setLngLat(coordinates)
-                    .addTo(map);
-
-                const geocoder = new MapboxGeocoder({
-                    accessToken: mapboxgl.accessToken, // Set the access token
-                    mapboxgl: mapboxgl, // Set the mapbox-gl instance
-                    marker: false, // Do not use the default marker style
-                    placeholder: 'Find schools near...',
-                    bbox: [-0.489, 51.28, 0.236, 51.686], // Boundary for London
-                    proximity: {
-                        longitude: -0.118092,
-                        latitude: 51.509865
-                    } // Coordinates for Islington
-                });
-
-                map.addControl(geocoder);
-
-                geocoder.on('result', (event) => {
-                    const newCoordinates = event.result.geometry.coordinates;
-                    marker.setLngLat(newCoordinates);
-
-                    map.flyTo({
-                        center: newCoordinates,
-                        zoom: 14
-                    });
-                });
-            }
-
-            initializeMap();
-        </script>
-    </div>
+        initializeMap();
+    </script>
 
 </body>
 </html>
