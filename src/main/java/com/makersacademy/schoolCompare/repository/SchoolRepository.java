@@ -1,16 +1,18 @@
 package com.makersacademy.schoolCompare.repository;
 
 import com.makersacademy.schoolCompare.model.School;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface SchoolRepository extends CrudRepository<School, Long> {
 
+    //Redundant code for the moment List<School> findAllById(long id);
+    Optional<School> findById(Long id);
 
     List<School> findByType(String type);
 
