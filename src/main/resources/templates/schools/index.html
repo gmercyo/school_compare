@@ -19,12 +19,54 @@
         <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
         <div class="map-filters">
             <h3>Filter schools by...</h3>
-            <ul class="filter-options">
-                <li>Age Range</li>
-                <li>Gender</li>
-                <li>Ofsted Rating</li>
-                <li>Religious Affiliation</li>
-            </ul>
+<!--            <ul class="filter-options">-->
+<!--                <li>Age Range</li>-->
+<!--                <li>Gender</li>-->
+<!--                <li>Ofsted Rating</li>-->
+<!--                <li>Religious Affiliation</li>-->
+<!--            </ul>-->
+            <form>
+                <div class="filter-option">
+                    <label for="ages">Ages: </label>
+                    <select name="ages" id="ages">
+                        <option value="all" selected="">All</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="sixth-form">Sixth-Form</option>
+                    </select>
+                </div>
+                <div class="filter-option">
+                    <label for="gender">Gender: </label>
+                    <select name="gender" id="gender">
+                        <option value="mixed" selected="">Mixed</option>
+                        <option value="boys">Boys</option>
+                        <option value="girls">Girls</option>
+                    </select>
+                </div>
+
+                <div class="filter-option">
+                    <label for="ofsted_rating">Rating: </label>
+                    <select name="ofsted_rating" id="ofsted_rating">
+                        <option value="0" selected="">Any</option>
+                        <option value="1">Outstanding</option>
+                        <option value="2">Good</option>
+                        <option value="3">Requires Improvement</option>
+                        <option value="4">Inadequate</option>
+                    </select>
+                </div>
+
+                <div class="filter-option">
+                    <label for="religious-affiliation">Religious Affiliation: </label>
+                    <select name="religious-affiliation" id="religious-affiliation">
+                        <option value="any" selected="">Any</option>
+                        <option value="coe">Church of England</option>
+                        <option value="catholic">Catholic</option>
+                        <option value="jewish">Jewish</option>
+                        <option value="muslim">Muslim</option>
+                    </select>
+                </div>
+
+            </form>
         </div>
     </div>
 

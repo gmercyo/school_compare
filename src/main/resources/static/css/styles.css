@@ -19,23 +19,26 @@ ul {
     position: absolute;
     top: 32px;
     left: 32px;
-    width: 160px;
     z-index: 5;
     background-color: white;
     padding: 16px;
 }
 
-.filter-options li {
-    list-style-type: none;
+.filter-option {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 8px;
     border: 1px solid black;
     box-sizing: border-box;
 }
 
-.filter-options li:hover {
-    background-color: beige;
-    cursor: pointer;
+.filter-option label {
+    margin-right: 8px;
+}
+
+.filter-option select {
+    flex-grow: 1;
 }
 
 nav {
