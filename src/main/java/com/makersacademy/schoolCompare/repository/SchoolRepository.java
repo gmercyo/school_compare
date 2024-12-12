@@ -18,7 +18,7 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
     @Query("SELECT s FROM School s " +
             "WHERE (:ages = 'all' OR s.type = :ages) " +
             "AND (:gender = 'any' OR s.gender = :gender) " +
-            "AND (:rating = 0 OR s.ofstedRating >= :rating) " +
+            "AND (s.ofstedRating >= :rating) " +
             "AND (:affiliation = 'any' OR s.religiousAffiliation = :affiliation)")
     List<School> findSchoolsByFilterCriteria(
             @Param("ages") String ages,
