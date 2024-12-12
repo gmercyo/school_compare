@@ -28,61 +28,59 @@ public class Answer {
         this.createdAt = createdAt;
     }
 
-
     public Long getId() {
         return id;
-    }
-
-    public Long getSchool_id() {
-        return schoolId;
-    }
-
-    public Long getUser_id() {
-        return userId;
-    }
-
-    public Long getQuestion_id() {
-        return questionId;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public LocalDateTime getCreated_at() {
-        return createdAt;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setSchool_id(Long schoolId) {
+    public Long getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Long schoolId) {
         this.schoolId = schoolId;
     }
 
-    public void setUser_id(Long userId) {
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public void setQuestion_id(Long questionId) {
+    public Long getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(Long questionId) {
         this.questionId = questionId;
+    }
+
+    public String getRole() {
+        return role;
     }
 
     public void setRole(String role) {
         this.role = role;
     }
 
+    public String getContent() {
+        return content;
+    }
+
     public void setContent(String content) {
         this.content = content;
     }
 
-    public void setCreated_at(LocalDateTime createdAt) {
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }
-

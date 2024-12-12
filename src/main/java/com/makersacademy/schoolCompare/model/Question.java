@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "questions")
-
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,47 +22,45 @@ public class Question {
         this.userId = userId;
         this.content = content;
         this.createdAt = createdAt;
-
     }
 
     public Long getId() {
-    return id;
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getSchoolId() {
-    return schoolId;
+        return schoolId;
+    }
+
+    public void setSchoolId(Long schoolId) {
+        this.schoolId = schoolId;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public String getContent(){
-        return content;
-    }
-
-    public LocalDateTime getCreatedAt(){
-        return createdAt;
-    }
-
-    public void setId(Long id){
-        this.id = id;
-    }
-
-    public void setSchool_id(Long schoolId){
-        this.schoolId = schoolId;
-    }
-
-    public void setUser_id(Long userId){
+    public void setUserId(Long userId) {
         this.userId = userId;
     }
 
-    public void setContent(String content){
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
         this.content = content;
     }
 
-    public void setCreated_at(LocalDateTime createdAt){
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 }
-
