@@ -59,6 +59,20 @@ VALUES (
     'https://www.st-joanofarc.islington.sch.uk/');
 INSERT INTO schools (name, address, longitude, latitude, catchment_radius, ofsted_rating, ofsted_url, type, gender, sen_availability, religious_affiliation, website)
 VALUES (
+    'Highbury Quadrant Primary School',
+    'Highbury New Park, N5 2DP',
+    -0.0918841,
+    51.5540009,
+    '[{"year": "''24-''25", "radius": -1}, {"year": "''23-''24", "radius": -1}, {"year": "''22-''23", "radius": -1}]',
+    2,
+    'https://files.ofsted.gov.uk/v1/file/50228420',
+    'primary',
+    'mixed',
+    'n/a',
+    'community',
+    'www.highburyquadrantprimary.co.uk');
+INSERT INTO schools (name, address, longitude, latitude, catchment_radius, ofsted_rating, ofsted_url, type, gender, sen_availability, religious_affiliation, website)
+VALUES (
     'Highbury Fields School',
     'Highbury Hill, N5 1AR',
     -0.101539,
