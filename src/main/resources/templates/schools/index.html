@@ -4,6 +4,7 @@
 <head>
     <th:block th:replace="~{core/head :: head}"></th:block>
     <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="/css/map.css" />
     <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
     <link
             rel="stylesheet"
@@ -115,6 +116,14 @@
             }
         }
 
+        function formatPopup(school) {
+            return `
+            <h3><a href="${protocol}//${root}/schools/${school.id}">${school.name}</a></h3>
+            <p>${school.address}</p>
+            <p><a href="${school.website}">${school.website}</a></p>
+            `
+        }
+
         async function initializeMap() {
             mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
             const coordinates = await fetchCoordinatesFromBrowser();
@@ -172,10 +181,17 @@
             .then(response => response.json())
             .then(schools => {
                 schools.forEach(school => {
+                    const popup = new mapboxgl.Popup({
+                        offset: 25,
+                    })
+                    .setHTML(formatPopup(school));
+
                     const coords = [school.longitude, school.latitude];
                     const marker = new mapboxgl.Marker({ color: getMarkerColor(school) }) // initialize a new marker
                         .setLngLat(coords)
+                        .setPopup(popup)
                         .addTo(map);
+
                     schoolMarkers.push(marker);
                 });
             });
