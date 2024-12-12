@@ -32,20 +32,21 @@
                 <div class="filter-option">
                     <label for="gender">Gender: </label>
                     <select name="gender" id="gender">
-                        <option value="mixed" selected="">Mixed</option>
+                        <option value="any" selected="">Any</option>
+                        <option value="mixed">Mixed</option>
                         <option value="boys">Boys</option>
                         <option value="girls">Girls</option>
                     </select>
                 </div>
 
                 <div class="filter-option">
-                    <label for="ofsted-rating">Rating: </label>
+                    <label for="ofsted-rating">Min. Rating: </label>
                     <select name="ofsted_rating" id="ofsted-rating">
-                        <option value="0" selected="">Any</option>
-                        <option value="1">Outstanding</option>
-                        <option value="2">Good</option>
-                        <option value="3">Requires Improvement</option>
-                        <option value="4">Inadequate</option>
+                        <option value="0" selected="">None</option>
+                        <option value="4">Outstanding</option>
+                        <option value="3">Good</option>
+                        <option value="2">Requires Improvement</option>
+                        <option value="1">Inadequate</option>
                     </select>
                 </div>
 
@@ -53,6 +54,7 @@
                     <label for="religious-affiliation">Religious Affiliation: </label>
                     <select name="religious-affiliation" id="religious-affiliation">
                         <option value="any" selected="">Any</option>
+                        <option value="community">Secular</option>
                         <option value="coe">Church of England</option>
                         <option value="catholic">Catholic</option>
                         <option value="jewish">Jewish</option>
@@ -66,6 +68,10 @@
     <script>
         const protocol = window.location.protocol;
         const root = window.location.host;
+        const filterOptions = document.getElementById('filter-options');
+
+        let map = null;
+        let schoolMarkers = [];
 
         function fetchCoordinatesFromBrowser() {
             const defaultCoordinates = [-0.118092, 51.509865]; // London
@@ -90,6 +96,25 @@
             });
         }
 
+        function getFilterCriteria() {
+            return {
+                ages: document.getElementById('ages').value,
+                gender: document.getElementById('gender').value,
+                rating: parseInt(document.getElementById('ofsted-rating').value),
+                affiliation: document.getElementById('religious-affiliation').value
+            }
+        }
+
+        function getMarkerColor(school) {
+            switch(school.ofstedRating) {
+                case 4: return '#006B3D';
+                case 3: return '#84DB0B';
+                case 2: return '#FF980E';
+                case 1: return '#D3212C';
+                default: return 'purple';
+            }
+        }
+
         async function initializeMap() {
             mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
             const coordinates = await fetchCoordinatesFromBrowser();
@@ -100,7 +125,7 @@
                 zoom: 14
             });
 
-            const homeMarker = new mapboxgl.Marker() // initialize a new marker
+            const homeMarker = new mapboxgl.Marker({ color: 'blue' }) // initialize a new marker
                 .setLngLat(coordinates)
                 .addTo(map);
 
@@ -127,14 +152,15 @@
                     zoom: 14
                 });
             });
-            const filterCriteria = {
-                ages: document.getElementById('ages').value,
-                gender: document.getElementById('gender').value,
-                rating: parseInt(document.getElementById('ofsted-rating').value),
-                affiliation: document.getElementById('religious-affiliation').value
-            }
 
-            console.log(map);
+            return map;
+        }
+
+        async function updateSchoolMarkers() {
+            const filterCriteria = getFilterCriteria();
+
+            schoolMarkers.forEach(marker => marker.remove());
+            schoolMarkers = [];
 
             fetch(`${protocol}//${root}/schools/api`, {
                 method: 'POST',
@@ -147,22 +173,20 @@
             .then(schools => {
                 schools.forEach(school => {
                     const coords = [school.longitude, school.latitude];
-                    console.log(`adding a new marker at lng-lat: ${coords}`);
-                    new mapboxgl.Marker() // initialize a new marker
+                    const marker = new mapboxgl.Marker({ color: getMarkerColor(school) }) // initialize a new marker
                         .setLngLat(coords)
                         .addTo(map);
+                    schoolMarkers.push(marker);
                 });
             });
-            return map;
         }
 
-        async function addSchoolMarkers(map) {
-            // To-do: make this its own function
-            return;
-        }
-
-        const map = initializeMap();
-        addSchoolMarkers(map);
+        initializeMap()
+        .then(loadedMap => {
+            map = loadedMap;
+            updateSchoolMarkers();
+            filterOptions.addEventListener("change", updateSchoolMarkers)
+        });
     </script>
 
 </body>
