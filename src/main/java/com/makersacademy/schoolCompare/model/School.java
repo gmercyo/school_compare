@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "schools")
@@ -28,7 +29,7 @@ public final class School {
     private BigDecimal longitude;
 
     @JdbcTypeCode(SqlTypes.JSON)
-    private CatchmentRadius catchmentRadius;
+    private List<CatchmentRadius> catchmentRadius;
 
     @Column
     private Integer ofstedRating;
@@ -54,7 +55,7 @@ public final class School {
     // Constructors
     public School() {}
 
-    public School(String name, String address, BigDecimal latitude, BigDecimal longitude, CatchmentRadius catchmentRadius,
+    public School(String name, String address, BigDecimal latitude, BigDecimal longitude, List<CatchmentRadius> catchmentRadius,
                   Integer ofstedRating, String ofstedUrl, String type, String gender, String senAvailability,
                   String religiousAffiliation, String website) {
 
@@ -112,11 +113,11 @@ public final class School {
         this.longitude = longitude;
     }
 
-    public CatchmentRadius getCatchmentRadius() {
+    public List<CatchmentRadius> getCatchmentRadius() {
         return catchmentRadius;
     }
 
-    public void setCatchmentRadius(CatchmentRadius catchmentRadius) {
+    public void setCatchmentRadius(List<CatchmentRadius> catchmentRadius) {
         this.catchmentRadius = catchmentRadius;
     }
 
@@ -164,9 +165,7 @@ public final class School {
         return religiousAffiliation;
     }
 
-    public void setReligiousAffiliation(String religiousAffiliation) {
-        this.religiousAffiliation = religiousAffiliation;
-    }
+    public void setReligiousAffiliation(String religiousAffiliation) { this.religiousAffiliation = religiousAffiliation; }
 
     public String getWebsite() {
         return website;
