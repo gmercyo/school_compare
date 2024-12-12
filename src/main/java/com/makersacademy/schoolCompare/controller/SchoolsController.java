@@ -7,19 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
-
+import com.makersacademy.schoolCompare.pojo.FilterCriteria;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 @Controller
 public class SchoolsController {
 
     @Autowired
-    SchoolRepository schoolRepository;
+    SchoolRepository repository;
 
     @GetMapping("schools/{id}")
     public ModelAndView showSchoolInfo(@PathVariable("id") long id) {
         ModelAndView modelAndView = new ModelAndView("/schools/show-school");
-        Optional<School> school = schoolRepository.findById(id); // Use findById for a single entity
+        Optional<School> school = repository.findById(id); // Use findById for a single entity
         if (school.isPresent()) {
             modelAndView.addObject("school", school.get());
         } else {
@@ -29,5 +34,15 @@ public class SchoolsController {
         return modelAndView;
     }
 
+    @PostMapping(value = "/schools/api")
+    @ResponseBody
+    public ResponseEntity<List<School>> getSchools(@RequestBody FilterCriteria filterCriteria) {
+        List<School> filteredSchools = repository.findSchoolsByFilterCriteria(
+                filterCriteria.getAges(),
+                filterCriteria.getGender(),
+                filterCriteria.getRating(),
+                filterCriteria.getAffiliation());
+        return ResponseEntity.ok(filteredSchools);
+    }
 
 }
