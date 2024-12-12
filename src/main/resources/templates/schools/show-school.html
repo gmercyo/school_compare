@@ -23,10 +23,14 @@
             <h3>School Website - <span th:text="${school.website}"></span></h3>
         </div>
 
+        <a th:href="@{/schools/{schoolId}/questions/new(schoolId=${school.id})}">
+            <button class="BackButton">Ask Question</button>
+        </a>
+
         <div class="Questions">
             Test questions
             <div th:each="question: ${questions}">
-                <h3>Question- <span th:text="${question.content}"></span></h3>
+                <h3>Question- <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a></h3>
 
 
 
