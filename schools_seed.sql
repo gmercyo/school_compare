@@ -85,3 +85,17 @@ VALUES (
     'n/a',
     'community',
     'http://www.highburyfields.islington.sch.uk/');
+INSERT INTO schools (name, address, longitude, latitude, catchment_radius, ofsted_rating, ofsted_url, type, gender, sen_availability, religious_affiliation, website)
+VALUES (
+    'Elizabeth Garrett Anderson School',
+    'Donegal Street, N1 9QG',
+    -0.112659,
+    51.5330009,
+    '[{"year": "''24-''25", "radius": 1.082}, {"year": "''23-''24", "radius": 1.506}, {"year": "''22-''23", "radius": 0.873}]',
+    4,
+    'https://files.ofsted.gov.uk/v1/file/2447618',
+    'secondary',
+    'girls',
+    'n/a',
+    'community',
+    'https://www.egaschool.co.uk/');
