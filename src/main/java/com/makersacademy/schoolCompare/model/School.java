@@ -165,9 +165,7 @@ public final class School {
         return religiousAffiliation;
     }
 
-    public void setReligiousAffiliation(String religiousAffiliation) {
-        this.religiousAffiliation = religiousAffiliation;
-    }
+    public void setReligiousAffiliation(String religiousAffiliation) { this.religiousAffiliation = religiousAffiliation; }
 
     public String getWebsite() {
         return website;
