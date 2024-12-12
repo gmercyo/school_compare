@@ -3,11 +3,18 @@
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="main.css">
+    <link th:href="@{/css/school.css}" rel="stylesheet">
     <title th:text="${school.name}"></title>
 </head>
-<body>
+    <body>
+        <div class="Banner">
+            <span th:text="${school.name}"></span>
+        </div>
+
+        <div class="SchoolInfo">
+            <span th:text="${school.address}"></span>
+        </div>
 
 
-</body>
+    </body>
 </html>

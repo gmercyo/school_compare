@@ -3,6 +3,10 @@ body {
     font-family: 'Roboto', sans-serif;
 }
 
+.Banner {
+    border: solid black 2px;
+}
+
 ul {
     padding: 0;
 }

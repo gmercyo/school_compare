@@ -1,0 +1,24 @@
+.Banner {
+    border: 2px solid black;
+    padding: 20px 40px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+    z-index: 10;
+}
+
+.SchoolInfo {
+    border: 2px solid black;
+    padding: 20px;
+    padding-top: 50px;
+    width: 80%
+    margin: 20px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}

@@ -31,7 +31,7 @@ public final class School {
     private CatchmentRadius catchmentRadius;
 
     @Column
-    private int ofstedRating;
+    private Integer ofstedRating;
 
     @Column
     private String ofstedUrl;
@@ -55,7 +55,7 @@ public final class School {
     public School() {}
 
     public School(String name, String address, BigDecimal latitude, BigDecimal longitude, CatchmentRadius catchmentRadius,
-                  int ofstedRating, String ofstedUrl, String type, String gender, String senAvailability,
+                  Integer ofstedRating, String ofstedUrl, String type, String gender, String senAvailability,
                   String religiousAffiliation, String website) {
 
         this.name = name;
@@ -120,11 +120,11 @@ public final class School {
         this.catchmentRadius = catchmentRadius;
     }
 
-    public int getOfstedRating() {
+    public Integer getOfstedRating() {
         return ofstedRating;
     }
 
-    public void setOfstedRating(int ofstedRating) {
+    public void setOfstedRating(Integer ofstedRating) {
         this.ofstedRating = ofstedRating;
     }
 
