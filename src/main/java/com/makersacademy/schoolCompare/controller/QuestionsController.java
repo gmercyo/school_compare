@@ -20,10 +20,6 @@ public class QuestionsController {
     @Autowired
     SchoolRepository schoolRepository;
 
-    private String getCurrentUser() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
-    }
-
     @GetMapping("schools/{schoolId}/questions/new")
     public String newQuestion(@PathVariable("schoolId") long schoolId, HttpSession session, Model model) {
         School school = schoolRepository.findById(schoolId).orElseThrow();
