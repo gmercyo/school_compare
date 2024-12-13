@@ -21,7 +21,8 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_DB: school_compare_springboot_test
-
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
