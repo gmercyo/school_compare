@@ -37,7 +37,6 @@ public class SchoolsTest {
         School school = new School();
         school.setName(nameOfSchool);
         Assert.assertEquals(nameOfSchool, school.getName());
-        Assert.assertEquals(false, true);
     }
 
     @Test
