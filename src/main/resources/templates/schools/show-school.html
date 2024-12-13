@@ -31,10 +31,6 @@
             Test questions
             <div th:each="question: ${questions}">
                 <h3>Question- <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a></h3>
-
-
-
-
             </div>
         </div>
 
