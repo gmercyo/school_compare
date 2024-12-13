@@ -48,9 +48,9 @@ jobs:
 
       - name: Set Test Environment Variables
         run: |
-          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_TEST_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
-          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_TEST_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "OKTA_ISSUER=${{ secrets.OKTA_TEST_ISSUER }}" >> $GITHUB_ENV
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
           echo "POSTGRES_URL=${{ secrets.POSTGRES_URL_TEST }}" >> $GITHUB_ENV  # Set the test DB URL
           
 
