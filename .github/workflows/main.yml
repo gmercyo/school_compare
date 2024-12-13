@@ -60,6 +60,7 @@ jobs:
           echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
           echo "OKTA_ISSUER=$OKTA_ISSUER"
           echo "POSTGRES_URL=$POSTGRES_URL"
+          echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD"
           
 
       # Run tests with maven
