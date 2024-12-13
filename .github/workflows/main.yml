@@ -64,4 +64,6 @@ jobs:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/school_compare_springboot_test
           SPRING_DATASOURCE_USERNAME: postgres
           SPRING_DATASOURCE_PASSWORD: postgres
-        run: mvn test
+        run: |
+          mvn spring-boot:run
+          mvn test
