@@ -14,20 +14,21 @@ jobs:
   test:
     # Set up the virtual machine for testing
     runs-on: ubuntu-latest
-    container: node:20-bookworm-slim
 
     services:
       # Configure PostgreSQL service
       postgres:
         image: postgres:13
         env:
+          POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_DB: school_compare_springboot_test
+          POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
         options: >-
-          --health-cmd pg_isready
+          --health-cmd="pg_isready -d school_compare_springboot_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -54,21 +55,6 @@ jobs:
 
 
       # Run tests with maven
-      - name: Connect to PostgreSQL
-        # Runs a script that creates a PostgreSQL table, populates
-        # the table with data, and then retrieves the data.
-        run: node client.js
-        # Environment variables used by the `client.js` script to create a new PostgreSQL table.
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
       - name: Test with maven
         run: |
           mvn spring-boot:run & sleep 25 ; mvn test
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          POSTGRES_HOST: postgres
-          # The default PostgreSQL port
-          POSTGRES_PORT: 5432
