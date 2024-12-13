@@ -40,6 +40,7 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
+          cache: maven
 
       - name: Set Test Environment Variables
         run: |
@@ -55,6 +56,8 @@ jobs:
 
 
       # Run tests with maven
-      - name: Test with maven
+      - name: Build with Maven
         run: |
-          mvn spring-boot:run & sleep 25 ; mvn test
+          sleep 15
+          pg_isready
+          mvn --batch-mode --update-snapshots verify
