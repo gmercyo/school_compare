@@ -20,10 +20,8 @@ jobs:
       postgres:
         image: postgres:13
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_DB: school_compare_springboot_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
@@ -58,6 +56,7 @@ jobs:
       # Run tests with maven
       - name: Build with Maven
         run: |
-          sleep 15
+          echo "Checking PostgreSQL service..."
+          docker logs ${{ job.services.postgres.id }}
           pg_isready
           mvn --batch-mode --update-snapshots verify
