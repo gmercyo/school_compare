@@ -36,7 +36,7 @@ public class SchoolsTest {
         String nameOfSchool = "Highbury School";
         School school = new School();
         school.setName(nameOfSchool);
-        Assert.assertEquals(nameOfSchool, school.getName());
+        Assert.assertEquals("HS", school.getName());
     }
 
     @Test

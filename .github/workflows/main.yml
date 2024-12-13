@@ -59,10 +59,6 @@ jobs:
       - name: Build with Maven
         run: mvn clean verify
 
-      - name: List Test Directory Contents
-        run: |
-          ls -R src/test/java/com/makersacademy/schoolCompare/model
-
       - name: Run tests with PostgreSQL
         env:
           SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/school_compare_springboot_test
