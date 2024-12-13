@@ -35,6 +35,8 @@ jobs:
 
 
     steps:
+      - name: Sleep a bit
+        run: sleep 10
       - name: Run health check again
         run: pg_isready
 
