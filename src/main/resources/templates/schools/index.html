@@ -130,8 +130,9 @@
 
             const map = new mapboxgl.Map({
                 container: 'map',
+                style: 'mapbox://styles/daniel-sussman/cm4lg2w2d000d01sa6azz3ah1',
                 center: coordinates,
-                zoom: 14
+                zoom: 15.5
             });
 
             const homeMarker = new mapboxgl.Marker({ color: 'blue' }) // initialize a new marker
@@ -197,12 +198,13 @@
             });
         }
 
-        initializeMap()
+        map = initializeMap()
         .then(loadedMap => {
             map = loadedMap;
             updateSchoolMarkers();
-            filterOptions.addEventListener("change", updateSchoolMarkers)
+            filterOptions.addEventListener("change", updateSchoolMarkers);
         });
+
     </script>
 
 </body>
