@@ -9,9 +9,9 @@
         <relativePath/>
     </parent>
     <groupId>com.makersacademy</groupId>
-    <artifactId>school-compare-template</artifactId>
+    <artifactId>school-compare</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>schoolCompare</name>
+    <name>SchoolCompare</name>
     <description>Demo project for Spring Boot</description>
     <url/>
     <licenses>
