@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/question.css}" rel="stylesheet">
+    <title th:text="${question.content}"></title>
+</head>
+    <body>
+    <a th:href="@{/schools/{schoolId}(schoolId=${question.schoolId})}">
+        <button class="BackButton">Home</button>
+    </a>
+    <div class="Banner">
+        <span th:text="${question.content}"></span>
+        <span> &nbsp;&mdash;&nbsp; </span>
+        <span th:text="${username}"></span>
+    </div>
+
+    </body>
+</html>

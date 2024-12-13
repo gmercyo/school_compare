@@ -1,0 +1,55 @@
+.Banner {
+    border: 2px solid black;
+    padding: 20px 40px;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+    position: sticky;
+    top: 0;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+    z-index: 10;
+}
+
+.BackButton {
+    border: 2px solid black;
+    background-color: white;
+    box-shadow: 0 2px 8px rgba(0,0,0, 0.1);
+}
+
+.SchoolInfo {
+    border: 2px solid black;
+    padding: 10px;
+    width: 80%
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.SchoolInfo span {
+    display: inline-block; /* Ensure span behaves like a block-level element */
+    margin: 0; /* Remove margin if any */
+    padding: 0;
+}
+
+.Questions {
+    border: 2px solid black;
+    padding: 10px;
+    width: 80%
+    margin: 40px auto;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}

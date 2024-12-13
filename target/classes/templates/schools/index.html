@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+    <th:block th:replace="~{core/head :: head}"></th:block>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+    <link rel="stylesheet" href="/css/map.css" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.css" rel="stylesheet">
+    <link
+            rel="stylesheet"
+            href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.css"
+            type="text/css"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js"></script>
+</head>
+<body>
+    <nav class="navbar"></nav>
+    <div class="container">
+        <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
+        <div class="map-filters">
+            <h3>Filter schools by...</h3>
+            <form id="filter-options">
+                <div class="filter-option">
+                    <label for="ages">Ages: </label>
+                    <select name="ages" id="ages">
+                        <option value="all" selected="">All</option>
+                        <option value="primary">Primary</option>
+                        <option value="secondary">Secondary</option>
+                        <option value="sixth_form">Sixth-Form</option>
+                    </select>
+                </div>
+                <div class="filter-option">
+                    <label for="gender">Gender: </label>
+                    <select name="gender" id="gender">
+                        <option value="any" selected="">Any</option>
+                        <option value="mixed">Mixed</option>
+                        <option value="boys">Boys</option>
+                        <option value="girls">Girls</option>
+                    </select>
+                </div>
+
+                <div class="filter-option">
+                    <label for="ofsted-rating">Min. Rating: </label>
+                    <select name="ofsted_rating" id="ofsted-rating">
+                        <option value="0" selected="">None</option>
+                        <option value="4">Outstanding</option>
+                        <option value="3">Good</option>
+                        <option value="2">Requires Improvement</option>
+                        <option value="1">Inadequate</option>
+                    </select>
+                </div>
+
+                <div class="filter-option">
+                    <label for="religious-affiliation">Religious Affiliation: </label>
+                    <select name="religious-affiliation" id="religious-affiliation">
+                        <option value="any" selected="">Any</option>
+                        <option value="community">Secular</option>
+                        <option value="coe">Church of England</option>
+                        <option value="catholic">Catholic</option>
+                        <option value="jewish">Jewish</option>
+                        <option value="muslim">Muslim</option>
+                    </select>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script>
+        const protocol = window.location.protocol;
+        const root = window.location.host;
+        const filterOptions = document.getElementById('filter-options');
+
+        let map = null;
+        let schoolMarkers = [];
+
+        function fetchCoordinatesFromBrowser() {
+            const defaultCoordinates = [-0.118092, 51.509865]; // London
+
+            return new Promise((resolve, reject) => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            resolve([
+                                position.coords.longitude,
+                                position.coords.latitude
+                            ]);
+                        },
+                        (error) => {
+                            console.error('User refused to share location:', error);
+                            resolve(defaultCoordinates);
+                        }
+                    );
+                } else {
+                    resolve(defaultCoordinates);
+                }
+            });
+        }
+
+        function getFilterCriteria() {
+            return {
+                ages: document.getElementById('ages').value,
+                gender: document.getElementById('gender').value,
+                rating: parseInt(document.getElementById('ofsted-rating').value),
+                affiliation: document.getElementById('religious-affiliation').value
+            }
+        }
+
+        function getMarkerColor(school) {
+            switch(school.ofstedRating) {
+                case 4: return '#006B3D';
+                case 3: return '#84DB0B';
+                case 2: return '#FF980E';
+                case 1: return '#D3212C';
+                default: return 'purple';
+            }
+        }
+
+        function formatPopup(school) {
+            return `
+            <h3><a href="${protocol}//${root}/schools/${school.id}">${school.name}</a></h3>
+            <p>${school.address}</p>
+            <p><a href="${school.website}">${school.website}</a></p>
+            `
+        }
+
+        async function initializeMap() {
+            mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
+            const coordinates = await fetchCoordinatesFromBrowser();
+
+            const map = new mapboxgl.Map({
+                container: 'map',
+                style: 'mapbox://styles/daniel-sussman/cm4lg2w2d000d01sa6azz3ah1',
+                center: coordinates,
+                zoom: 15.5
+            });
+
+            const homeMarker = new mapboxgl.Marker({ color: 'blue' }) // initialize a new marker
+                .setLngLat(coordinates)
+                .addTo(map);
+
+            const geocoder = new MapboxGeocoder({
+                accessToken: mapboxgl.accessToken, // Set the access token
+                mapboxgl: mapboxgl, // Set the mapbox-gl instance
+                marker: false, // Do not use the default marker style
+                placeholder: 'Find schools near...',
+                bbox: [-0.489, 51.28, 0.236, 51.686], // Boundary for London
+                proximity: {
+                    longitude: -0.118092,
+                    latitude: 51.509865
+                } // Coordinates for Islington
+            });
+
+            map.addControl(geocoder);
+
+            geocoder.on('result', (event) => {
+                const newCoordinates = event.result.geometry.coordinates;
+                homeMarker.setLngLat(newCoordinates);
+
+                map.flyTo({
+                    center: newCoordinates,
+                    zoom: 14
+                });
+            });
+
+            return map;
+        }
+
+        async function updateSchoolMarkers() {
+            const filterCriteria = getFilterCriteria();
+
+            schoolMarkers.forEach(marker => marker.remove());
+            schoolMarkers = [];
+
+            fetch(`${protocol}//${root}/schools/api`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filterCriteria)
+            })
+            .then(response => response.json())
+            .then(schools => {
+                schools.forEach(school => {
+                    const popup = new mapboxgl.Popup({
+                        offset: 25,
+                    })
+                    .setHTML(formatPopup(school));
+
+                    const coords = [school.longitude, school.latitude];
+                    const marker = new mapboxgl.Marker({ color: getMarkerColor(school) }) // initialize a new marker
+                        .setLngLat(coords)
+                        .setPopup(popup)
+                        .addTo(map);
+
+                    schoolMarkers.push(marker);
+                });
+            });
+        }
+
+        map = initializeMap()
+        .then(loadedMap => {
+            map = loadedMap;
+            updateSchoolMarkers();
+            filterOptions.addEventListener("change", updateSchoolMarkers);
+        });
+
+    </script>
+
+</body>
+</html>
