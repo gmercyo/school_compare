@@ -35,10 +35,12 @@ jobs:
 
 
     steps:
-      - name: Sleep a bit
-        run: sleep 10
       - name: Run health check again
-        run: pg_isready
+        run: |
+          echo "Checking PostgreSQL service..."
+          docker logs ${{ job.services.postgres.id }}
+          sleep 10
+          pg_isready
 
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
