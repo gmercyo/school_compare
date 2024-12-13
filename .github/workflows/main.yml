@@ -58,8 +58,10 @@ jobs:
           echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
           echo "OKTA_ISSUER=$OKTA_ISSUER"
 
+
       # Run tests with maven
       - name: Test with maven
         run: |
+          pg_isready
           createuser runner
           mvn spring-boot:run & sleep 25 ; mvn test
