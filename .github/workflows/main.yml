@@ -59,6 +59,12 @@ jobs:
           echo "OKTA_ISSUER=$OKTA_ISSUER"
 
       # Run tests with maven
+      - name: Setup db and run server in background
+        env:
+          PGPASSWORD: postgres
+        run: |
+          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_test
+
       - name: Test with maven
         run: |
           export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_test"
