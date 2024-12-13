@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.pojo;
+package com.makersacademy.schoolcompare.pojo;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

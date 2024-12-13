@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.model;
+package com.makersacademy.schoolcompare.model;
 
-import com.makersacademy.schoolCompare.pojo.QuestionLikeId;
+import com.makersacademy.schoolcompare.pojo.QuestionLikeId;
 import jakarta.persistence.*;
 
 @Entity

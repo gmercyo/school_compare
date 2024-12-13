@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.model;
+package com.makersacademy.schoolcompare.model;
 
 import jakarta.persistence.*;
 

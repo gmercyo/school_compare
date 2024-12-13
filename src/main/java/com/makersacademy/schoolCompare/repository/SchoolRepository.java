@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.repository;
+package com.makersacademy.schoolcompare.repository;
 
-import com.makersacademy.schoolCompare.model.School;
+import com.makersacademy.schoolcompare.model.School;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

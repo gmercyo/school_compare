@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.config;
+package com.makersacademy.schoolcompare.config;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

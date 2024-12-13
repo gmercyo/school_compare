@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.model;
+package com.makersacademy.schoolcompare.model;
 
-import com.makersacademy.schoolCompare.pojo.CatchmentRadius;
+import com.makersacademy.schoolcompare.pojo.CatchmentRadius;
 import org.flywaydb.core.Flyway;
 import org.junit.Assert;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class SchoolsTest {
     @Test
     public void createSchoolWithNoParams() {
         String nameOfSchool = "Highbury School";
-        School school = new School();
+        com.makersacademy.schoolcompare.model.School school = new School();
         school.setName(nameOfSchool);
         Assert.assertEquals(nameOfSchool, school.getName());
     }
