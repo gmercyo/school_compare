@@ -57,6 +57,6 @@ jobs:
       # Run tests with maven
       - name: Test with maven
         run: |
-          pg_isready
+          pg_isready -d school_compare_springboot_test
           createuser runner
           mvn spring-boot:run & sleep 25 ; mvn test
