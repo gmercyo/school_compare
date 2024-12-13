@@ -61,4 +61,5 @@ jobs:
       # Run tests with maven
       - name: Test with maven
         run: |
+          createuser runner
           mvn spring-boot:run & sleep 25 ; mvn test
