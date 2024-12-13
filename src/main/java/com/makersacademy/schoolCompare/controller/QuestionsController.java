@@ -39,17 +39,18 @@ public class QuestionsController {
     @PostMapping("/questions")
     public RedirectView create(@ModelAttribute Question question) {
         question.setCreatedAt(LocalDateTime.now());
+        repository.save(question);
         return new RedirectView("/schools/" + question.getSchoolId() );
     }
 
     @GetMapping("schools/{school}/questions/{questionId}")
-    public ModelAndView showQuestion(@PathVariable("school") long schoolId, @PathVariable("questionId") long questionId) {
+    public ModelAndView showQuestion(@PathVariable("school") Long schoolId, @PathVariable("questionId") Long questionId) {
         ModelAndView modelAndView = new ModelAndView("/questions/show-question");
         Optional<Question> question = repository.findById(questionId);
         if (question.isPresent()) {
-            modelAndView.addObject("question", question.get());
             Question q = question.get();
-            User u = userRepository.findById(q.getId()).get();
+            modelAndView.addObject("question", q);
+            User u = userRepository.findById(q.getUserId()).get();
             modelAndView.addObject("username", u.getUsername());
         }
         return modelAndView;
