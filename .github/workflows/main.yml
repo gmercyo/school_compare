@@ -40,6 +40,9 @@ jobs:
           echo "Checking PostgreSQL service..."
           docker logs ${{ job.services.postgres.id }}
           sleep 10
+          export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_test"
+          export POSTGRES_USER="postgres"
+          export POSTGRES_PASSWORD="postgres"
           pg_isready
 
       - uses: actions/checkout@v4
