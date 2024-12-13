@@ -57,14 +57,11 @@ jobs:
 
       # Run tests with maven
       - name: Build with Maven
-        run: |
-          echo "Checking PostgreSQL service..."
-          docker logs ${{ job.services.postgres.id }}
-          createdb -h localhost -p 5432 -U postgres school_compare_springboot_test
-          pg_isready
-          mvn --batch-mode --update-snapshots verify
+        run: mvn clean verify
+
+      - name: Run tests with PostgreSQL
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: school_compare_springboot_test
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/school_compare_springboot_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+        run: mvn test
