@@ -60,6 +60,7 @@ jobs:
         run: |
           echo "Checking PostgreSQL service..."
           docker logs ${{ job.services.postgres.id }}
+          createdb -h localhost -p 5432 -U postgres school_compare_springboot_test
           pg_isready
           mvn --batch-mode --update-snapshots verify
         env:
