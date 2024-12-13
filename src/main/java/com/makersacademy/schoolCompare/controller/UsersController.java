@@ -2,11 +2,15 @@ package com.makersacademy.schoolCompare.controller;
 
 import com.makersacademy.schoolCompare.model.User;
 import com.makersacademy.schoolCompare.repository.UserRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+
+import java.time.LocalDateTime;
 
 @RestController
 public class UsersController {
@@ -14,17 +18,20 @@ public class UsersController {
     UserRepository userRepository;
 
     @GetMapping("/users/after-login")
-    public RedirectView afterLogin() {
-        DefaultOidcUser principal = (DefaultOidcUser) SecurityContextHolder
-                .getContext()
-                .getAuthentication()
-                .getPrincipal();
+    public RedirectView afterLogin(HttpSession session,
+                                   @AuthenticationPrincipal DefaultOidcUser principal) {
 
-        String username = (String) principal.getAttributes().get("email");
-        userRepository
-                .findUserByUsername(username)
-                .orElseGet(() -> userRepository.save(new User(username)));
+        String username = (String) principal.getAttributes().get("nickname");
+        String auth0Id = (String) principal.getAttributes().get("sub");
+        User user = userRepository
+                .findUserByAuth0Id(auth0Id)
+                .map(existingUser -> {
+                    existingUser.setUsername(username);
+                    return userRepository.save(existingUser);
+                })
+                .orElseGet(() -> userRepository.save(new User(username, auth0Id)));
 
+        session.setAttribute("userId", user.getId());
         return new RedirectView("/");
     }
 }
