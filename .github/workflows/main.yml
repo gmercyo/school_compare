@@ -62,4 +62,6 @@ jobs:
       - name: Test with maven
         run: |
           export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_test"
+          echo "POSTGRES_URL=${POSTGRES_URL}
+          echo "POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
           mvn spring-boot:run & sleep 25 ; mvn test
