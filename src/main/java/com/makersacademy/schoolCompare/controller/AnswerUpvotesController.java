@@ -18,6 +18,6 @@ public class AnswerUpvotesController {
     public RedirectView create(@PathVariable Long answerId, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         repository.save(new AnswerUpvote(userId, answerId));
-        return new RedirectView("/schools/" + answerId );
+        return new RedirectView("/"); // Once we move beyond MVP, this will not be a redirect anymore, so the path isn't important
     }
 }
