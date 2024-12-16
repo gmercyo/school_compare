@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+<!--    <link th:href="@{/css/question.css}" rel="stylesheet">-->
+    <title th:text="${answer.content}"></title>
+</head>
+<body>
+<a th:href="@{/schools/{schoolId}(schoolId=${question.schoolId})}">
+    <button class="BackButton">Home</button>
+</a>
+<div th:each="answer : ${answers}">
+    <div>
+        <p th:text="${answer.answerContent}">Answer Content</p>
+        <p>Upvotes: <span th:text="${answer.upvotesCount}">Upvote Count</span></p>
+        <p>Posted by: <span th:text="${answer.username}">Username</span></p>
+        <!-- Format the LocalDateTime -->
+        <p>Created on: <span th:text="${#dates.format(answer.answerCreatedAt, 'yyyy-MM-dd HH:mm')}">Created At</span></p>
+        <button th:onclick="'upvoteAnswer(' + ${answer.answerId} + ')'" >Upvote</button>
+    </div>
+</div>
+
+</body>
+</html>

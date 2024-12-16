@@ -30,11 +30,11 @@ public class AnswersController {
     UserRepository userRepository;
 
     @PostMapping("/new-answer")
-    public RedirectView newAnswer(@ModelAttribute Answer answer) {
+    public RedirectView create(@ModelAttribute Answer answer) {
         answer.setCreatedAt(LocalDateTime.now());
         answerRepository.save(answer);
         return new RedirectView("/schools/" + answer.getSchoolId() + "/questions/" + answer.getQuestionId());
-//    Need to know what this line is doing exactly
+
     }
     @GetMapping("schools/{schoolId}/questions/{questionId}/answers")
     public ModelAndView showAnswers(@PathVariable("questionId") Long questionId) {
