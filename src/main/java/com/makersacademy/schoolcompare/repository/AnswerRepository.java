@@ -11,11 +11,13 @@ import java.util.List;
 
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
-    @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(a.id, a.userId, u.username, a.role, a.content, a.createdAt, " +
-            "(SELECT COUNT(upv.id) FROM AnswerUpvote upv WHERE upv.answerId = a.id)) " +
+    @Query("SELECT a.id, a.userId, u.username, a.role, a.content, a.createdAt, " +
+            "COUNT(upv.id) AS upvotesCount " +
             "FROM Answer a " +
             "JOIN User u ON a.userId = u.id " +
+            "LEFT JOIN AnswerUpvote upv ON upv.answerId = a.id " +
             "WHERE a.questionId = :questionId " +
+            "GROUP BY a.id, a.userId, u.username, a.role, a.content, a.createdAt " +
             "ORDER BY a.createdAt DESC")
     List<AnswerWithData> getAllByQuestionId(@Param("questionId") Long questionId);
 }

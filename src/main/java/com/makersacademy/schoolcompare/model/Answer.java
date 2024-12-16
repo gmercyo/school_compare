@@ -11,10 +11,13 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long schoolId;
+    @Column(name = "user_id")
     private Long userId;
+    @Column(name = "question_id")
     private Long questionId;
     private String role;
     private String content;
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     public Answer() {}

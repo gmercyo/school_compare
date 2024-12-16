@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public class AnswerWithData {
     private Long answerId;
+    private Long questionID;
     private Long userId;
     private String username;
     private String role;

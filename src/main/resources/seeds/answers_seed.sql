@@ -24,5 +24,4 @@ INSERT INTO answers (school_id, user_id, question_id, content) VALUES
 (12, 1, 12, 'This is the answer for question 12'),
 (12, 2, 12, 'This is the second answer for question 12'),
 (13, 1, 13, 'This is the answer for question 13'),
-(13, 2, 13, 'This is the second answer for question 13'),
-(
+(13, 2, 13, 'This is the second answer for question 13')
