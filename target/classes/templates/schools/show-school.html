@@ -6,34 +6,41 @@
     <link th:href="@{/css/school.css}" rel="stylesheet">
     <title th:text="${school.name}"></title>
 </head>
-    <body>
-        <a href="/"><button class="BackButton">Home</button></a>
-        <div class="Banner">
-            <span th:text="${school.name}"></span>
-        </div>
+<body>
+<a href="/"><button class="BackButton">Home</button></a>
+<div class="Banner">
+    <span th:text="${school.name}"></span>
+</div>
 
-        <div class="SchoolInfo">
-            <h3>School Address - <span th:text="${school.address}"></span></h3>
-            <h3>Ofsted Rating - <span th:text="${school.ofstedRating}"></span></h3>
-            <h3>Ofsted URL - <span th:text="${school.ofstedUrl}"></span></h3>
-            <h3>School Type - <span th:text="${school.type}"></span></h3>
-            <h3>School Gender - <span th:text="${school.gender}"></span></h3>
-            <h3>School SEN availability - <span th:text="${school.senAvailability}"></span></h3>
-            <h3>School Religious Affiliation - <span th:text="${school.religiousAffiliation}"></span></h3>
-            <h3>School Website - <span th:text="${school.website}"></span></h3>
-        </div>
+<div class="SchoolInfo">
+    <h3>School Address - <span th:text="${school.address}"></span></h3>
+    <h3>Ofsted Rating - <span th:text="${school.ofstedRating}"></span></h3>
+    <h3>Ofsted URL - <span th:text="${school.ofstedUrl}"></span></h3>
+    <h3>School Type - <span th:text="${school.type}"></span></h3>
+    <h3>School Gender - <span th:text="${school.gender}"></span></h3>
+    <h3>School SEN availability - <span th:text="${school.senAvailability}"></span></h3>
+    <h3>School Religious Affiliation - <span th:text="${school.religiousAffiliation}"></span></h3>
+    <h3>School Website - <span th:text="${school.website}"></span></h3>
+</div>
 
-        <a th:href="@{/schools/{schoolId}/questions/new(schoolId=${school.id})}">
-            <button class="BackButton">Ask Question</button>
-        </a>
+<a th:href="@{/schools/{schoolId}/questions/new(schoolId=${school.id})}">
+    <button class="BackButton">Ask Question</button>
+</a>
 
-        <div class="Questions">
-            Test questions
-            <div th:each="question: ${questions}">
-                <h3>Question- <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a></h3>
-            </div>
-        </div>
+<div class="Questions">
+    <h2>Questions</h2>
+    <div th:each="question : ${questions}">
+        <h3>
+            <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a>
+        </h3>
 
-
-    </body>
+        <!-- Like Button -->
+        <form th:action="@{/likes/{questionId}(questionId=${question.id})}" method="post">
+            <button type="submit" th:text="${likedQuestionIds.contains(question.id) ? 'Unlike' : 'Like'}">
+                Like
+            </button>
+        </form>
+    </div>
+</div>
+</body>
 </html>
