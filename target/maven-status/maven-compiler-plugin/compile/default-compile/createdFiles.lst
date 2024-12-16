@@ -13,8 +13,12 @@ com/makersacademy/schoolcompare/model/Question.class
 com/makersacademy/schoolcompare/repository/UserRepository.class
 com/makersacademy/schoolcompare/pojo/QuestionLike.class
 com/makersacademy/schoolcompare/repository/SchoolRepository.class
+com/makersacademy/schoolcompare/repository/ReviewRepository.class
+com/makersacademy/schoolcompare/pojo/CalculateDistance.class
 com/makersacademy/schoolcompare/model/School.class
 com/makersacademy/schoolcompare/controller/SchoolsController.class
+com/makersacademy/schoolcompare/model/Review.class
+com/makersacademy/schoolcompare/model/ReviewUpvote.class
 com/makersacademy/schoolcompare/model/Answer.class
 com/makersacademy/schoolcompare/pojo/FilterCriteria.class
 com/makersacademy/schoolcompare/repository/AnswerUpvoteRepository.class
@@ -22,7 +26,9 @@ com/makersacademy/schoolcompare/model/QuestionLike.class
 com/makersacademy/schoolcompare/repository/QuestionLikeRepository.class
 com/makersacademy/schoolcompare/controller/UsersController.class
 com/makersacademy/schoolcompare/repository/QuestionRepository.class
+com/makersacademy/schoolcompare/dto/ReviewWithData.class
 com/makersacademy/schoolcompare/controller/QuestionLikesController.class
 com/makersacademy/schoolcompare/Application.class
+com/makersacademy/schoolcompare/pojo/ReviewUpvoteId.class
 com/makersacademy/schoolcompare/pojo/AnswerUpvoteId.class
 com/makersacademy/schoolcompare/config/SecurityConfiguration.class

@@ -1,5 +1,37 @@
-<div class="school-forum">
-    <div th:each="question: ${questions}">
-        <p th:text="${question.content}"></p>
+<div id="school-forum" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div id="forum-container">
+        <div id="forum-options">
+            <div id="view-options">
+                <h4>View:</h4>
+                <div th:if="${view == 'questions'}" class="options">
+                    <h4>Questions</h4>
+                    <h4 class="text-salmon"><a th:href="'/schools/' + ${school.id} + '?view=reviews&sort_by=' + ${sortBy}">Reviews</a></h4>
+                </div>
+                <div th:if="${view == 'reviews'}" class="options">
+                    <h4 class="text-salmon"><a th:href="'/schools/' + ${school.id} + '?view=questions&sort_by=' + ${sortBy}">Questions</a></h4>
+                    <h4>Reviews</h4>
+                </div>
+            </div>
+            <div id="sort-options">
+                <h4>Sort by:</h4>
+                <div th:if="${sortBy == 'relevance'}" class="options">
+                    <h4>Most relevant</h4>
+                    <h4 class="text-salmon"><a th:href="'/schools/' + ${school.id} + '?view=' + ${view} + '&sort_by=recent'">Most recent</a></h4>
+                </div>
+                <div th:if="${sortBy == 'recent'}" class="options">
+                    <h4 class="text-salmon"><a th:href="'/schools/' + ${school.id} + '?view=' + ${view} + '&sort_by=relevance'">Most relevant</a></h4>
+                    <h4>Most recent</h4>
+                </div>
+            </div>
+        </div>
+        <div th:if="${view == 'questions'}" id="questions" th:each="question: ${questions}">
+            <p th:text="${question.question.content}"></p>
+        </div>
+
+        <div th:if="${view == 'reviews'}" id="reviews" th:each="review: ${reviews}">
+            <p th:text="${review.review.content}"></p>
+            <p th:text="${review.username}"></p>
+            <p th:text="${review.upvotes}"></p>
+        </div>
     </div>
 </div>

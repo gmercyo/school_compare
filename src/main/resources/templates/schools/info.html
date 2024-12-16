@@ -1,3 +1,13 @@
-<div class="school-info">
+<div id="school-info">
   <h3 th:text="${school.name}"></h3>
+  <div id="top-review" th:if="${topReview}">
+    <p th:text="${topReview.review.content}"></p>
+  </div>
+  <div id="nearby-schools">
+    <div class="nearby-school" th:each="nearbySchool : ${nearbySchools}">
+      <p th:text="${nearbySchool.name}"></p>
+      <p th:text="${nearbySchool.address}"></p>
+      <p th:text="${nearbySchool.distance}"></p>
+    </div>
+  </div>
 </div>
