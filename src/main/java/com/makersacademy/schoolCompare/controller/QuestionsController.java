@@ -1,11 +1,11 @@
-package com.makersacademy.schoolCompare.controller;
+package com.makersacademy.schoolcompare.controller;
 
-import com.makersacademy.schoolCompare.model.Question;
-import com.makersacademy.schoolCompare.model.School;
-import com.makersacademy.schoolCompare.model.User;
-import com.makersacademy.schoolCompare.repository.QuestionRepository;
-import com.makersacademy.schoolCompare.repository.SchoolRepository;
-import com.makersacademy.schoolCompare.repository.UserRepository;
+import com.makersacademy.schoolcompare.model.Question;
+import com.makersacademy.schoolcompare.model.School;
+import com.makersacademy.schoolcompare.model.User;
+import com.makersacademy.schoolcompare.repository.QuestionRepository;
+import com.makersacademy.schoolcompare.repository.SchoolRepository;
+import com.makersacademy.schoolcompare.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

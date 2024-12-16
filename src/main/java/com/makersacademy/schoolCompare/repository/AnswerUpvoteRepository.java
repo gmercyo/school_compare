@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.repository;
+package com.makersacademy.schoolcompare.repository;
 
-import com.makersacademy.schoolCompare.model.AnswerUpvote;
+import com.makersacademy.schoolcompare.model.AnswerUpvote;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{/css/school.css}" rel="stylesheet">
+    <title th:text="${school.name}"></title>
+</head>
+    <body>
+        <a href="/"><button class="BackButton">Home</button></a>
+        <div class="Banner">
+            <span th:text="${school.name}"></span>
+        </div>
+
+        <div class="SchoolInfo">
+            <h3>School Address - <span th:text="${school.address}"></span></h3>
+            <h3>Ofsted Rating - <span th:text="${school.ofstedRating}"></span></h3>
+            <h3>Ofsted URL - <span th:text="${school.ofstedUrl}"></span></h3>
+            <h3>School Type - <span th:text="${school.type}"></span></h3>
+            <h3>School Gender - <span th:text="${school.gender}"></span></h3>
+            <h3>School SEN availability - <span th:text="${school.senAvailability}"></span></h3>
+            <h3>School Religious Affiliation - <span th:text="${school.religiousAffiliation}"></span></h3>
+            <h3>School Website - <span th:text="${school.website}"></span></h3>
+        </div>
+
+        <a th:href="@{/schools/{schoolId}/questions/new(schoolId=${school.id})}">
+            <button class="BackButton">Ask Question</button>
+        </a>
+
+        <div class="Questions">
+            Test questions
+            <div th:each="question: ${questions}">
+                <h3>Question- <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a></h3>
+            </div>
+        </div>
+
+
+    </body>
+</html>

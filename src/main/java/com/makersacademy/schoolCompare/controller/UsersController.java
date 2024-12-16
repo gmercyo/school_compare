@@ -1,7 +1,7 @@
-package com.makersacademy.schoolCompare.controller;
+package com.makersacademy.schoolcompare.controller;
 
-import com.makersacademy.schoolCompare.model.User;
-import com.makersacademy.schoolCompare.repository.UserRepository;
+import com.makersacademy.schoolcompare.model.User;
+import com.makersacademy.schoolcompare.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

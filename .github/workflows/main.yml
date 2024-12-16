@@ -21,14 +21,14 @@ jobs:
         image: postgres:13
         env:
           POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_DB: school_compare_springboot_development
+          POSTGRES_DB: school_compare_springboot_test
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
         ports:
           - 5432:5432
         # Give PostgreSQL some time to initialize
         options: >-
-          --health-cmd="pg_isready -d school_compare_springboot_development"
+          --health-cmd="pg_isready -d school_compare_springboot_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -40,36 +40,28 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-
-      - name: Install playwright
-        run: |
-          mvn -B install -D skipTests -ntp
-          mvn exec:java -e -D exec.mainClass=com.microsoft.playwright.CLI -D exec.args="install --with-deps chromium"
+          cache: maven
 
       - name: Set Test Environment Variables
         run: |
-          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_TEST_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
-          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_TEST_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "OKTA_ISSUER=${{ secrets.OKTA_TEST_ISSUER }}" >> $GITHUB_ENV
-          echo "POSTGRES_URL=${{ secrets.POSTGRES_URL_TEST }}" >> $GITHUB_ENV  # Set the test DB URL
-          
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV          
 
       - name: Verify environment variables
         run: |
           echo "OKTA_CLIENT_ID=$OKTA_CLIENT_ID"
           echo "OKTA_CLIENT_SECRET=$OKTA_CLIENT_SECRET"
           echo "OKTA_ISSUER=$OKTA_ISSUER"
-          echo "POSTGRES_URL=$POSTGRES_URL"
-          
 
       # Run tests with maven
-      - name: Setup db and run server in background
-        env:
-          PGPASSWORD: postgres
-        run: |
-          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development_test
+      - name: Build with Maven
+        run: mvn clean verify
 
-      - name: Test with maven
-        run: |
-          export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_development_test"
-          mvn spring-boot:run & sleep 25 ; mvn test
+      - name: Run tests
+        env:
+          SPRING_PROFILES_ACTIVE: test
+          SPRING_DATASOURCE_URL: jdbc:postgresql://localhost:5432/school_compare_springboot_test
+          SPRING_DATASOURCE_USERNAME: postgres
+          SPRING_DATASOURCE_PASSWORD: postgres
+        run: mvn test

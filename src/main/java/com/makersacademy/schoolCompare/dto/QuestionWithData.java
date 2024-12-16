@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.dto;
+package com.makersacademy.schoolcompare.dto;
 
 import java.time.LocalDateTime;
 import java.util.List;

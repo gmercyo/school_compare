@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.model;
+package com.makersacademy.schoolcompare.model;
 
-import com.makersacademy.schoolCompare.pojo.CatchmentRadius;
+import com.makersacademy.schoolcompare.pojo.CatchmentRadius;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;

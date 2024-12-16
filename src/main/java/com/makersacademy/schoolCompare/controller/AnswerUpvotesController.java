@@ -1,7 +1,7 @@
-package com.makersacademy.schoolCompare.controller;
+package com.makersacademy.schoolcompare.controller;
 
-import com.makersacademy.schoolCompare.model.AnswerUpvote;
-import com.makersacademy.schoolCompare.repository.AnswerUpvoteRepository;
+import com.makersacademy.schoolcompare.model.AnswerUpvote;
+import com.makersacademy.schoolcompare.repository.AnswerUpvoteRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

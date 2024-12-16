@@ -1,6 +1,6 @@
-package com.makersacademy.schoolCompare.repository;
+package com.makersacademy.schoolcompare.repository;
 
-import com.makersacademy.schoolCompare.model.User;
+import com.makersacademy.schoolcompare.model.User;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;
