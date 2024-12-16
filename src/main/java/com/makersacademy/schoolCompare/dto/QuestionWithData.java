@@ -1,6 +1,7 @@
 package com.makersacademy.schoolcompare.dto;
 
 import com.makersacademy.schoolcompare.model.Question;
+import com.makersacademy.schoolcompare.pojo.TimeAgo;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,6 +39,7 @@ public class QuestionWithData {
     public Long getUserId() { return question.getUserId(); }
     public String getContent() { return question.getContent(); }
     public LocalDateTime getCreatedAt() { return question.getCreatedAt(); }
+    public String getTimeAgo() { return TimeAgo.calculate(question.getCreatedAt()); }
 
     public void setQuestion(Question question) { this.question = question; }
     public void setUsername(String username) { this.username = username; }

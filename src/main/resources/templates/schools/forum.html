@@ -24,14 +24,9 @@
                 </div>
             </div>
         </div>
-        <div th:if="${view == 'questions'}" id="questions" th:each="question: ${questions}">
-            <p th:text="${question.content}"></p>
-        </div>
 
-        <div th:if="${view == 'reviews'}" id="reviews" th:each="review: ${reviews}">
-            <p th:text="${review.review.content}"></p>
-            <p th:text="${review.username}"></p>
-            <p th:text="${review.upvotes}"></p>
-        </div>
+        <div th:if="${view == 'questions'}" th:each="question: ${questions}" th:insert="~{questions/question :: div}"></div>
+
+        <div th:if="${view == 'reviews'}" th:each="review: ${reviews}" th:insert="~{reviews/review :: div}"></div>
     </div>
 </div>

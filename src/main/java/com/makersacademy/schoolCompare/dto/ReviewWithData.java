@@ -1,6 +1,7 @@
 package com.makersacademy.schoolcompare.dto;
 
 import com.makersacademy.schoolcompare.model.Review;
+import com.makersacademy.schoolcompare.pojo.TimeAgo;
 
 import java.time.LocalDateTime;
 
@@ -31,6 +32,7 @@ public class ReviewWithData {
     public String getRole() { return review.getRole(); }
     public String getContent() { return review.getContent(); }
     public LocalDateTime getCreatedAt() { return review.getCreatedAt(); }
+    public String getTimeAgo() { return TimeAgo.calculate(review.getCreatedAt()); }
 
     public void setReview(Review review) { this.review = review; }
     public void setUsername(String username) { this.username = username; }
