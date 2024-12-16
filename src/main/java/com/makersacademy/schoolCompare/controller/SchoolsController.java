@@ -27,7 +27,7 @@ public class SchoolsController {
 
     @GetMapping("schools/{id}")
     public ModelAndView showSchoolInfo(@PathVariable("id") long id) {
-        ModelAndView modelAndView = new ModelAndView("/schools/show-school");
+        ModelAndView modelAndView = new ModelAndView("/schools/show");
         Optional<School> school = repository.findById(id); // Use findById for a single entity
         if (school.isPresent()) {
             List<Question> questions = questionRepository.getAllBySchool(id);

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
+<head>
+  <th:block th:replace="~{core/head :: head}"></th:block>
+  <link rel="stylesheet" href="/css/school-details.css" />
+</head>
+<body>
+  <nav th:replace="~{core/navbar :: div}"></nav>
+  <div class="page-body">
+    <div th:replace="~{schools/info :: div}"></div>
+    <div th:replace="~{schools/forum :: div}"></div>
+  </div>
+</body>
+</html>
