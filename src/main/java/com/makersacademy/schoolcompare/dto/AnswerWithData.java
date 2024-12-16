@@ -30,8 +30,8 @@ public class AnswerWithData {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    public String getrole() { return role; }
-    public void setrole(String role) { this.role = role; }
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 
     public String getAnswerContent() { return answerContent; }
     public void setAnswerContent(String answerContent) { this.answerContent = answerContent; }

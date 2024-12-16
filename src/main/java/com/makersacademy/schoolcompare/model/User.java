@@ -2,8 +2,6 @@ package com.makersacademy.schoolcompare.model;
 
 import jakarta.persistence.*;
 
-import static java.lang.Boolean.TRUE;
-
 @Entity
 @Table(name = "USERS")
 public class User {
