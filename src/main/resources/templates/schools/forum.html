@@ -25,7 +25,7 @@
             </div>
         </div>
         <div th:if="${view == 'questions'}" id="questions" th:each="question: ${questions}">
-            <p th:text="${question.question.content}"></p>
+            <p th:text="${question.content}"></p>
         </div>
 
         <div th:if="${view == 'reviews'}" id="reviews" th:each="review: ${reviews}">

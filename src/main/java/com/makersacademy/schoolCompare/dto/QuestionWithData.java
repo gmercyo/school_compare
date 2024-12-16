@@ -32,6 +32,13 @@ public class QuestionWithData {
     public LocalDateTime getLastAnswerTimestamp() { return lastAnswerTimestamp; }
     public List<AnswerWithData> getAnswers() { return answers; }
 
+    // Extra getters:
+    public Long getId() { return question.getId(); }
+    public Long getSchoolId() { return question.getSchoolId(); }
+    public Long getUserId() { return question.getUserId(); }
+    public String getContent() { return question.getContent(); }
+    public LocalDateTime getCreatedAt() { return question.getCreatedAt(); }
+
     public void setQuestion(Question question) { this.question = question; }
     public void setUsername(String username) { this.username = username; }
     public void setLikes(Long likes) { this.likes = likes; }

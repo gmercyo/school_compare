@@ -2,6 +2,8 @@ package com.makersacademy.schoolcompare.dto;
 
 import com.makersacademy.schoolcompare.model.Review;
 
+import java.time.LocalDateTime;
+
 public class ReviewWithData {
     private Review review;
     private String username;
@@ -21,6 +23,14 @@ public class ReviewWithData {
     public String getUsername() { return username; }
     public Long getUpvotes() { return upvotes; }
     public boolean isUpvotedByCurrentUser() { return upvotedByCurrentUser; }
+
+    // Extra getters:
+    public Long getId() { return review.getId(); }
+    public Long getSchoolId() { return review.getSchoolId(); }
+    public Long getUserId() { return review.getUserId(); }
+    public String getRole() { return review.getRole(); }
+    public String getContent() { return review.getContent(); }
+    public LocalDateTime getCreatedAt() { return review.getCreatedAt(); }
 
     public void setReview(Review review) { this.review = review; }
     public void setUsername(String username) { this.username = username; }
