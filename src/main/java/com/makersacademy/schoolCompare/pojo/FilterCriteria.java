@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.pojo;
+package com.makersacademy.schoolcompare.pojo;
 
 public class FilterCriteria {
     private String ages;

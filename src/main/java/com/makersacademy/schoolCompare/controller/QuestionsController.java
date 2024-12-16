@@ -1,20 +1,17 @@
-package com.makersacademy.schoolCompare.controller;
+package com.makersacademy.schoolcompare.controller;
 
-import com.makersacademy.schoolCompare.model.Question;
-import com.makersacademy.schoolCompare.model.School;
-import com.makersacademy.schoolCompare.model.User;
-import com.makersacademy.schoolCompare.repository.QuestionRepository;
-import com.makersacademy.schoolCompare.repository.SchoolRepository;
-import com.makersacademy.schoolCompare.repository.UserRepository;
+import com.makersacademy.schoolcompare.model.Question;
+import com.makersacademy.schoolcompare.model.School;
+import com.makersacademy.schoolcompare.model.User;
+import com.makersacademy.schoolcompare.repository.QuestionRepository;
+import com.makersacademy.schoolcompare.repository.SchoolRepository;
+import com.makersacademy.schoolcompare.repository.UserRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -38,20 +35,22 @@ public class QuestionsController {
         model.addAttribute("question", new Question());
         return "/questions/new";
     }
+
     @PostMapping("/questions")
     public RedirectView create(@ModelAttribute Question question) {
+        question.setCreatedAt(LocalDateTime.now());
         repository.save(question);
         return new RedirectView("/schools/" + question.getSchoolId() );
     }
 
     @GetMapping("schools/{school}/questions/{questionId}")
-    public ModelAndView showQuestion(@PathVariable("school") long schoolId, @PathVariable("questionId") long questionId) {
+    public ModelAndView showQuestion(@PathVariable("school") Long schoolId, @PathVariable("questionId") Long questionId) {
         ModelAndView modelAndView = new ModelAndView("/questions/show-question");
         Optional<Question> question = repository.findById(questionId);
         if (question.isPresent()) {
-            modelAndView.addObject("question", question.get());
             Question q = question.get();
-            User u = userRepository.findById(q.getId()).get();
+            modelAndView.addObject("question", q);
+            User u = userRepository.findById(q.getUserId()).get();
             modelAndView.addObject("username", u.getUsername());
         }
         return modelAndView;

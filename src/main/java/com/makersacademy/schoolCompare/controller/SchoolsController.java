@@ -1,15 +1,15 @@
 package com.makersacademy.schoolCompare.controller;
 
-import com.makersacademy.schoolCompare.model.Question;
-import com.makersacademy.schoolCompare.model.School;
-import com.makersacademy.schoolCompare.repository.QuestionRepository;
-import com.makersacademy.schoolCompare.repository.SchoolRepository;
+import com.makersacademy.schoolcompare.model.Question;
+import com.makersacademy.schoolcompare.model.School;
+import com.makersacademy.schoolcompare.repository.QuestionRepository;
+import com.makersacademy.schoolcompare.repository.SchoolRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
-import com.makersacademy.schoolCompare.pojo.FilterCriteria;
+import com.makersacademy.schoolcompare.pojo.FilterCriteria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
