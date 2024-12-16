@@ -6,18 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import com.makersacademy.schoolcompare.dto.AnswerWithData;
 
 import java.util.List;
 
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
-    @Query("SELECT a.id, a.userId, u.username, a.role, a.content, a.createdAt, " +
-            "COUNT(upv.id) AS upvotesCount " +
+    @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
+            "a.id, a.userId, u.username, a.content, a.createdAt, a.role, " +
+            "(SELECT COUNT(upv.id) FROM AnswerUpvote upv WHERE upv.answerId = a.id)) " +
             "FROM Answer a " +
             "JOIN User u ON a.userId = u.id " +
-            "LEFT JOIN AnswerUpvote upv ON upv.answerId = a.id " +
-            "WHERE a.questionId = :questionId " +
-            "GROUP BY a.id, a.userId, u.username, a.role, a.content, a.createdAt " +
-            "ORDER BY a.createdAt DESC")
+            "WHERE a.questionId = :questionId")
     List<AnswerWithData> getAllByQuestionId(@Param("questionId") Long questionId);
 }

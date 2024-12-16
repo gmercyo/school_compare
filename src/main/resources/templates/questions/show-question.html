@@ -10,10 +10,15 @@
     <a th:href="@{/schools/{schoolId}(schoolId=${question.schoolId})}">
         <button class="BackButton">Home</button>
     </a>
-    <div class="Banner">
+    <div class="QuestionInfo">
         <span th:text="${question.content}"></span>
-        <span> &nbsp;&mdash;&nbsp; </span>
+        <br>
         <span th:text="${username}"></span>
+
+        <div class="answerPreview">
+            <span th:text="${answers[0].content.substring(0, 100)}"></span> <!-- Shows the first 100 characters -->
+            <span th:text="${answers.size() > 0 ? '...' : ''}"></span> <!-- Adds ellipsis if answer is longer -->
+        </div>
     </div>
 
     </body>

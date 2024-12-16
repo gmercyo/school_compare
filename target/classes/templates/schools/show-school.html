@@ -28,9 +28,18 @@
         </a>
 
         <div class="Questions">
-            Test questions
-            <div th:each="question: ${questions}">
-                <h3>Question- <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a></h3>
+            Top Questions
+            <div th:each="question : ${questions}" class="question-card">
+                <h3>Question:
+                    <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a>
+                </h3>
+
+                <div th:each="answer : ${answers}" class="answer-card">
+                    <p th:text="${answer.content.substring(0, 100)}"></p>
+                    <span th:text="${answer.content.length() > 100 ? '...' : ''}"></span>
+                    <br>
+                    <span th:text="${answer.username}"></span>
+                </div>
             </div>
         </div>
 

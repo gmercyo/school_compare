@@ -30,6 +30,7 @@ public class SchoolsController {
         Optional<School> school = repository.findById(id); // Use findById for a single entity
         if (school.isPresent()) {
             List<Question> questions = questionRepository.getAllBySchool(id);
+
             modelAndView.addObject("school", school.get());
             modelAndView.addObject("questions", questions);
 
