@@ -14,13 +14,13 @@ jobs:
   test:
     # Set up the virtual machine for testing
     runs-on: ubuntu-latest
+    container: node:20-bookworm-slim
 
     services:
       # Configure PostgreSQL service
       postgres:
         image: postgres:13
         env:
-          POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_DB: school_compare_springboot_development
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -28,7 +28,7 @@ jobs:
           - 5432:5432
         # Give PostgreSQL some time to initialize
         options: >-
-          --health-cmd="pg_isready -d school_compare_springboot_development"
+          --health-cmd="pg_isready -d school_compare_springboot_test"
           --health-interval=10s
           --health-timeout=5s
           --health-retries=5
@@ -48,9 +48,9 @@ jobs:
 
       - name: Set Test Environment Variables
         run: |
-          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_TEST_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
-          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_TEST_CLIENT_SECRET }}" >> $GITHUB_ENV
-          echo "OKTA_ISSUER=${{ secrets.OKTA_TEST_ISSUER }}" >> $GITHUB_ENV
+          echo "OKTA_CLIENT_ID=${{ secrets.OKTA_CLIENT_ID }}" >> $GITHUB_ENV # Use a test API URL
+          echo "OKTA_CLIENT_SECRET=${{ secrets.OKTA_CLIENT_SECRET }}" >> $GITHUB_ENV
+          echo "OKTA_ISSUER=${{ secrets.OKTA_ISSUER }}" >> $GITHUB_ENV
           echo "POSTGRES_URL=${{ secrets.POSTGRES_URL_TEST }}" >> $GITHUB_ENV  # Set the test DB URL
           
 
@@ -67,9 +67,9 @@ jobs:
         env:
           PGPASSWORD: postgres
         run: |
-          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_development_test
+          PGPASSWORD=$POSTGRES_PASSWORD createdb -h localhost -p 5432 -U postgres school_compare_springboot_test
 
       - name: Test with maven
         run: |
-          export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_development_test"
+          export POSTGRES_URL="postgresql://localhost:5432/school_compare_springboot_test"
           mvn spring-boot:run & sleep 25 ; mvn test
