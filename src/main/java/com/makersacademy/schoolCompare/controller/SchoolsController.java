@@ -26,14 +26,16 @@ public class SchoolsController {
     QuestionRepository questionRepository;
 
     @GetMapping("schools/{id}")
-    public ModelAndView showSchoolInfo(@PathVariable("id") long id) {
+    public ModelAndView showSchoolInfo(
+            @PathVariable("id") Long id,
+            @RequestParam(value = "view", defaultValue = "questions") String view,
+            @RequestParam(value = "sort_by", defaultValue = "relevance") String sortBy) {
         ModelAndView modelAndView = new ModelAndView("/schools/show");
         Optional<School> school = repository.findById(id); // Use findById for a single entity
         if (school.isPresent()) {
             List<Question> questions = questionRepository.getAllBySchool(id);
             modelAndView.addObject("school", school.get());
             modelAndView.addObject("questions", questions);
-
         } else {
             // Handle case when school is not found, e.g., show a "not found" page or return an error message
             modelAndView.addObject("error", "School not found");
