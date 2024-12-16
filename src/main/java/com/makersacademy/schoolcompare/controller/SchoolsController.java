@@ -1,4 +1,4 @@
-package com.makersacademy.schoolCompare.controller;
+package com.makersacademy.schoolcompare.controller;
 
 import com.makersacademy.schoolcompare.model.Question;
 import com.makersacademy.schoolcompare.model.School;
@@ -11,9 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 import com.makersacademy.schoolcompare.pojo.FilterCriteria;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
+
 import java.util.List;
 import java.util.Optional;
 
