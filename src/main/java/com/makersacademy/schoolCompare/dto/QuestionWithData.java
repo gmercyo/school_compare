@@ -1,84 +1,45 @@
 package com.makersacademy.schoolcompare.dto;
 
+import com.makersacademy.schoolcompare.model.Question;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
 public class QuestionWithData {
-    private Long id;
-    private String userId;
+    private Question question;
     private String username;
-    private Long schoolId;
-    private Long postId;
-    private String content;
-    private List<QuestionWithData> answers;
-    private LocalDateTime createdAt;
+    private int likes;
+    private boolean likedByCurrentUser;
+    private LocalDateTime lastAnswerTimestamp;
+    private List<AnswerWithData> answers;
 
-    public QuestionWithData(Long id, String userId, String username, Long schoolId,Long postId, String content, LocalDateTime createdAt) {
-        this.id = id;
-        this.userId = userId;
+    public QuestionWithData(Question question,
+                            String username,
+                            int likes,
+                            boolean likedByCurrentUser,
+                            LocalDateTime lastAnswerTimestamp,
+                            List<AnswerWithData> answers) {
+        this.question = question;
         this.username = username;
-        this.schoolId = schoolId;
-        this.postId = postId;
-        this.content = content;
-        this.createdAt = createdAt;
+        this.likes = likes;
+        this.likedByCurrentUser = likedByCurrentUser;
+        this.lastAnswerTimestamp = lastAnswerTimestamp;
+        this.answers = answers;
     }
 
     public QuestionWithData() {};
 
-    public Long getId() {
-        return id;
-    }
+    public Question getQuestion() { return question; }
+    public String getUsername() { return username; }
+    public int getLikes() { return likes; }
+    public boolean isLikedByCurrentUser() { return likedByCurrentUser; }
+    public LocalDateTime getLastAnswerTimestamp() { return lastAnswerTimestamp; }
+    public List<AnswerWithData> getAnswers() { return answers; }
 
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public Long getSchoolId() {
-        return schoolId;
-    }
-
-    public void setSchoolId(Long schoolId) {
-        this.schoolId = schoolId;
-    }
-
-    public Long getPostId() {
-        return postId;
-    }
-
-    public void setPostId(Long postId) {
-        this.postId = postId;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public void setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-    }
+    public void setQuestion(Question question) { this.question = question; }
+    public void setUsername(String username) { this.username = username; }
+    public void setLikes(int likes) { this.likes = likes; }
+    public void setLikedByCurrentUser(boolean likedByCurrentUser) { this.likedByCurrentUser = likedByCurrentUser; }
+    public void setLastAnswerTimestamp(LocalDateTime lastAnswerTimestamp) { this.lastAnswerTimestamp = lastAnswerTimestamp; }
+    public void setAnswers(List<AnswerWithData> answers) { this.answers = answers; }
 }

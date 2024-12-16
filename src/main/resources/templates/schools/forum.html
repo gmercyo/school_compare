@@ -1,4 +1,5 @@
 <div class="school-forum">
-
-
+    <div th:each="question: ${questions}">
+        <p th:text="${question.content}"></p>
+    </div>
 </div>
