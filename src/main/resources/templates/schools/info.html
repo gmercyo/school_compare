@@ -64,7 +64,7 @@
   <div id="nearby-schools">
     <h3>Nearby <span th:text="${school.type}"></span> schools:</h3>
     <div class="nearby-school" th:each="nearbySchool : ${nearbySchools}">
-      <a th:href="'/schools/' + ${nearbySchool.id}"><i class="fa-solid fa-angle-right"></i></a>
+      <a th:href="'/schools/' + ${nearbySchool.id}" class="action-button"><i class="fa-solid fa-angle-right"></i></a>
       <div>
         <p th:text="${nearbySchool.name}"></p>
         <h6><span th:text="${nearbySchool.address}"></span> (<span th:text="${#numbers.formatDecimal(nearbySchool.distance, 1, 4)}"></span> mi.)</h6>

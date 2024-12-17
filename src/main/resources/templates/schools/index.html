@@ -19,7 +19,7 @@
     <div id="map-container">
         <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
         <div class="map-filters">
-            <h3>Filter schools by...</h3>
+            <h3 class="filter-header">Filter schools by...</h3>
             <form id="filter-options">
                 <div class="filter-option">
                     <label for="ages">Ages: </label>
@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="filter-option">
-                    <label for="religious-affiliation">Religious Affiliation: </label>
+                    <label for="religious-affiliation">Faith: </label>
                     <select name="religious-affiliation" id="religious-affiliation">
                         <option value="any" selected="">Any</option>
                         <option value="community">Secular</option>
@@ -154,6 +154,14 @@
             }
         }
 
+        function truncateString(string, length) {
+            if (string.length > length + 2) {
+                return string.substring(0, length) + "...";
+            } else {
+                return string;
+            }
+        }
+
         function getMarkerColor(school) {
             switch(school.ofstedRating) {
                 case 4: return '#006B3D';
@@ -166,9 +174,14 @@
 
         function formatPopup(school) {
             return `
-            <h3><a href="${protocol}//${root}/schools/${school.id}">${school.name}</a></h3>
-            <p>${school.address}</p>
-            <p><a href="${school.website}">${school.website}</a></p>
+            <div class="popup-title">
+                <p><a href="${protocol}//${root}/schools/${school.id}"><strong>${truncateString(school.name, 32)}</strong></a></p>
+                <p>${school.address}</p>
+            </div>
+            <p>${school.type.charAt(0).toUpperCase() + school.type.slice(1)} · ${school.gender.charAt(0).toUpperCase() + school.gender.slice(1)}</p>
+            <p>${school.religiousAffiliation === 'coe' ? 'Church of England' : school.religiousAffiliation === 'community' ? 'Community school' : school.religiousAffiliation.charAt(0).toUpperCase() + school.religiousAffiliation.slice(1)}</p>
+            <p><a href="${school.website}">${truncateString(school.website, 32)}</a></p>
+            <a href="${protocol}//${root}/schools/${school.id}" class="action-button"><i class="fa-solid fa-angle-right"></i></a>
             `
         }
 
@@ -233,6 +246,7 @@
             .then(schools => {
                 schools.forEach(school => {
                     const popup = new mapboxgl.Popup({
+                        closeButton: false,
                         offset: 25,
                     })
                     .setHTML(formatPopup(school));

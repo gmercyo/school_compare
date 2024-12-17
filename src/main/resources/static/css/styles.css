@@ -36,7 +36,6 @@ h2 {
 h3 {
     font-size: 18px;
     font-weight: bold;
-    color: var(--dark-text);
 }
 
 h4 {
@@ -68,6 +67,23 @@ a {
 .flex {
     display: flex;
     align-items: center;
+}
+
+.action-button {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    color: var(--action-red);
+    border: 1px solid var(--action-red);
+}
+
+.action-button:hover {
+    background-color: var(--white);
+    color: var(--grey-blue);
+    border: 1px solid var(--grey-blue);
 }
 
 /* TEXT STYLES */
