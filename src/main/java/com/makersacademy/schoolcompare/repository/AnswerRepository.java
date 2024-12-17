@@ -17,7 +17,7 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
     @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
             "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " + // Pass the whole 'Answer' object as 'a'
             "(SELECT COUNT(aauu) FROM AnswerUpvote aauu WHERE aauu.answerId = a.id), " +
-            "au.userId IS NOT NULL) " +
+            "CASE WHEN au.userId IS NOT NULL THEN true ELSE false END) " +
             "FROM Question q " +
             "JOIN Answer a ON a.questionId = q.id " +
             "JOIN User u ON u.id = a.userId " +
@@ -26,17 +26,17 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
     List<AnswerWithData> findAnswersByRelevance(@Param("questionId") Long questionId, @Param("currentUser") Long currentUser);
     @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
             "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " +
-            "(SELECT COUNT(upv.id) FROM AnswerUpvote upv WHERE upv.answerId = a.id)) " +
+            "(SELECT COUNT(upv.id) FROM AnswerUpvote upv WHERE upv.answerId = a.id), " +
+            "false) " +
             "FROM Answer a " +
             "JOIN User u ON a.userId = u.id " +
             "LEFT JOIN AnswerUpvote v ON a.id = v.answerId " +
             "WHERE a.questionId = :questionId")
     List<AnswerWithData> getAllByQuestionId(@Param("questionId") Long questionId);
-
-
     @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
             "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " +
-            "(SELECT COUNT(au) FROM AnswerUpvote au WHERE au.answerId = a.id)) " +
+            "(SELECT COUNT(au) FROM AnswerUpvote au WHERE au.answerId = a.id), " +
+            "false) " +
             "FROM Answer a " +
             "JOIN User u ON a.userId = u.id " +
             "WHERE a.questionId = :questionId " +

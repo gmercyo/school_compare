@@ -1,4 +1,4 @@
-<div th:fragment="question-card(question, likedQuestionIds, answer)">
+<div th:fragment="question-card(question, likedQuestionIds, answer)" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="card question-card">
         <!-- User and Like Button -->
         <div class="question-header">
@@ -16,13 +16,24 @@
             <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
         </p>
 
-        <!-- Answer Preview Card -->
-        <div th:replace="~{answers/answer-preview :: answer-preview(${answer})}"></div>
+        <!-- Best Answer Preview -->
+        <div th:if="${question.bestAnswer != null}" class="best-answer-preview">
+            <p><strong>Best answer (most upvotes):</strong></p>
+            <p>
+                <span th:text="${question.bestAnswer.username} + ' · '"></span>
+                <span th:text="${question.bestAnswer.role}"></span>
+                <span th:text="${#temporals.format(question.bestAnswer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            </p>
+            <p th:text="${question.bestAnswer.content.length() > 100
+                ? question.bestAnswer.content.substring(0, 100) + '...'
+                : question.bestAnswer.content}"></p>
+            <p>Upvotes: <span th:text="${question.bestAnswer.upvotesCount}"></span></p>
+        </div>
 
         <!-- Expand Answers Button -->
         <div class="expand-answers">
             <a th:href="@{/questions/{questionId}(questionId=${question.id})}">
-                <button>View All Answers</button>
+                <button>View more</button>
             </a>
         </div>
     </div>
