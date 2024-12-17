@@ -1,81 +1,16 @@
-:root {
-    --dark-text: #071E22;
-    --deep-blue: #1D7874;
-    --grey-blue: #679289;
-    --salmon: #F4C095;
-    --action-red: #EE2E31;
-    --parchment: #F4ECD6;
-    --white: #F7F7F2;
-    --rating-outstanding: #2A7221;
-    --rating-good: #8AC926;
-    --rating-needs-improvement: #FBAF00;
-    --rating-inadequate: #EE2E31;
-}
-
 body {
     margin: 0;
-    padding: 0;
-    font-family: 'Inter', sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
-}
-
-h1 {
-    font-size: 42px;
-    line-height: 42px;
-}
-
-h2 {
-    font-size: 24px;
-    font-weight: normal;
-}
-
-h4 {
-    font-size: 16px;
-    font-weight: bold;
-    color: var(--dark-text);
-}
-
-a {
-    text-decoration: none;
-    color: unset;
-}
-
-/* TEXT STYLES */
-.text-white {
-    color: var(--white);
-}
-.text-salmon {
-    color: var(--salmon);
-}
-
-/* NAVBAR */
-.navbar {
-    position: fixed;
-    height: 104px;
-    width: 100vw;
-    background-color: var(--grey-blue);
-    padding: 0 54px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    z-index: 5;
-    box-sizing: border-box;
-}
-
-.nav-spacer {
-    height: 104px;
-    width: 100vw;
+    font-family: 'Roboto', sans-serif;
 }
 
 .Banner {
     border: solid black 2px;
 }
 
-/* MAP */
+ul {
+    padding: 0;
+}
+
 #map {
     position: absolute;
     top: 0;
@@ -110,9 +45,19 @@ a {
     flex-grow: 1;
 }
 
-#map-container {
+nav {
+    height: 120px;
     width: 100vw;
-    height: calc(100vh - 104px);
+    background-color: green;
+}
+
+.container {
+    width: 100vw;
+    height: calc(100vh - 120px);
     margin: 0;
     position: relative;
+}
+
+h1 {
+    color: green;
 }

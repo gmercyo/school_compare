@@ -58,6 +58,4 @@ public class AnswerWithData {
 
     public Long getQuestionId() { return questionId; }
     public void setQuestionId(Long questionId) { this.questionId = questionId; }
-    public String getTimeAgo() { return TimeAgo.calculate(answer.getCreatedAt()); }
-
 }

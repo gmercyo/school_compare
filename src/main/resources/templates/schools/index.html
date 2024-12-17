@@ -15,8 +15,8 @@
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js"></script>
 </head>
 <body>
-    <nav th:replace="~{core/navbar :: div}"></nav>
-    <div id="map-container">
+    <nav class="navbar"></nav>
+    <div class="container">
         <div id="map" th:data-mapbox-token="${mapboxToken}"></div>
         <div class="map-filters">
             <h3>Filter schools by...</h3>
@@ -159,7 +159,7 @@
 
                 map.flyTo({
                     center: newCoordinates,
-                    zoom: 15.5
+                    zoom: 14
                 });
             });
 
