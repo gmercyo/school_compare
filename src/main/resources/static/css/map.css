@@ -38,12 +38,10 @@
     background-color: var(--parchment) !important;
 }
 
-.mapboxgl-ctrl-geocoder .suggestions li:first-child > a {
+.mapboxgl-ctrl-geocoder .suggestions li:first-child > a,
+.mapboxgl-ctrl-geocoder .suggestions a:hover,
+.mapboxgl-ctrl-geocoder .suggestions li.active > a {
     background-color: var(--salmon) !important;
-}
-
-.mapboxgl-ctrl-geocoder .suggestions a:hover {
-    background-color: var(--white) !important;
 }
 
 .mapboxgl-ctrl-geocoder--button {
