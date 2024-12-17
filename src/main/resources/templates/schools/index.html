@@ -199,7 +199,7 @@
                 } // Coordinates for Islington
             });
 
-            map.addControl(geocoder);
+            map.addControl(geocoder, 'top-left');
 
             geocoder.on('result', (event) => {
                 const newAddress = event.result.place_name;
