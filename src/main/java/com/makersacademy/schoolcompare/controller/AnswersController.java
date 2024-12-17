@@ -32,7 +32,6 @@ public class AnswersController {
         answer.setCreatedAt(LocalDateTime.now());
         answerRepository.save(answer);
         return new RedirectView("/schools/" + answer.getSchoolId() + "/questions/" + answer.getQuestionId());
-
     }
     @GetMapping("schools/{schoolId}/questions/{questionId}/answers")
     public ModelAndView showAnswers(@PathVariable("questionId") Long questionId) {

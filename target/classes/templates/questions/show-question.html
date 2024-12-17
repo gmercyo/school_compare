@@ -16,7 +16,7 @@
         <span th:text="${username}"></span>
 
         <div class="answerPreview">
-            <span th:text="${answers[0].content.substring(0, 100)}"></span> <!-- Shows the first 100 characters -->
+            <span th:text="${answers[0].content}"></span> <!-- Shows the first 100 characters -->
             <span th:text="${answers.size() > 0 ? '...' : ''}"></span> <!-- Adds ellipsis if answer is longer -->
         </div>
     </div>

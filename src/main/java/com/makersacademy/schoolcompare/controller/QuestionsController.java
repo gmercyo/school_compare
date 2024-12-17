@@ -32,6 +32,7 @@ public class QuestionsController {
     @Autowired
     AnswerRepository answerRepository;
 
+
     @GetMapping("schools/{schoolId}/questions/new")
     public String newQuestion(@PathVariable("schoolId") long schoolId, HttpSession session, Model model) {
         School school = schoolRepository.findById(schoolId).orElseThrow();
@@ -60,9 +61,8 @@ public class QuestionsController {
             User u = userRepository.findById(q.getUserId()).get();
             modelAndView.addObject("username", u.getUsername());
 
-            List<AnswerWithData> answers = answerRepository.getAllByQuestionId(questionId);  // Assuming getAllByQuestionId is implemented
-            modelAndView.addObject("answer", answers);  // Pass answers to the view
-
+            List<AnswerWithData> answers = answerRepository.getAllByQuestionId(questionId);
+            modelAndView.addObject("answers", answers);
         }
         return modelAndView;
     }
