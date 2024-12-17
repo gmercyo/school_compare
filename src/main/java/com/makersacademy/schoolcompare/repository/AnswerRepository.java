@@ -15,7 +15,8 @@ import java.util.List;
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
     @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
-            "a, u.username, (SELECT COUNT(aauu) FROM AnswerUpvote aauu WHERE aauu.answerId = a.id), " +
+            "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " + // Pass the whole 'Answer' object as 'a'
+            "(SELECT COUNT(aauu) FROM AnswerUpvote aauu WHERE aauu.answerId = a.id), " +
             "au.userId IS NOT NULL) " +
             "FROM Question q " +
             "JOIN Answer a ON a.questionId = q.id " +
@@ -24,7 +25,7 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
             "WHERE q.id = :questionId")
     List<AnswerWithData> findAnswersByRelevance(@Param("questionId") Long questionId, @Param("currentUser") Long currentUser);
     @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
-            "a.id, a.userId, u.username, a.role, a.content, a.createdAt, " +
+            "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " +
             "(SELECT COUNT(upv.id) FROM AnswerUpvote upv WHERE upv.answerId = a.id)) " +
             "FROM Answer a " +
             "JOIN User u ON a.userId = u.id " +
@@ -33,4 +34,13 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
     List<AnswerWithData> getAllByQuestionId(@Param("questionId") Long questionId);
 
 
+    @Query("SELECT new com.makersacademy.schoolcompare.dto.AnswerWithData(" +
+            "a.id, a.userId, u.username, a.role, a, a.content, a.createdAt, " +
+            "(SELECT COUNT(au) FROM AnswerUpvote au WHERE au.answerId = a.id)) " +
+            "FROM Answer a " +
+            "JOIN User u ON a.userId = u.id " +
+            "WHERE a.questionId = :questionId " +
+            "ORDER BY (SELECT COUNT(au) FROM AnswerUpvote au WHERE au.answerId = a.id) DESC " +
+            "LIMIT 1")
+    AnswerWithData findBestAnswerByQuestionId(@Param("questionId") Long questionId);
 }

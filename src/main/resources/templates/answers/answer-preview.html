@@ -1,0 +1,13 @@
+<!-- templates/answers/answer-preview.html -->
+<div th:fragment="answer-preview(answer)" xmlns:th="http://www.w3.org/1999/xhtml">
+    <div class="card answer-preview-card">
+        <p>Best answer (most upvotes):</p>
+        <p>
+            <span th:text="${answer.username} + ' · '"></span>
+            <span th:text="${answer.role}"></span>
+            <span th:text="${#temporals.format(answer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+        </p>
+        <p th:text="${answer.content.substring(0, 100)}"></p>
+        <p>Upvotes: <span th:text="${answer.upvotesCount}"></span></p>
+    </div>
+</div>

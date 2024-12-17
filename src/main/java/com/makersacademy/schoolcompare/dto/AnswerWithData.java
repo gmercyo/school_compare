@@ -11,23 +11,19 @@ public class AnswerWithData {
     private Long userId;
     private String username;
     private String role;
-//    private Answer answer;
+    private Answer answer;
     private String content;
     private LocalDateTime createdAt;
-    private Long upvotes;
     private boolean upvotedByCurrentUser;
 
-    public AnswerWithData() {}
-//    public AnswerWithData(Answer answer, String username, Long upvotes, ) {
-//        this.answer = answer;
-    public AnswerWithData(Long id, Long userId, String username, String role, String content,
-                          LocalDateTime createdAt, Long upvotes, boolean upvotedByCurrentUser) {
+    public AnswerWithData(Long id, Long userId, String username, String role, Answer answer, String content,
+                          LocalDateTime createdAt, boolean upvotedByCurrentUser) {
         this.id = id;
         this.userId = userId;
         this.username = username;
-        this.upvotes = upvotes;
-        this.upvotedByCurrentUser = upvotedByCurrentUser;
         this.role = role;
+        this.answer = answer;
+        this.upvotedByCurrentUser = upvotedByCurrentUser;
         this.content = content;
         this.createdAt = createdAt;
     }
@@ -50,12 +46,13 @@ public class AnswerWithData {
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
-    public Long getUpvotes() { return upvotes; }
-    public void setUpvotes(Long upvotes) { this.upvotes = upvotes; }
-
     public boolean isUpvotedByCurrentUser() { return upvotedByCurrentUser; }
     public void setUpvotedByCurrentUser(boolean upvotedByCurrentUser) { this.upvotedByCurrentUser = upvotedByCurrentUser; }
 
     public Long getQuestionId() { return questionId; }
     public void setQuestionId(Long questionId) { this.questionId = questionId; }
+
+    public Answer getAnswer() { return answer; }
+
+    public void setAnswer(Answer answer) { this.answer = answer; }
 }

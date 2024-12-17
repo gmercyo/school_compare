@@ -10,6 +10,10 @@
   <div class="page-body">
     <div th:replace="~{schools/info :: div}"></div>
     <div th:replace="~{schools/forum :: div}"></div>
+    <div th:each="question, iStat : ${questions}">
+      <div th:replace="~{questions/question :: question-card(${question}, ${likedQuestionIds}, ${question.bestAnswer})}"></div>
+    </div>
+    <div th:replace="~{questions/question :: div"></div>
   </div>
 </body>
 </html>

@@ -1,0 +1,7 @@
+<div th:fragment="like-button(questionId, likedQuestionIds)" xmlns:th="http://www.w3.org/1999/xhtml">
+    <form th:action="@{/likes/{questionId}(questionId=${questionId})}" method="post">
+        <button type="submit" class="like-button"
+                th:text="${likedQuestionIds.contains(questionId) ? 'Unlike' : 'Like'}">
+        </button>
+    </form>
+</div>

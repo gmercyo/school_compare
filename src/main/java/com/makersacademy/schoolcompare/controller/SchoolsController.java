@@ -64,8 +64,7 @@ public class SchoolsController {
             LocalDateTime lastAnswerTimestamp = answers.isEmpty()
                     ? null
                     : answers.stream()
-                    .map(AnswerWithData::getContent)
-                    .map(Answer::getCreatedAt)
+                    .map(AnswerWithData::getCreatedAt)
                     .max(LocalDateTime::compareTo)
                     .orElse(null);
 
@@ -101,6 +100,11 @@ public class SchoolsController {
 
         if (view.equals("questions")) {
             List<QuestionWithData> questions = questionRepository.findQuestionsBySchoolId(school.getId(), currentUser);
+            questions.forEach(q -> {
+                AnswerWithData bestAnswer = answerRepository.findBestAnswerByQuestionId(q.getId());
+                q.setBestAnswer(bestAnswer);
+            });
+
             fetchAnswers(questions, currentUser);
 
             if (sortBy.equals("relevance")) {

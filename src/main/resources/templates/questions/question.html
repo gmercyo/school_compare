@@ -1,8 +1,29 @@
-<div class="card question-card">
-    <p th:text="${question.username} + ' · ' + ${question.timeAgo}"></p>
-    <p th:text="${question.content}"></p>
+<div th:fragment="question-card(question, likedQuestionIds, answer)">
+    <div class="card question-card">
+        <!-- User and Like Button -->
+        <div class="question-header">
+            <p>
+                <span th:text="${question.username} + ' asked... '"></span>
+            </p>
+            <form th:replace="~{questions/like-button :: like-button(${question.id}, ${likedQuestionIds})}"></form>
+        </div>
 
-    <div th:if="${question.answers.size() > 0}" class="answers-container">
-        <div th:each="answer: ${question.answers}" th:insert="~{answers/answer :: div}"></div>
+        <!-- Question Content -->
+        <h3 th:text="${question.content}"></h3>
+        <p>
+            <span th:text="${question.likesCount} + ' likes · '"></span>
+            <span th:text="${question.answerCount} + ' answers · '"></span>
+            <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+        </p>
+
+        <!-- Answer Preview Card -->
+        <div th:replace="~{answers/answer-preview :: answer-preview(${answer})}"></div>
+
+        <!-- Expand Answers Button -->
+        <div class="expand-answers">
+            <a th:href="@{/questions/{questionId}(questionId=${question.id})}">
+                <button>View All Answers</button>
+            </a>
+        </div>
     </div>
 </div>

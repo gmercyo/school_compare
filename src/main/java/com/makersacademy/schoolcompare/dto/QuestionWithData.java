@@ -13,6 +13,7 @@ public class QuestionWithData {
     private boolean likedByCurrentUser;
     private LocalDateTime lastAnswerTimestamp;
     private List<AnswerWithData> answers;
+    private AnswerWithData bestAnswer;
 
     public QuestionWithData(Question question,
                             String username,
@@ -32,6 +33,8 @@ public class QuestionWithData {
     public boolean isLikedByCurrentUser() { return likedByCurrentUser; }
     public LocalDateTime getLastAnswerTimestamp() { return lastAnswerTimestamp; }
     public List<AnswerWithData> getAnswers() { return answers; }
+    public AnswerWithData getBestAnswer() {return  bestAnswer; }
+
 
     // Extra getters:
     public Long getId() { return question.getId(); }
@@ -47,4 +50,5 @@ public class QuestionWithData {
     public void setLikedByCurrentUser(boolean likedByCurrentUser) { this.likedByCurrentUser = likedByCurrentUser; }
     public void setLastAnswerTimestamp(LocalDateTime lastAnswerTimestamp) { this.lastAnswerTimestamp = lastAnswerTimestamp; }
     public void setAnswers(List<AnswerWithData> answers) { this.answers = answers; }
+    public void setBestAnswer(AnswerWithData bestAnswer) { this.bestAnswer = bestAnswer; }
 }
