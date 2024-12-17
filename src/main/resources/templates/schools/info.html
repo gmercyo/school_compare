@@ -46,6 +46,19 @@
     </table>
   </div>
 
+  <div th:unless="${distanceFromUser}">
+    <table id="catchment-table">
+      <tr>
+        <th>Year</th>
+        <th>Catchment radius (mi.)</th>
+      </tr>
+      <tr th:each="data : ${school.catchmentRadius}">
+        <td th:text="${data.year}"></td>
+        <td th:text="${data.radius}"></td>
+      </tr>
+    </table>
+  </div>
+
   <p th:if="${school.website}" id="school-website">Website: <a th:href="${school.website}" th:text="${school.website}"></a></p>
 
   <div id="nearby-schools">
