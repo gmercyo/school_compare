@@ -13,7 +13,7 @@
     padding: 32px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
 
 .info-name {
@@ -111,8 +111,9 @@
 
 /* FORUM */
 #school-forum {
-    flex-grow: 1;
     background-color: var(--salmon);
+    width: calc(100vw - 624px);
+    box-sizing: border-box;
 }
 
 #forum-container {
