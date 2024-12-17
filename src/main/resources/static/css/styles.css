@@ -33,10 +33,27 @@ h2 {
     font-weight: normal;
 }
 
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
 h4 {
     font-size: 16px;
     font-weight: bold;
     color: var(--dark-text);
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--grey-blue);
+}
+
+h6 {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 a {
@@ -48,12 +65,32 @@ a {
     display: none;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+}
+
 /* TEXT STYLES */
 .text-white {
     color: var(--white);
 }
 .text-salmon {
     color: var(--salmon);
+}
+.text-blue {
+    color: var(--deep-blue);
+}
+.text-inadequate {
+    color: var(--rating-inadequate);
+}
+.text-improvement {
+    color: var(--rating-needs-improvement);
+}
+.text-good {
+    color: var(--rating-good);
+}
+.text-outstanding {
+    color: var(--rating-outstanding);
 }
 
 /* NAVBAR */
@@ -73,6 +110,53 @@ a {
 .nav-spacer {
     height: 104px;
     width: 100vw;
+}
+
+.menu-button {
+    height: 72px;
+    width: 72px;
+    position: relative;
+    background-color: var(--white);
+    border-radius: 8px;
+    padding: 16px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu-button > i {
+    color: var(--grey-blue);
+    font-size: 48px;
+}
+
+#menu-options {
+    position: absolute;
+    top: 96px;
+    right: -40px;
+    margin: 0;
+    padding: 0;
+}
+
+#menu-options > li {
+    width: 200px;
+    list-style: none;
+    background-color: var(--parchment);
+    border: solid var(--dark-text);
+    border-width: 0 1px 1px;
+}
+
+#menu-options > li:first-child {
+    border-width: 1px;
+}
+
+#menu-options a {
+    display: block;
+    padding: 8px;
+}
+
+#menu-options > li:hover {
+    background-color: var(--salmon);
 }
 
 .Banner {

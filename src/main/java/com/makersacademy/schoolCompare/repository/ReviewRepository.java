@@ -34,7 +34,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     List<ReviewWithData> findReviewsByRecent(@Param("schoolId") Long schoolId, @Param("currentUser") Long currentUser);
 
     @Query("SELECT new com.makersacademy.schoolcompare.dto.ReviewWithData(" +
-            "r, u.username, (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE ru.reviewId = r.id), " +
+            "r, u.username, (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE rruu.reviewId = r.id), " +
             "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END) " +
             "FROM School s " +
             "JOIN Review r ON r.schoolId = s.id " +
