@@ -18,7 +18,7 @@ body {
     font-family: 'Inter', sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
 }
@@ -33,9 +33,23 @@ h2 {
     font-weight: normal;
 }
 
+h4 {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
+a {
+    text-decoration: none;
+    color: unset;
+}
+
 /* TEXT STYLES */
 .text-white {
     color: var(--white);
+}
+.text-salmon {
+    color: var(--salmon);
 }
 
 /* NAVBAR */
@@ -59,10 +73,6 @@ h2 {
 
 .Banner {
     border: solid black 2px;
-}
-
-ul {
-    padding: 0;
 }
 
 /* MAP */
@@ -100,9 +110,9 @@ ul {
     flex-grow: 1;
 }
 
-.container {
+#map-container {
     width: 100vw;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 104px);
     margin: 0;
     position: relative;
 }

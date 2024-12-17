@@ -1,1 +1,0 @@
-ALTER TABLE answers ADD COLUMN role VARCHAR(255);
