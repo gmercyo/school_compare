@@ -4,18 +4,21 @@
     <p th:text="${topReview.review.content}"></p>
   </div>
 
-  <table>
-    <tr>
-      <th>Year</th>
-      <th>Catchment radius (mi.)</th>
-      <th>Within catchment?</th>
-    </tr>
-    <tr th:each="data : ${school.catchmentRadius}">
-      <td th:text="${data.year}"></td>
-      <td th:text="${data.radius}"></td>
-      <td></td>
-    </tr>
-  </table>
+  <div th:if="${distanceFromUser}">
+    <p>Distance: <span th:text="${#numbers.formatDecimal(distanceFromUser, 1, 4)}"></span> mi.</p>
+    <table>
+      <tr>
+        <th>Year</th>
+        <th>Catchment radius (mi.)</th>
+        <th>Within catchment?</th>
+      </tr>
+      <tr th:each="data : ${school.catchmentRadius}">
+        <td th:text="${data.year}"></td>
+        <td th:text="${data.radius}"></td>
+        <td th:text="${distanceFromUser <= data.radius ? 'yes' : 'no'}"></td>
+      </tr>
+    </table>
+  </div>
 
   <div id="nearby-schools">
     <div class="nearby-school" th:each="nearbySchool : ${nearbySchools}">

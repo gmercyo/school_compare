@@ -7,11 +7,9 @@ import com.makersacademy.schoolcompare.dto.ReviewWithData;
 import com.makersacademy.schoolcompare.model.Answer;
 import com.makersacademy.schoolcompare.model.Question;
 import com.makersacademy.schoolcompare.model.School;
+import com.makersacademy.schoolcompare.model.User;
 import com.makersacademy.schoolcompare.pojo.CalculateDistance;
-import com.makersacademy.schoolcompare.repository.AnswerRepository;
-import com.makersacademy.schoolcompare.repository.QuestionRepository;
-import com.makersacademy.schoolcompare.repository.ReviewRepository;
-import com.makersacademy.schoolcompare.repository.SchoolRepository;
+import com.makersacademy.schoolcompare.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,6 +33,8 @@ public class SchoolsController {
     AnswerRepository answerRepository;
     @Autowired
     ReviewRepository reviewRepository;
+    @Autowired
+    UserRepository userRepository;
 
     private List<NearbySchool> getNearbySchools(School school) {
         List<School> schoolsOfType = repository.findByType(school.getType());
@@ -69,6 +69,15 @@ public class SchoolsController {
         });
     }
 
+    private double getDistanceFromUser(School school, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return CalculateDistance.fromLatLng(
+                user.getLatitude(),
+                user.getLongitude(),
+                school.getLatitude(),
+                school.getLongitude());
+    }
+
     @GetMapping("schools/{id}")
     public ModelAndView showSchoolInfo(
             @PathVariable("id") Long id,
@@ -86,6 +95,7 @@ public class SchoolsController {
         model.addObject("nearbySchools", getNearbySchools(school));
         model.addObject("topReview", topReview);
 
+        if (currentUser != null) model.addObject("distanceFromUser", getDistanceFromUser(school, currentUser));
 
         if (view.equals("questions")) {
             List<QuestionWithData> questions = questionRepository.findQuestionsBySchoolId(school.getId(), currentUser);
