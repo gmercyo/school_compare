@@ -9,12 +9,13 @@ public class TimeAgo {
     public static String calculate(LocalDateTime momentInThePast) {
         Duration duration = Duration.between(momentInThePast, LocalDateTime.now());
         long minutes = duration.toMinutes();
+        long days = duration.toDays();
 
         if (minutes < 1) {
             return "just now";
         } else if (minutes < 60) {
             return minutes + "m ago";
-        } else if (minutes < 1440) {
+        } else if (minutes < 1440) { // less than 24h ago
             return (minutes / 60) + "h ago";
         } else if (minutes < 2880) {
             return "yesterday";
