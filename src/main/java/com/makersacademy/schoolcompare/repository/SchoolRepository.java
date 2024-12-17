@@ -1,6 +1,5 @@
 package com.makersacademy.schoolcompare.repository;
 
-import com.makersacademy.schoolcompare.dto.NearbySchool;
 import com.makersacademy.schoolcompare.model.School;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
