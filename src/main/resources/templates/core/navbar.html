@@ -22,9 +22,21 @@
     <div class="nav-spacer"></div>
 
     <script>
+        const menu = document.getElementById('menu-options');
+
+        function closeMenu() {
+            menu.classList.add('hidden');
+            document.removeEventListener('click', closeMenu);
+        }
+
         function toggleMenu() {
-            const menu = document.getElementById('menu-options');
-            menu.classList.toggle('hidden');
+            event.stopPropagation();
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                document.addEventListener('click', closeMenu);
+            } else {
+                closeMenu();
+            }
         }
     </script>
 </div>
