@@ -33,10 +33,27 @@ h2 {
     font-weight: normal;
 }
 
+h3 {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--dark-text);
+}
+
 h4 {
     font-size: 16px;
     font-weight: bold;
     color: var(--dark-text);
+}
+
+h5 {
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--grey-blue);
+}
+
+h6 {
+    font-size: 14px;
+    font-weight: normal;
 }
 
 a {
@@ -48,12 +65,32 @@ a {
     display: none;
 }
 
+.flex {
+    display: flex;
+    align-items: center;
+}
+
 /* TEXT STYLES */
 .text-white {
     color: var(--white);
 }
 .text-salmon {
     color: var(--salmon);
+}
+.text-blue {
+    color: var(--deep-blue);
+}
+.text-inadequate {
+    color: var(--rating-inadequate);
+}
+.text-improvement {
+    color: var(--rating-needs-improvement);
+}
+.text-good {
+    color: var(--rating-good);
+}
+.text-outstanding {
+    color: var(--rating-outstanding);
 }
 
 /* NAVBAR */
