@@ -1,0 +1,5 @@
+<div class="card review-card">
+  <p th:text="${review.username} + ' (' + ${review.role} + ') · ' + ${review.timeAgo}"></p>
+  <p th:text="${review.content}"></p>
+  <p th:text="'upvotes: ' + ${review.upvotes}"></p>
+</div>
