@@ -39,9 +39,9 @@
       </tr>
       <tr th:each="data : ${school.catchmentRadius}">
         <td th:text="${data.year}"></td>
-        <td th:text="${data.radius}"></td>
-        <td th:if="${distanceFromUser <= data.radius}" class="text-outstanding">yes</td>
-        <td th:unless="${distanceFromUser <= data.radius}" class="text-inadequate">no</td>
+        <td th:text="${data.radius < 0 ? 'n/a' : data.radius}"></td>
+        <td th:if="${distanceFromUser <= data.radius || data.radius < 0}" class="text-outstanding">yes</td>
+        <td th:unless="${distanceFromUser <= data.radius || data.radius < 0}" class="text-inadequate">no</td>
       </tr>
     </table>
   </div>
@@ -54,7 +54,7 @@
       </tr>
       <tr th:each="data : ${school.catchmentRadius}">
         <td th:text="${data.year}"></td>
-        <td th:text="${data.radius}"></td>
+        <td th:text="${data.radius < 0 ? 'n/a' : data.radius}"></td>
       </tr>
     </table>
   </div>
