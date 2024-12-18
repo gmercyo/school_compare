@@ -8,20 +8,22 @@ import com.makersacademy.schoolcompare.model.Answer;
 import com.makersacademy.schoolcompare.model.Question;
 import com.makersacademy.schoolcompare.model.School;
 import com.makersacademy.schoolcompare.model.QuestionLike;
+import com.makersacademy.schoolcompare.model.User;
 import com.makersacademy.schoolcompare.pojo.CalculateDistance;
+import com.makersacademy.schoolcompare.repository.*;
 import com.makersacademy.schoolcompare.pojo.FilterCriteria;
 import com.makersacademy.schoolcompare.pojo.TimeAgo;
-import com.makersacademy.schoolcompare.repository.UserRepository;
 import com.makersacademy.schoolcompare.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.servlet.ModelAndView;
+import com.makersacademy.schoolcompare.pojo.FilterCriteria;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -74,6 +76,15 @@ public class SchoolsController {
         });
     }
 
+    private double getDistanceFromUser(School school, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow();
+        return CalculateDistance.fromLatLng(
+                user.getLatitude(),
+                user.getLongitude(),
+                school.getLatitude(),
+                school.getLongitude());
+    }
+
     @GetMapping("schools/{id}")
     public ModelAndView showSchoolInfo(
             @PathVariable("id") Long id,
@@ -98,6 +109,7 @@ public class SchoolsController {
         model.addObject("nearbySchools", getNearbySchools(school));
         model.addObject("topReview", topReview);
 
+        if (currentUser != null) model.addObject("distanceFromUser", getDistanceFromUser(school, currentUser));
 
         if (view.equals("questions")) {
             List<QuestionWithData> questions = questionRepository.findQuestionsBySchoolId(school.getId(), currentUser);

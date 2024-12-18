@@ -66,21 +66,69 @@
             </form>
         </div>
     </div>
+    <div th:if="${currentUser}"
+         id="user-properties"
+         class="hidden"
+         th:data-user-id="${currentUser.id}"
+         th:data-latitude="${currentUser.latitude}"
+         th:data-longitude="${currentUser.longitude}"></div>
     <script>
         const protocol = window.location.protocol;
         const root = window.location.host;
+        const user = document.getElementById('user-properties');
         const filterOptions = document.getElementById('filter-options');
+
+        const defaultCoordinates = [-0.118092, 51.509865]; // London
 
         let map = null;
         let schoolMarkers = [];
 
-        function fetchCoordinatesFromBrowser() {
-            const defaultCoordinates = [-0.118092, 51.509865]; // London
+        function getSavedCoordinates() {
+            if (!user) {
+                console.log('Unable to load saved coordinates: user not logged in');
+                return null;
+            } else {
+                const userLongitude = user.dataset.longitude;
+                const userLatitude = user.dataset.latitude;
+                return (userLongitude && userLatitude) ? [userLongitude, userLatitude] : null;
+            }
+        }
 
+        function updateGeodata(address, latitude, longitude) {
+            if (!user) {
+                console.log('Unable to update geodata: user not logged in');
+                return;
+            }
+            const userId = user.dataset.userId
+            fetch(`${protocol}//${root}/users/geodata`, {
+                method: 'PATCH',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "address": address,
+                    "latitude": latitude,
+                    "longitude": longitude
+                })
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => {throw new Error(err.message || "Server error")});
+                } else {
+                    console.log('User geodata updated');
+                }
+            })
+            .catch(error => {
+                console.error('Error updating geodata:', error);
+            });
+        }
+
+        function fetchCoordinatesFromBrowser() {
             return new Promise((resolve, reject) => {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
+                            updateGeodata(null, position.coords.latitude, position.coords.longitude);
                             resolve([
                                 position.coords.longitude,
                                 position.coords.latitude
@@ -126,7 +174,7 @@
 
         async function initializeMap() {
             mapboxgl.accessToken = document.getElementById('map').dataset.mapboxToken;
-            const coordinates = await fetchCoordinatesFromBrowser();
+            const coordinates = getSavedCoordinates() ?? await fetchCoordinatesFromBrowser();
 
             const map = new mapboxgl.Map({
                 container: 'map',
@@ -154,7 +202,9 @@
             map.addControl(geocoder);
 
             geocoder.on('result', (event) => {
+                const newAddress = event.result.place_name;
                 const newCoordinates = event.result.geometry.coordinates;
+                updateGeodata(newAddress, newCoordinates[1], newCoordinates[0]);
                 homeMarker.setLngLat(newCoordinates);
 
                 map.flyTo({

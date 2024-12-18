@@ -6,7 +6,37 @@
                 <h2>Where to <strong>learn</strong> about <strong>schools</strong></h2>
             </a>
         </div>
-        <div class="menu-button"></div>
+        <div onclick="toggleMenu()" class="menu-button">
+            <i class="fa-solid fa-bars"></i>
+            <ul sec:authorize="isAuthenticated()" id="menu-options" class="menu-links hidden">
+                <li><a href="#"><span sec:authentication="principal.attributes['nickname']"></span></a></li>
+                <li><a href="/">Find schools</a></li>
+                <li><a href="/logout">Log Out</a></li>
+            </ul>
+            <ul th:unless="${#authorization.expression('isAuthenticated()')}" id="menu-options" class="menu-links hidden">
+                <li><a href="/oauth2/authorization/okta">Log In / Sign Up</a></li>
+                <li><a href="/">Find schools</a></li>
+            </ul>
+        </div>
     </nav>
     <div class="nav-spacer"></div>
+
+    <script>
+        const menu = document.getElementById('menu-options');
+
+        function closeMenu() {
+            menu.classList.add('hidden');
+            document.removeEventListener('click', closeMenu);
+        }
+
+        function toggleMenu() {
+            event.stopPropagation();
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                document.addEventListener('click', closeMenu);
+            } else {
+                closeMenu();
+            }
+        }
+    </script>
 </div>
