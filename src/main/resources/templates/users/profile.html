@@ -1,66 +1,54 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-  <meta charset="UTF-8">
-  <title>User Profile</title>
-  <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-    }
-    h1, h2 {
-        color: #333;
-    }
-    .section {
-        margin-bottom: 30px;
-    }
-    .school, .review {
-        border: 1px solid #ddd;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-    .school h3, .review h3 {
-        margin: 0;
-        font-size: 1.2em;
-    }
-    .school p, .review p {
-        font-size: 1em;
-    }
-  </style>
+  <!-- Reuse the head block from core/head -->
+  <th:block th:replace="~{core/head :: head}"></th:block>
+
+  <!-- Include your custom stylesheet for profile styling -->
+  <link rel="stylesheet" href="/css/profile.css" />
 </head>
 <body>
+<!-- Reuse the navbar block from core/navbar -->
+<nav th:replace="~{core/navbar :: div}"></nav>
 
-<h1>User Profile</h1>
+<div class="page-body">
+  <!-- Card 1: User Profile Information -->
+  <div class="card">
+    <h2>User Profile</h2>
+    <div class="card-body">
+      <p><strong>Username:</strong> <span th:text="${profileUser.username}">Username</span></p>
+      <p><strong>Email:</strong> <span th:text="${profileUser.address}">Address</span></p>
+    </div>
+  </div>
 
-<!-- Display Username -->
-<div class="section">
-  <h2>Username: <span th:text="${profileUser.username}">Username</span></h2>
+  <!-- Card 2: Saved Schools -->
+  <div class="card">
+    <h2>Saved Schools</h2>
+    <div class="card-body">
+      <div th:if="${savedSchools.isEmpty()}">
+        <p>No saved schools found.</p>
+      </div>
+      <div th:each="school : ${savedSchools}" class="school">
+        <h3 th:text="${school.name}">School Name</h3>
+        <p th:text="${school.description}">School Description</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card 3: Reviews -->
+  <div class="card">
+    <h2>Your Reviews</h2>
+    <div class="card-body">
+      <div th:if="${userReviews.isEmpty()}">
+        <p>No reviews found.</p>
+      </div>
+      <div th:each="review : ${userReviews}" class="review">
+        <h3 th:text="${review.title}">Review Title</h3>
+        <p th:text="${review.content}">Review Content</p>
+        <p><strong>Rating:</strong> <span th:text="${review.rating}">Rating</span></p>
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- Display Saved Schools -->
-<div class="section">
-  <h2>Saved Schools</h2>
-  <div th:if="${savedSchools.isEmpty()}">
-    <p>No saved schools found.</p>
-  </div>
-  <div th:each="school : ${savedSchools}" class="school">
-    <h3 th:text="${school.name}">School Name</h3>
-    <p th:text="${school.description}">School Description</p>
-  </div>
-</div>
-
-<!-- Display Reviews -->
-<div class="section">
-  <h2>Reviews</h2>
-  <div th:if="${userReviews.isEmpty()}">
-    <p>No reviews found.</p>
-  </div>
-  <div th:each="review : ${userReviews}" class="review">
-    <h3 th:text="${review.title}">Review Title</h3>
-    <p th:text="${review.content}">Review Content</p>
-    <p><strong>Rating:</strong> <span th:text="${review.rating}">Rating</span></p>
-  </div>
-</div>
-
 </body>
 </html>
