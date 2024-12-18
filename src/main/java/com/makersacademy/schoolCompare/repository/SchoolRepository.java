@@ -38,7 +38,12 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
     List<School> findByLatitudeBetweenAndLongitudeBetween(
             BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong);
 
-    List<School> findBySavedByUsers_Id(Long userId);
+    @Query("SELECT s FROM School s JOIN s.savedByUsers u WHERE u.id = :userId")
+    List<School> findBySavedByUsers_Id(@Param("userId") Long userId);
+
+
+
+
 
 }
 

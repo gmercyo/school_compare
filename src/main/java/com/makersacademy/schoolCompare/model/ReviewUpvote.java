@@ -1,29 +1,44 @@
 package com.makersacademy.schoolcompare.model;
 
-import com.makersacademy.schoolcompare.pojo.ReviewUpvoteId;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name="REVIEW_UPVOTES")
-@IdClass(ReviewUpvoteId.class)
+@Table(name = "REVIEW_UPVOTES")
 public class ReviewUpvote {
-    @Id
-    @JoinColumn(name = "user_id")
-    private Long userId;
-    @Id
-    @JoinColumn(name = "review_id")
-    private Long reviewId;
 
-    public ReviewUpvote(Long userId, Long reviewId) {
-        this.userId = userId;
-        this.reviewId = reviewId;
-    }
+    @Id  // Part of the composite primary key
+    @ManyToOne
+    @JoinColumn(name = "review_id", referencedColumnName = "id", nullable = false)
+    private Review review;
 
+    @Id  // Part of the composite primary key
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    private User user;
+
+    // Default constructor
     public ReviewUpvote() {}
 
-    public Long getUserId() { return userId; }
-    public Long getReviewId() { return reviewId; }
+    // Constructor with review and user
+    public ReviewUpvote(Review review, User user) {
+        this.review = review;
+        this.user = user;
+    }
 
-    public void setUserId(Long userId) { this.userId = userId; }
-    public void setReviewId(Long reviewId) { this.reviewId = reviewId; }
+    // Getters and setters
+    public Review getReview() {
+        return review;
+    }
+
+    public void setReview(Review review) {
+        this.review = review;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

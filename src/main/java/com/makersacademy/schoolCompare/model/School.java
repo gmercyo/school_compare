@@ -53,13 +53,20 @@ public final class School {
     @Column
     private String website;
 
-    @ManyToMany(mappedBy = "savedSchools") // Matches User.savedSchools
-    private List<User> savedByUsers = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = "school_likes", // Table name
+            joinColumns = @JoinColumn(name = "school_id"), // Column for School ID
+            inverseJoinColumns = @JoinColumn(name = "user_id") // Column for User ID
+    )
+    private List<User> savedByUsers;
 
-    // Getters and Setters
-    public List<User> getSavedByUsers() {
-        return savedByUsers;
-    }
+    // One-to-many relationship with Review
+    @OneToMany(mappedBy = "school", fetch = FetchType.LAZY)
+    private List<Review> reviews;
+
+
+
 
     public void setSavedByUsers(List<User> savedByUsers) {
         this.savedByUsers = savedByUsers;

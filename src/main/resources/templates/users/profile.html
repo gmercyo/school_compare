@@ -1,53 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+  <meta charset="UTF-8">
   <title>User Profile</title>
-  <link rel="stylesheet" href="/css/styles.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+    }
+    h1, h2 {
+        color: #333;
+    }
+    .section {
+        margin-bottom: 30px;
+    }
+    .school, .review {
+        border: 1px solid #ddd;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+    .school h3, .review h3 {
+        margin: 0;
+        font-size: 1.2em;
+    }
+    .school p, .review p {
+        font-size: 1em;
+    }
+  </style>
 </head>
 <body>
-<header>
-  <h1>User Profile</h1>
-</header>
-<main>
-  <!-- Part 1: User Information -->
-  <section id="user-info">
-    <h2>Your Information</h2>
-    <p>Username: <span th:text="${profileUser}"></span></p>
-  </section>
 
-  <!-- Part 2: Saved Schools -->
-  <section id="saved-schools">
-    <h2>Saved Schools</h2>
-    <ul>
-      <li th:each="school : ${profileUser.savedSchools}">
-        <span th:text="${school.name}">Example School</span>
-        <p>Location: <span th:text="${school.address}">New York, NY</span></p>
-      </li>
-    </ul>
-    <div th:if="${profileUser.savedSchools?.isEmpty()}">
-      <p>You haven't saved any schools yet.</p>
-    </div>
-  </section>
+<h1>User Profile</h1>
 
-  <!-- Part 3: Submitted Reviews -->
-  <section id="reviews">
-    <h2>Your Reviews</h2>
-    <ul>
-      <li th:each="review : ${profileUser.orElse(null)?.reviews}">
-        <h3 th:text="${review.schoolName}">Example School</h3>
-        <p>Rating: <span th:text="${review.rating}">5</span>/5</p>
-        <p>Comment: <span th:text="${review.comment}">Great school!</span></p>
-        <p>Submitted on: <span th:text="${review.submittedDate}">2024-01-01</span></p>
-      </li>
-    </ul>
-    <div th:if="${profileUser.reviews?.isEmpty()}">
-      <p>You haven't submitted any reviews yet.</p>
-    </div>
-  </section>
-</main>
+<!-- Display Username -->
+<div class="section">
+  <h2>Username: <span th:text="${profileUser.username}">Username</span></h2>
+</div>
 
-<footer>
-  <a href="/">Back to Home</a>
-</footer>
+<!-- Display Saved Schools -->
+<div class="section">
+  <h2>Saved Schools</h2>
+  <div th:if="${savedSchools.isEmpty()}">
+    <p>No saved schools found.</p>
+  </div>
+  <div th:each="school : ${savedSchools}" class="school">
+    <h3 th:text="${school.name}">School Name</h3>
+    <p th:text="${school.description}">School Description</p>
+  </div>
+</div>
+
+<!-- Display Reviews -->
+<div class="section">
+  <h2>Reviews</h2>
+  <div th:if="${userReviews.isEmpty()}">
+    <p>No reviews found.</p>
+  </div>
+  <div th:each="review : ${userReviews}" class="review">
+    <h3 th:text="${review.title}">Review Title</h3>
+    <p th:text="${review.content}">Review Content</p>
+    <p><strong>Rating:</strong> <span th:text="${review.rating}">Rating</span></p>
+  </div>
+</div>
+
 </body>
 </html>
