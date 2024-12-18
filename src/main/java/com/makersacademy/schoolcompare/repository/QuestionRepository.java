@@ -14,6 +14,7 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
     @Query("SELECT new com.makersacademy.schoolcompare.dto.QuestionWithData(" +
             "q.id, q, u.username, q.content, " +
             "(SELECT COUNT(l) FROM QuestionLike l WHERE l.questionId = q.id), " +
+            "(SELECT COUNT(a.id) FROM Answer a WHERE a.questionId = q.id), " +
             "(SELECT MAX(a.createdAt) FROM Answer a WHERE a.questionId = q.id), " + // Fetch latest answer timestamp
             "CASE WHEN EXISTS (SELECT 1 FROM QuestionLike l WHERE l.questionId = q.id AND l.userId = :currentUser) " +
             "THEN true ELSE false END) " +
