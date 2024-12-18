@@ -37,7 +37,7 @@ public class QuestionsController {
     }
 
     @PostMapping("/questions")
-    public RedirectView create(@ModelAttribute Question question) {
+    public RedirectView create(@ModelAttribute Question question, HttpSession session) {
         question.setCreatedAt(LocalDateTime.now());
         repository.save(question);
         return new RedirectView("/schools/" + question.getSchoolId() );

@@ -1,0 +1,10 @@
+<div class="card answer-preview-card">
+    <p>Best answer (most upvotes):</p>
+    <p>
+        <span th:text="${answer.username} + ' · '"></span>
+        <span th:text="${answer.role} + ' · '"></span>
+        <span th:text="${answer.timeAgo}"></span>
+    </p>
+    <p th:text="${answer.content}"></p>
+    <p>Upvotes: <span th:text="${answer.upvotes}"></span></p>
+</div>

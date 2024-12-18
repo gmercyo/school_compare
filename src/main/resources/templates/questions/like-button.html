@@ -1,0 +1,7 @@
+<div th:fragment="like-button">
+    <form th:action="'/schools/' + ${school.id} + '/likes/' + ${question.id}" method="post">
+        <button type="submit" class="like-button"
+                th:text="${question.likedByCurrentUser ? 'Unlike' : 'Like'}">
+        </button>
+    </form>
+</div>

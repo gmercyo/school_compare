@@ -1,18 +1,10 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" >
-<head th:replace="~{core/head :: head}"></head>
-
-<body>
-    <form th:action="@{/questions}" th:object="${question}" method="POST">
-        <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
-        <input type="hidden" th:attr="name='userId'" th:value="${userId}">
-        <input type="hidden" th:attr="name='createdAt'" th:value="${null}">
-        <input type="text"
-               th:field="*{content}"
-               th:placeholder="'Ask a question about ' + ${school.name} + '...'"
-        />
-        <input type="submit" value="submit" />
-    </form>
-</body>
-</html>
+<form th:action="@{/questions}" th:object="${newQuestion}" method="POST">
+    <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
+    <input type="hidden" th:attr="name='userId'" th:value="${userId}">
+    <input type="hidden" th:attr="name='createdAt'" th:value="${null}">
+    <input type="text"
+        th:field="*{content}"
+        th:placeholder="'Ask a question about ' + ${school.name} + '...'"
+    />
+    <input type="submit" value="submit" />
+</form>
