@@ -43,9 +43,10 @@
         <p>No reviews found.</p>
       </div>
       <div th:each="review : ${userReviews}" class="review">
-        <h3 th:text="${review.title}">Review Title</h3>
+        <p th:text="${review.school}">Review School</p>
         <p th:text="${review.content}">Review Content</p>
-        <p><strong>Rating:</strong> <span th:text="${review.rating}">Rating</span></p>
+        <p th:text="${review.role}">Reviewer's Role</p>
+        <p><strong>Created:</strong> <span th:text="${review.createdAt}">Rating</span></p>
       </div>
     </div>
   </div>
