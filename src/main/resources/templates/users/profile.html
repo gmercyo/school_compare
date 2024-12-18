@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>User Profile</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+<header>
+  <h1>User Profile</h1>
+</header>
+<main>
+  <!-- Part 1: User Information -->
+  <section id="user-info">
+    <h2>Your Information</h2>
+    <p>Username: <span th:text="${profileUser}"></span></p>
+  </section>
+
+  <!-- Part 2: Saved Schools -->
+  <section id="saved-schools">
+    <h2>Saved Schools</h2>
+    <ul>
+      <li th:each="school : ${profileUser.savedSchools}">
+        <span th:text="${school.name}">Example School</span>
+        <p>Location: <span th:text="${school.address}">New York, NY</span></p>
+      </li>
+    </ul>
+    <div th:if="${profileUser.savedSchools?.isEmpty()}">
+      <p>You haven't saved any schools yet.</p>
+    </div>
+  </section>
+
+  <!-- Part 3: Submitted Reviews -->
+  <section id="reviews">
+    <h2>Your Reviews</h2>
+    <ul>
+      <li th:each="review : ${profileUser.orElse(null)?.reviews}">
+        <h3 th:text="${review.schoolName}">Example School</h3>
+        <p>Rating: <span th:text="${review.rating}">5</span>/5</p>
+        <p>Comment: <span th:text="${review.comment}">Great school!</span></p>
+        <p>Submitted on: <span th:text="${review.submittedDate}">2024-01-01</span></p>
+      </li>
+    </ul>
+    <div th:if="${profileUser.reviews?.isEmpty()}">
+      <p>You haven't submitted any reviews yet.</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <a href="/">Back to Home</a>
+</footer>
+</body>
+</html>

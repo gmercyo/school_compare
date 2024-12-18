@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -51,6 +52,18 @@ public final class School {
 
     @Column
     private String website;
+
+    @ManyToMany(mappedBy = "savedSchools") // Matches User.savedSchools
+    private List<User> savedByUsers = new ArrayList<>();
+
+    // Getters and Setters
+    public List<User> getSavedByUsers() {
+        return savedByUsers;
+    }
+
+    public void setSavedByUsers(List<User> savedByUsers) {
+        this.savedByUsers = savedByUsers;
+    }
 
     // Constructors
     public School() {}

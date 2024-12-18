@@ -44,4 +44,6 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
             "ORDER BY (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE rruu.reviewId = r.id) DESC " +
             "LIMIT 1")
     ReviewWithData findTopReview(@Param("schoolId") Long schoolId, @Param("currentUser") Long currentUser);
+
+    List<Review> findByUserId(Long userId);
 }

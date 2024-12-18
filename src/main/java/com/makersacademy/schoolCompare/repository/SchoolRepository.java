@@ -37,5 +37,8 @@ public interface SchoolRepository extends CrudRepository<School, Long> {
 
     List<School> findByLatitudeBetweenAndLongitudeBetween(
             BigDecimal minLat, BigDecimal maxLat, BigDecimal minLong, BigDecimal maxLong);
+
+    List<School> findBySavedByUsers_Id(Long userId);
+
 }
 

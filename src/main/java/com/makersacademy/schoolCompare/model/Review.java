@@ -16,6 +16,7 @@ public class Review {
     private String content;
     private LocalDateTime createdAt;
 
+
     public Review(Long schoolId, Long userId, String role, String content, LocalDateTime createdAt) {
         this.schoolId = schoolId;
         this.userId = userId;

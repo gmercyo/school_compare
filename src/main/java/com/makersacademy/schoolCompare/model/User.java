@@ -3,6 +3,8 @@ package com.makersacademy.schoolcompare.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.Boolean.TRUE;
 
@@ -18,6 +20,24 @@ public class User {
     private String address;
     private BigDecimal latitude;
     private BigDecimal longitude;
+
+    @ManyToMany
+    @JoinTable(
+            name = "school_likes",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "school_id")
+    )
+    private List<School> savedSchools = new ArrayList<>();
+
+    // Getters and Setters
+    public List<School> getSavedSchools() {
+        return savedSchools;
+    }
+
+    public void setSavedSchools(List<School> savedSchools) {
+        this.savedSchools = savedSchools;
+    }
+
 
     public User(String username, String auth0Id, String address, BigDecimal latitude, BigDecimal longitude) {
         this.username = username;
