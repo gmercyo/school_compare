@@ -85,7 +85,7 @@
         let homeCoordinates = defaultCoordinates;
 
         let map = null;
-        let schoolMarkers = [];
+        const schoolMarkers = [];
 
         function updateHomeCoordinates(newCoordinates) {
             homeCoordinates = newCoordinates;
@@ -190,6 +190,18 @@
             map.setPaintProperty(source, 'fill-outline-color', color);
         }
 
+        function addHoverListenerToMarker(marker, source) {
+            const markerElement = marker.getElement();
+
+            markerElement.addEventListener('mouseenter', () => {
+                map.setLayoutProperty(source, 'visibility', 'visible');
+            });
+
+            markerElement.addEventListener('mouseleave', () => {
+                map.setLayoutProperty(source, 'visibility', 'none');
+            });
+        }
+
         function addMarkerRadius(map, marker, radius, offerRatio, schoolId) {
             const center = marker.getLngLat().toArray();
             const options = {steps: 64, units: 'miles', properties: {}};
@@ -214,16 +226,7 @@
             });
 
             map.setLayoutProperty(source, 'visibility', 'none'); // Hide the circle by default
-
-            const markerElement = marker.getElement();
-
-            markerElement.addEventListener('mouseenter', () => {
-                map.setLayoutProperty(source, 'visibility', 'visible');
-            });
-
-            markerElement.addEventListener('mouseleave', () => {
-                map.setLayoutProperty(source, 'visibility', 'none');
-            });
+            addHoverListenerToMarker(marker, source);
         }
 
         function getFilterCriteria() {
@@ -314,7 +317,6 @@
             const filterCriteria = getFilterCriteria();
 
             schoolMarkers.forEach(marker => marker.remove());
-            schoolMarkers = [];
             const radii = [];
 
             fetch(`${protocol}//${root}/schools/api`, {
@@ -347,12 +349,20 @@
                     }
                 });
 
-                map.on('load', () => {
+                if (map.loaded()) {
                     radii.forEach(radius => {
                         const [marker, avgRadius, offerRatio, schoolId] = radius;
-                        addMarkerRadius(map, marker, avgRadius, offerRatio, schoolId);
+                        const source = `marker-radius-${schoolId}`;
+                        addHoverListenerToMarker(marker, source);
                     });
-                });
+                } else {
+                    map.on('load', () => {
+                        radii.forEach(radius => {
+                            const [marker, avgRadius, offerRatio, schoolId] = radius;
+                            addMarkerRadius(map, marker, avgRadius, offerRatio, schoolId);
+                        });
+                    });
+                }
             });
         }
 
