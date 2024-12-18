@@ -70,16 +70,21 @@ public class UsersController {
         }
     }
 
-    @GetMapping("/profile/{id}")
-    public ModelAndView userProfile(@PathVariable Long id, HttpSession session, @AuthenticationPrincipal DefaultOidcUser principal) {
+    @GetMapping("/profile")
+    public ModelAndView userProfile(HttpSession session, @AuthenticationPrincipal DefaultOidcUser principal) {
         ModelAndView modelAndView = new ModelAndView("/users/profile");
 
+        // Get the current user's ID from the session
         Long currentUserId = (Long) session.getAttribute("userId");
-        Optional<User> activeUser = userRepository.findById(currentUserId);
 
-        // Fetch profileUser with savedSchools
-        User profileUser = userRepository.findByIdWithSavedSchools(id)
-                .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+        // Check if the user ID is valid and fetch the user details
+        Optional<User> activeUser = userRepository.findById(currentUserId);
+        if (activeUser.isEmpty()) {
+            throw new IllegalArgumentException("User not found with id: " + currentUserId);
+        }
+
+        // Fetch the active user's profile with saved schools
+        User profileUser = activeUser.get();
 
         // Fetch the username
         String username = profileUser.getUsername();
@@ -99,6 +104,7 @@ public class UsersController {
 
         return modelAndView;
     }
+
 
 }
 
