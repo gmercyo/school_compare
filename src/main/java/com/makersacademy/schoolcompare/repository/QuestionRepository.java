@@ -22,4 +22,6 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
             "JOIN User u ON q.userId = u.id " +
             "WHERE q.schoolId = :schoolId")
     List<QuestionWithData> findQuestionsBySchoolId(@Param("schoolId") Long schoolId, @Param("currentUser") Long currentUser);
+    @Query("SELECT q.schoolId FROM Question q WHERE q.id = :questionId")
+    Long findSchoolIdByQuestionId(@Param("questionId") Long questionId);
 }
