@@ -13,7 +13,7 @@
     padding: 32px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 24px;
 }
 
 .info-name {
@@ -88,31 +88,15 @@
     gap: 16px;
 }
 
-.nearby-school > a {
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 24px;
-    height: 24px;
-    color: var(--action-red);
-    border: 1px solid var(--action-red);
-}
-
-.nearby-school > a:hover {
-    background-color: var(--white);
-    color: var(--grey-blue);
-    border: 1px solid var(--grey-blue);
-}
-
-.nearby-school > a:hover + div {
+.action-button:hover + div {
     color: var(--grey-blue) !important;
 }
 
 /* FORUM */
 #school-forum {
-    flex-grow: 1;
     background-color: var(--salmon);
+    width: calc(100vw - 624px);
+    box-sizing: border-box;
 }
 
 #forum-container {

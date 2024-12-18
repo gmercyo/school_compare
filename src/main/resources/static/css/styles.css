@@ -36,7 +36,6 @@ h2 {
 h3 {
     font-size: 18px;
     font-weight: bold;
-    color: var(--dark-text);
 }
 
 h4 {
@@ -68,6 +67,23 @@ a {
 .flex {
     display: flex;
     align-items: center;
+}
+
+.action-button {
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    color: var(--action-red);
+    border: 1px solid var(--action-red);
+}
+
+.action-button:hover {
+    background-color: var(--white);
+    color: var(--grey-blue);
+    border: 1px solid var(--grey-blue);
 }
 
 /* TEXT STYLES */
@@ -161,46 +177,4 @@ a {
 
 .Banner {
     border: solid black 2px;
-}
-
-/* MAP */
-#map {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.map-filters {
-    position: absolute;
-    top: 32px;
-    left: 32px;
-    z-index: 5;
-    background-color: white;
-    padding: 16px;
-}
-
-.filter-option {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-    padding: 8px;
-    border: 1px solid black;
-    box-sizing: border-box;
-}
-
-.filter-option label {
-    margin-right: 8px;
-}
-
-.filter-option select {
-    flex-grow: 1;
-}
-
-#map-container {
-    width: 100vw;
-    height: calc(100vh - 104px);
-    margin: 0;
-    position: relative;
 }

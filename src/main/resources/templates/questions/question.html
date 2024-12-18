@@ -1,8 +1,23 @@
 <div class="card question-card">
+    <form sec:authorize="isAuthenticated()" th:replace="~{questions/like-button :: like-button(questionId=${question.id}, likedQuestionIds=${likedQuestionIds})}"></form>
     <p th:text="${question.username} + ' · ' + ${question.timeAgo}"></p>
     <p th:text="${question.content}"></p>
 
-    <div th:if="${question.answers.size() > 0}" class="answers-container">
-        <div th:each="answer: ${question.answers}" th:insert="~{answers/answer :: div}"></div>
+    <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}">
+        <div th:replace="~{answers/best-answer :: div}"></div>
     </div>
+    <div th:if="${question.answers.size() > 1}">
+        <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
+
+        <div th:id="'answers-container-' + ${question.id}" class="answers-container hidden">
+            <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+        </div>
+    </div>
+
+    <script>
+        function toggleAnswers(questionId) {
+            const answersContainer = document.getElementById(`answers-container-${questionId}`);
+            answersContainer.classList.toggle('hidden');
+        }
+    </script>
 </div>

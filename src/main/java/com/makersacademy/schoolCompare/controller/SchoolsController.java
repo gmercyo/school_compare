@@ -94,6 +94,7 @@ public class SchoolsController {
         model.addObject("school", school);
         model.addObject("nearbySchools", getNearbySchools(school));
         model.addObject("topReview", topReview);
+        model.addObject("userId", currentUser);
 
         if (currentUser != null) model.addObject("distanceFromUser", getDistanceFromUser(school, currentUser));
 
@@ -106,6 +107,7 @@ public class SchoolsController {
                 questions.sort(Comparator.comparing(QuestionWithData::getQuestion, Comparator.comparing(Question::getCreatedAt)).reversed());
             }
             model.addObject("questions", questions);
+            model.addObject("newQuestion", new Question());
         } else if (view.equals("reviews")) {
             List<ReviewWithData> reviews = List.of();
 
