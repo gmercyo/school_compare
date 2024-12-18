@@ -13,6 +13,7 @@
     />
     <script src="https://api.mapbox.com/mapbox-gl-js/v3.8.0/mapbox-gl.js"></script>
     <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.1-dev/mapbox-gl-geocoder.min.js"></script>
+    <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
 </head>
 <body>
     <nav th:replace="~{core/navbar :: div}"></nav>
@@ -71,7 +72,9 @@
          class="hidden"
          th:data-user-id="${currentUser.id}"
          th:data-latitude="${currentUser.latitude}"
-         th:data-longitude="${currentUser.longitude}"></div>
+         th:data-longitude="${currentUser.longitude}">
+    </div>
+
     <script>
         const protocol = window.location.protocol;
         const root = window.location.host;
@@ -79,9 +82,15 @@
         const filterOptions = document.getElementById('filter-options');
 
         const defaultCoordinates = [-0.118092, 51.509865]; // London
+        let homeCoordinates = defaultCoordinates;
 
         let map = null;
         let schoolMarkers = [];
+
+        function updateHomeCoordinates(newCoordinates) {
+            homeCoordinates = newCoordinates;
+            updateMarkerColors();
+        }
 
         function getSavedCoordinates() {
             if (!user) {
@@ -90,11 +99,17 @@
             } else {
                 const userLongitude = user.dataset.longitude;
                 const userLatitude = user.dataset.latitude;
-                return (userLongitude && userLatitude) ? [userLongitude, userLatitude] : null;
+                if (userLongitude && userLatitude) {
+                    homeCoordinates = [userLongitude, userLatitude];
+                    return homeCoordinates;
+                } else {
+                    return null;
+                }
             }
         }
 
         function updateGeodata(address, latitude, longitude) {
+            updateHomeCoordinates([longitude, latitude]);
             if (!user) {
                 console.log('Unable to update geodata: user not logged in');
                 return;
@@ -128,11 +143,9 @@
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
+                            homeCoordinates = [position.coords.longitude, position.coords.latitude];
                             updateGeodata(null, position.coords.latitude, position.coords.longitude);
-                            resolve([
-                                position.coords.longitude,
-                                position.coords.latitude
-                            ]);
+                            resolve(homeCoordinates);
                         },
                         (error) => {
                             console.error('User refused to share location:', error);
@@ -142,6 +155,74 @@
                 } else {
                     resolve(defaultCoordinates);
                 }
+            });
+        }
+
+        function parseCatchmentData(catchmentData, distance) {
+            let offerCount = 0;
+            let totalRadius = 0;
+            const defaultRadius = 1; // default to 1 mi. when under-subscribed
+            catchmentData.forEach(element => {
+                totalRadius += element.radius < 0 ? defaultRadius : element.radius;
+                if (element.radius < 0 || distance < element.radius) {
+                    offerCount++;
+                }
+            });
+            return [totalRadius / catchmentData.length, [offerCount, catchmentData.length]];
+        }
+
+        function getMarkerRadiusColor(offerRatio) {
+            const offers = offerRatio[0];
+            const years = offerRatio[1];
+
+            if (offers === years) {
+                return '#006B3D';
+            } else if (offers === 0) {
+                return '#D3212C';
+            } else {
+                return '#FF980E';
+            }
+        }
+
+        function updateLayer(map, source, offerRatio) {
+            const color = getMarkerRadiusColor(offerRatio);
+            map.setPaintProperty(source, 'fill-color', color);
+            map.setPaintProperty(source, 'fill-outline-color', color);
+        }
+
+        function addMarkerRadius(map, marker, radius, offerRatio, schoolId) {
+            const center = marker.getLngLat().toArray();
+            const options = {steps: 64, units: 'miles', properties: {}};
+            const circle = turf.circle(center, radius, options);
+            const color = getMarkerRadiusColor(offerRatio);
+            const source = `marker-radius-${schoolId}`;
+
+            map.addSource(source, {
+                type: 'geojson',
+                data: circle
+            });
+
+            map.addLayer({
+                'id': source,
+                'type': 'fill',
+                'source': source,
+                'paint': {
+                    'fill-color': color, // 25% opacity
+                    'fill-outline-color': color, // 50% opacity
+                    'fill-opacity': 0.25
+                }
+            });
+
+            map.setLayoutProperty(source, 'visibility', 'none'); // Hide the circle by default
+
+            const markerElement = marker.getElement();
+
+            markerElement.addEventListener('mouseenter', () => {
+                map.setLayoutProperty(source, 'visibility', 'visible');
+            });
+
+            markerElement.addEventListener('mouseleave', () => {
+                map.setLayoutProperty(source, 'visibility', 'none');
             });
         }
 
@@ -234,6 +315,7 @@
 
             schoolMarkers.forEach(marker => marker.remove());
             schoolMarkers = [];
+            const radii = [];
 
             fetch(`${protocol}//${root}/schools/api`, {
                 method: 'POST',
@@ -258,6 +340,47 @@
                         .addTo(map);
 
                     schoolMarkers.push(marker);
+                    if (school.catchmentRadius) {
+                        const distance = turf.distance(homeCoordinates, [school.longitude, school.latitude], { units: 'miles' });
+                        const [avgRadius, offerRatio] = parseCatchmentData(school.catchmentRadius, distance);
+                        radii.push([marker, avgRadius, offerRatio, school.id]);
+                    }
+                });
+
+                map.on('load', () => {
+                    radii.forEach(radius => {
+                        const [marker, avgRadius, offerRatio, schoolId] = radius;
+                        addMarkerRadius(map, marker, avgRadius, offerRatio, schoolId);
+                    });
+                });
+            });
+        }
+
+        async function updateMarkerColors() {
+            console.log('updating marker colors...');
+            const filterCriteria = getFilterCriteria();
+            const radii = [];
+
+            fetch(`${protocol}//${root}/schools/api`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(filterCriteria)
+            })
+            .then(response => response.json())
+            .then(schools => {
+                schools.forEach(school => {
+                    if (school.catchmentRadius) {
+                        const distance = turf.distance(homeCoordinates, [school.longitude, school.latitude], { units: 'miles' });
+                        const [avgRadius, offerRatio] = parseCatchmentData(school.catchmentRadius, distance);
+                        radii.push([avgRadius, offerRatio, school.id]);
+                    }
+                });
+                radii.forEach(radius => {
+                    const [avgRadius, offerRatio, schoolId] = radius;
+                    const source = `marker-radius-${schoolId}`;
+                    updateLayer(map, source, offerRatio);
                 });
             });
         }
