@@ -10,6 +10,7 @@ import com.makersacademy.schoolcompare.model.School;
 import com.makersacademy.schoolcompare.model.QuestionLike;
 import com.makersacademy.schoolcompare.pojo.CalculateDistance;
 import com.makersacademy.schoolcompare.pojo.FilterCriteria;
+import com.makersacademy.schoolcompare.pojo.TimeAgo;
 import com.makersacademy.schoolcompare.repository.UserRepository;
 import com.makersacademy.schoolcompare.repository.*;
 import jakarta.servlet.http.HttpSession;
@@ -103,6 +104,10 @@ public class SchoolsController {
             questions.forEach(q -> {
                 AnswerWithData bestAnswer = answerRepository.findBestAnswerByQuestionId(q.getId());
                 q.setBestAnswer(bestAnswer);
+                q.setTimeAgo(TimeAgo.calculate(q.getQuestion().getCreatedAt()));
+                if (q.getAnswers() != null) {
+                    q.getAnswers().forEach(answer -> answer.setTimeAgo(TimeAgo.calculate(answer.getCreatedAt())));
+                }
             });
 
             fetchAnswers(questions, currentUser);
@@ -127,7 +132,6 @@ public class SchoolsController {
                     : reviewRepository.findReviewsByRecent(school.getId(), currentUser);
             model.addObject("reviews", reviews);
         }
-
         return model;
     }
 

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5" xmlns:th="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <link th:href="@{/css/school.css}" rel="stylesheet">
@@ -33,7 +34,12 @@
                 <h3>Question:
                     <a th:href="@{/schools/{schoolId}/questions/{questionId}(schoolId=${question.schoolId}, questionId=${question.id})}" th:text="${question.content}"></a>
                 </h3>
-
+                <form th:action="@{/likes/{questionId}(questionId=${question.id})}" method="post">
+                    <button type="submit" th:text="${likedQuestionIds.contains(question.id) ? 'Unlike' : 'Like'}">
+                        Like
+                    </button>
+                </form>
+            </div>
                 <div th:each="answer : ${answers}" class="answer-card">
                     <p th:text="${answer.content.substring(0, 100)}"></p>
                     <span th:text="${answer.content.length() > 100 ? '...' : ''}"></span>
@@ -41,8 +47,5 @@
                     <span th:text="${answer.username}"></span>
                 </div>
             </div>
-        </div>
-
-
     </body>
 </html>

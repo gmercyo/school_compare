@@ -1,33 +1,29 @@
-<div th:fragment="question-card(question, likedQuestionIds, answer)" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="card question-card">
-        <!-- User and Like Button -->
+<div th:fragment="question-card(question, likedQuestionIds)" class="card question-card" xmlns:th="http://www.w3.org/1999/xhtml">
         <div class="question-header">
             <p>
                 <span th:text="${question.username} + ' asked... '"></span>
             </p>
-            <form th:replace="~{questions/like-button :: like-button(${question.id}, ${likedQuestionIds})}"></form>
+            <form th:replace="~{questions/like-button :: like-button(questionId=${question.id}, likedQuestionIds=${likedQuestionIds})}"></form>
         </div>
 
-        <!-- Question Content -->
         <h3 th:text="${question.content}"></h3>
         <p>
-            <span th:text="${question.likesCount} + ' likes · '"></span>
+            <span th:text="${question.likes} + ' likes · '"></span>
             <span th:text="${question.answerCount} + ' answers · '"></span>
-            <span th:text="${#temporals.format(question.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+            <span th:text="${question.timeAgo}"></span>
         </p>
 
-        <!-- Best Answer Preview -->
         <div th:if="${question.bestAnswer != null}" class="best-answer-preview">
             <p><strong>Best answer (most upvotes):</strong></p>
             <p>
                 <span th:text="${question.bestAnswer.username} + ' · '"></span>
                 <span th:text="${question.bestAnswer.role}"></span>
-                <span th:text="${#temporals.format(question.bestAnswer.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+                <span th:text="${question.bestAnswer.timeAgo}"></span>
             </p>
-            <p th:text="${question.bestAnswer.content.length() > 100
-                ? question.bestAnswer.content.substring(0, 100) + '...'
-                : question.bestAnswer.content}"></p>
-            <p>Upvotes: <span th:text="${question.bestAnswer.upvotesCount}"></span></p>
+            <p th:text="${question.bestAnswer.content != null && question.bestAnswer.content.length() > 100
+            ? question.bestAnswer.content.substring(0, 100) + '...'
+            : question.bestAnswer.content}"></p>
+            <p>Upvotes: <span th:text="${question.bestAnswer.upvotes}"></span></p>
         </div>
 
         <!-- Expand Answers Button -->

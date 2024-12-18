@@ -13,19 +13,21 @@ public class AnswerWithData {
     private String role;
     private Answer answer;
     private String content;
+    private Long upvotes;
     private LocalDateTime createdAt;
     private boolean upvotedByCurrentUser;
 
     public AnswerWithData(Long id, Long userId, String username, String role, Answer answer, String content,
-                          LocalDateTime createdAt, boolean upvotedByCurrentUser) {
+                          LocalDateTime createdAt, Long upvotes, boolean upvotedByCurrentUser) {
         this.id = id;
         this.userId = userId;
         this.username = username;
         this.role = role;
         this.answer = answer;
-        this.upvotedByCurrentUser = upvotedByCurrentUser;
         this.content = content;
         this.createdAt = createdAt;
+        this.upvotes = upvotes;
+        this.upvotedByCurrentUser = upvotedByCurrentUser;
     }
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -43,6 +45,10 @@ public class AnswerWithData {
     public String getContent() { return content; }
     public void setContent(String content) { this.content = content; }
 
+    public String getTimeAgo() { return TimeAgo.calculate(this.createdAt); }
+    public void setTimeAgo(String timeAgo) {
+    }
+
     public LocalDateTime getCreatedAt() { return createdAt; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
 
@@ -53,6 +59,8 @@ public class AnswerWithData {
     public void setQuestionId(Long questionId) { this.questionId = questionId; }
 
     public Answer getAnswer() { return answer; }
-
     public void setAnswer(Answer answer) { this.answer = answer; }
+
+    public Long getUpvotes() { return upvotes; }
+    public void setUpvotes(Long upvotes) { this.upvotes = upvotes; }
 }

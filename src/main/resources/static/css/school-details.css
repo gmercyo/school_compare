@@ -1,5 +1,6 @@
 .page-body {
     display: flex;
+    gap: 16px;
 }
 
 .page-body > div {
@@ -61,4 +62,16 @@
     border-radius: 8px;
     padding: 16px;
     border: 1px solid var(--grey-blue);
+}
+/* LEFT SECTION*/
+.left-section {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.questions-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
