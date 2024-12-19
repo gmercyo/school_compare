@@ -16,7 +16,7 @@ public class ReviewUpvotesController {
     @Autowired
     ReviewUpvoteRepository repository;
 
-    @PostMapping("review-upvotes/{reviewId}")
+    @PostMapping("schools/{schoolId}/review-upvotes/{reviewId}")
     public RedirectView create(@PathVariable Long schoolId, @PathVariable Long reviewId, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         Optional<ReviewUpvote> existingUpvote = repository.findByUserIdAndReviewId(userId, reviewId);

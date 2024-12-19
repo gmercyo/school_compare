@@ -13,7 +13,8 @@ import java.util.List;
 public interface ReviewRepository extends CrudRepository<Review, Long> {
     @Query("SELECT new com.makersacademy.schoolcompare.dto.ReviewWithData(" +
             "r, u.username, (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE rruu.reviewId = r.id), " +
-            "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END) " +
+            "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END, " +
+            "s) " +
             "FROM School s " +
             "JOIN Review r ON r.schoolId = s.id " +
             "JOIN User u ON u.id = r.userId " +
@@ -24,7 +25,8 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
 
     @Query("SELECT new com.makersacademy.schoolcompare.dto.ReviewWithData(" +
             "r, u.username, (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE rruu.reviewId = r.id), " +
-            "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END) " +
+            "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END, " +
+            "s) " +
             "FROM School s " +
             "JOIN Review r ON r.schoolId = s.id " +
             "JOIN User u ON u.id = r.userId " +
@@ -48,7 +50,7 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     @Query("SELECT new com.makersacademy.schoolcompare.dto.ReviewWithData(" +
             "r, u.username, (SELECT COUNT(rruu) FROM ReviewUpvote rruu WHERE rruu.reviewId = r.id), " +
             "CASE WHEN ru.userId IS NOT NULL THEN true ELSE false END, " +
-            "s.name) " +
+            "s) " +
             "FROM School s " +
             "JOIN Review r ON r.schoolId = s.id " +
             "JOIN User u ON u.id = r.userId " +

@@ -69,6 +69,10 @@ a {
     align-items: center;
 }
 
+.border-none {
+    border: none !important;
+}
+
 .action-button {
     border-radius: 50%;
     display: flex;

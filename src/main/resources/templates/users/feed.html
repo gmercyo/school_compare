@@ -30,10 +30,12 @@
 <!--      <div th:each="question: ${questions}" th:insert="~{questions/question :: div}"></div>-->
 <!--    </div>-->
     <div th:if="${view == 'reviews'}" class="questions-container">
-      <p th:text="'reviews count: ' + ${reviews.size()}"></p>
+      <div class="input-card">
+        <h4 type="text" class="new-question-input border-none">This is your reviews feed. Reviews of schools you've shortlisted will appear here.</h4>
+      </div>
       <div th:if="${reviews.size() > 0}" class="card reviews-container">
         <h4 class="reviews-header" th:text="'All ' + ${reviews.size()} + ' reviews (sorted by ' + (${sortBy == 'relevance'} ? 'most upvotes' : 'most recent') + ')'"></h4>
-        <div th:each="review: ${reviews}" th:insert="~{reviews/review :: div}"></div>
+        <div th:each="review: ${reviews}" th:insert="~{reviews/review :: div}" th:with="school=${review.school}, showSchoolName=true"></div>
       </div>
     </div>
   </div>

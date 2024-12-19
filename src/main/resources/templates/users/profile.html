@@ -5,6 +5,7 @@
     <th:block th:replace="~{core/head :: head}"></th:block>
     <link rel="stylesheet" href="/css/profile.css" />
     <link rel="stylesheet" href="/css/school-details.css" />
+    <link rel="stylesheet" href="/css/review.css" />
 </head>
 <body>
 
@@ -57,7 +58,7 @@
                     </a>
 
                     <div>
-                        <p><strong>Review for:</strong> <span th:text="${review.schoolName}">School Name</span></p>
+                        <p><strong>Review for:</strong> <span th:text="${review.school.name}">School Name</span></p>
                         <p th:text="${review.content}">Review Content</p>
                         <p><strong>Role:</strong> <span th:text="${review.role}">Reviewer's Role</span></p>
                         <p><strong>Created:</strong> <span th:text="${review.timeAgo}">Time Ago</span></p>
