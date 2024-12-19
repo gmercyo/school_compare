@@ -28,6 +28,7 @@ public class UsersController {
     @Autowired
     SchoolLikeRepository schoolLikeRepository;
 
+
     @GetMapping("/users/after-login")
     public RedirectView afterLogin(HttpSession session,
                                    @AuthenticationPrincipal DefaultOidcUser principal) {
