@@ -2,7 +2,6 @@ package com.makersacademy.schoolcompare.controller;
 
 import com.makersacademy.schoolcompare.model.Answer;
 import com.makersacademy.schoolcompare.repository.AnswerRepository;
-import com.makersacademy.schoolcompare.repository.QuestionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +19,7 @@ public class AnswersController {
     public RedirectView create(@ModelAttribute Answer answer) {
         answer.setCreatedAt(LocalDateTime.now());
         repository.save(answer);
-        return new RedirectView("/schools/" + answer.getQuestionId() + "view=answers&sort_by=recent");
+        return new RedirectView("/schools/" + answer.getQuestionId() + "view=answers&sort_by=relevance");
     }
 
 }
