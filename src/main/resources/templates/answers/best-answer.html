@@ -1,11 +1,4 @@
-<div class="card answer-card">
-    <form sec:authorize="isAuthenticated()" th:replace="~{answers/upvote-button :: upvote-button(answerId=${answerId})}"></form>
+<div class="answer-card">
     <h5 class="text-blue">Best answer (most upvotes):</h5>
-    <h5>
-        <span th:text="${answer.username} + ' ('"></span>
-        <span th:text="${answer.role} + ') · '"></span>
-        <span th:text="${answer.timeAgo}"></span>
-    </h5>
-
-    <p th:text="${answer.content}"></p>
+    <div th:replace="~{answers/answer :: div}"></div>
 </div>

@@ -176,6 +176,7 @@
     border: none;
     margin: 0;
     padding: 0;
+    background-color: transparent;
 }
 .rotated-icon {
     transform: rotate(-90deg) scaleX(-1);
@@ -194,9 +195,22 @@
  /* ANSWERS */
 .upvote-icon {
      position: absolute;
-     top: 32px;
-     right: 32px;
+     top: 0;
+     right: 0;
+     display: flex;
+     align-items: center;
+     gap: 4px;
 }
-.card > answer-card {
+.upvote-icon > h5 {
+    color: var(--dark-text);
+}
+.upvote-icon > i {
+    transform: scale(1, 1.26) translateY(1px);
+}
+.answer-card {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
 }

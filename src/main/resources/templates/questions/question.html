@@ -4,20 +4,21 @@
     <h3 th:text="${question.content}"></h3>
     <h5 th:text="${question.likes} + ' likes · ' + ${question.answers.size()} + ' answers · last answered ' + ${question.answeredAgo}"></h5>
 
-    <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}">
+    <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}" th:id="'answers-container-' + ${question.id}" class="answers-container">
         <div th:replace="~{answers/best-answer :: div}"></div>
-    </div>
-    <div th:if="${question.answers.size() > 1}">
-        <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
+        <div th:if="${question.answers.size() > 1}">
+            <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
 
-        <div th:id="'answers-container-' + ${question.id}" class="answers-container hidden">
-            <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+            <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
+                <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+            </div>
         </div>
     </div>
 
+
     <script>
         function toggleAnswers(questionId) {
-            const answersContainer = document.getElementById(`answers-container-${questionId}`);
+            const answersContainer = document.getElementById(`expanded-answers-container-${questionId}`);
             answersContainer.classList.toggle('hidden');
         }
     </script>
