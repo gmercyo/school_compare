@@ -32,6 +32,8 @@ public class SchoolsController {
     ReviewRepository reviewRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    SchoolLikeRepository schoolLikeRepository;
 
     private List<NearbySchool> getNearbySchools(School school) {
         List<School> schoolsOfType = repository.findByType(school.getType());
@@ -45,7 +47,7 @@ public class SchoolsController {
                             school.getLongitude());
                     return new NearbySchool(nearbySchool.getId(), nearbySchool.getName(), nearbySchool.getAddress(), distance);
                 })
-                .filter(nearbySchool -> nearbySchool.getDistance() <= 1.0)
+                .filter(nearbySchool -> nearbySchool.getDistance() <= 0.8)
                 .sorted(Comparator.comparingDouble(NearbySchool::getDistance))
                 .toList();
     }
@@ -85,6 +87,7 @@ public class SchoolsController {
         School school = repository.findById(id).orElseThrow();
         Long currentUser = (Long) session.getAttribute("userId");
         ReviewWithData topReview = reviewRepository.findTopReview(school.getId(), currentUser);
+        boolean schoolLikedByCurrentUser = schoolLikeRepository.isLikedByCurrentUser(school.getId(), currentUser);
 
         model.addObject("view", view);
         model.addObject("sortBy", sortBy);
@@ -92,6 +95,7 @@ public class SchoolsController {
         model.addObject("nearbySchools", getNearbySchools(school));
         model.addObject("topReview", topReview);
         model.addObject("userId", currentUser);
+        model.addObject("schoolLikedByCurrentUser", schoolLikedByCurrentUser);
 
         if (currentUser != null) model.addObject("distanceFromUser", getDistanceFromUser(school, currentUser));
 

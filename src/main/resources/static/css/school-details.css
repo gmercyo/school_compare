@@ -15,6 +15,27 @@
     display: flex;
     flex-direction: column;
     gap: 24px;
+    position: relative;
+}
+
+#back-button {
+    position: absolute;
+    color: var(--deep-blue);
+    top: 32px;
+    left: 8px;
+    font-size: 20px;
+}
+
+#school-like {
+    position: absolute;
+    color: var(--deep-blue);
+    top: 32px;
+    right: 32px;
+}
+
+.input-submit > i.fa-bookmark {
+    color: var(--deep-blue) !important;
+    font-size: 28px !important;
 }
 
 .info-name {
@@ -185,6 +206,7 @@
     margin: 0;
     padding: 0;
     background-color: transparent;
+    cursor: pointer;
 }
 .rotated-icon {
     transform: rotate(-90deg) scaleX(-1);
@@ -211,9 +233,6 @@
 }
 .upvote-icon > h5 {
     color: var(--dark-text);
-}
-.upvote-icon > i {
-    cursor: pointer;
 }
 .fa-caret-up {
     transform: scale(1, 1.26) translateY(2px) !important;
