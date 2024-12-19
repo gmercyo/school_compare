@@ -10,6 +10,7 @@
             <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
 
             <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
+                <div class="hidden" th:replace="~{answers/new :: div}"></div>
                 <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
             </div>
         </div>

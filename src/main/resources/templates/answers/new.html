@@ -1,0 +1,19 @@
+<div th:fragment="div">
+    <form th:action="@{/answers}" class="input-card" th:object="${newAnswer}" method="POST">
+        <input type="hidden" th:field="*{schoolId}" th:value="${school.id}">
+        <input type="hidden" th:field="*{userId}" th:value="${userId}">
+        <input type="hidden" th:field="*{createdAt}">
+
+        <input type="text" class="new-question-input"
+               th:field="*{content}"
+               th:placeholder="'Answer this question yourself ' + (${answer.username != null ? answer.username : 'User'}) + '...'"
+        >
+        <input type="text" class="role-input"
+               th:field="*{role}"
+               th:placeholder="i'm knowledgeable about this because ...">
+
+        <button type="submit" class="input-submit">
+            <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
+        </button>
+    </form>
+</div>
