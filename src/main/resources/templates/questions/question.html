@@ -1,22 +1,24 @@
-<div class="card question-card">
+<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
     <form sec:authorize="isAuthenticated()" th:replace="~{questions/like-button :: like-button(questionId=${question.id}, likedQuestionIds=${likedQuestionIds})}"></form>
-    <p th:text="${question.username} + ' · ' + ${question.timeAgo}"></p>
-    <p th:text="${question.content}"></p>
+    <h5 th:text="${question.username} + ' · ' + ${question.timeAgo}"></h5>
+    <h3 th:text="${question.content}"></h3>
+    <h5 th:text="${question.likes} + ' likes · ' + ${question.answers.size()} + ' answers · last answered ' + ${question.answeredAgo}"></h5>
 
-    <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}">
+    <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}" th:id="'answers-container-' + ${question.id}" class="answers-container">
         <div th:replace="~{answers/best-answer :: div}"></div>
-    </div>
-    <div th:if="${question.answers.size() > 1}">
-        <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
+        <div th:if="${question.answers.size() > 1}">
+            <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
 
-        <div th:id="'answers-container-' + ${question.id}" class="answers-container hidden">
-            <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+            <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
+                <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+            </div>
         </div>
     </div>
 
+
     <script>
         function toggleAnswers(questionId) {
-            const answersContainer = document.getElementById(`answers-container-${questionId}`);
+            const answersContainer = document.getElementById(`expanded-answers-container-${questionId}`);
             answersContainer.classList.toggle('hidden');
         }
     </script>

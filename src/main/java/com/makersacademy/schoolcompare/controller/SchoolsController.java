@@ -4,10 +4,7 @@ import com.makersacademy.schoolcompare.dto.AnswerWithData;
 import com.makersacademy.schoolcompare.dto.NearbySchool;
 import com.makersacademy.schoolcompare.dto.QuestionWithData;
 import com.makersacademy.schoolcompare.dto.ReviewWithData;
-import com.makersacademy.schoolcompare.model.Answer;
-import com.makersacademy.schoolcompare.model.Question;
-import com.makersacademy.schoolcompare.model.School;
-import com.makersacademy.schoolcompare.model.User;
+import com.makersacademy.schoolcompare.model.*;
 import com.makersacademy.schoolcompare.pojo.CalculateDistance;
 import com.makersacademy.schoolcompare.repository.*;
 import jakarta.servlet.http.HttpSession;
@@ -108,6 +105,7 @@ public class SchoolsController {
             }
             model.addObject("questions", questions);
             model.addObject("newQuestion", new Question());
+            model.addObject("newAnswer", new Answer());
         } else if (view.equals("reviews")) {
             List<ReviewWithData> reviews = List.of();
 
@@ -117,6 +115,7 @@ public class SchoolsController {
                 reviews = reviewRepository.findReviewsByRecent(school.getId(), currentUser);
             }
             model.addObject("reviews", reviews);
+            model.addObject("newReview", new Review());
         }
 
         return model;
