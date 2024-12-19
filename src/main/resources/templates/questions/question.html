@@ -7,10 +7,14 @@
     <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}" th:id="'answers-container-' + ${question.id}" class="answers-container">
         <div th:replace="~{answers/best-answer :: div}"></div>
         <div th:if="${question.answers.size() > 1}">
-            <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
+
 
             <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
+                <div sec:authorize="isAuthenticated()" th:replace="~{answers/new :: form}"></div>
                 <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
+            </div>
+            <div class="view-more-wrapper">
+                <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
             </div>
         </div>
     </div>
@@ -20,6 +24,13 @@
         function toggleAnswers(questionId) {
             const answersContainer = document.getElementById(`expanded-answers-container-${questionId}`);
             answersContainer.classList.toggle('hidden');
+            const toggleButton = document.querySelector(".view-more-wrapper button");
+            if (! answersContainer.classList.contains('hidden')) {
+                toggleButton.innerText="View less"
+            } else {
+                toggleButton.innerText="View more"
+            }
         }
+
     </script>
 </div>

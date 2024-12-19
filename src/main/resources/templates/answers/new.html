@@ -1,0 +1,41 @@
+<form id="new-answer" onclick="toggleForm()" th:action="@{/answers}" class="input-card answer-form" th:object="${newAnswer}" method="POST">
+    <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
+    <input type="hidden" th:attr="name='questionId'" th:value="${question.id}">
+    <input type="hidden" th:attr="name='userId'" th:value="${userId}">
+    <input type="hidden" th:attr="name='createdAt'">
+    <input type="text" class="new-question-input" th:field="*{content}" th:placeholder="'Answer this question yourself ' + (${answer.username != null ? answer.username : ''}) + '...'">
+    <div id="role" class="input-submit-line hidden">
+        <input type="text" class="new-question-input" th:field="*{role}" th:value="${newAnswer.role != null ? newAnswer.role : ''}" th:placeholder="'I know because because...'">
+        <button type="submit" class="input-submit">
+            <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
+        </button>
+    </div>
+
+    <script>
+        const form = document.getElementById('new-answer');
+        const contentInput = document.getElementById('content');
+        const roleInput = document.getElementById('role');
+
+        function collapseForm() {
+            roleInput.classList.add('hidden');
+            form.classList.remove('input-card-expanded');
+            document.removeEventListener('click', collapseForm);
+        }
+
+        function toggleForm() {
+            event.stopPropagation();
+            if (roleInput.classList.contains('hidden')) {
+              form.classList.add('input-card-expanded');
+              roleInput.classList.remove('hidden');
+              document.addEventListener('click', collapseForm);
+            } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
+              collapseForm();
+            }
+        }
+
+        function expandAnswer() {
+            const roleInput = document.getElementById('role-input');
+            roleInput.classList.remove('hidden');
+        }
+    </script>
+</form>
