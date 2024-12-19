@@ -1,52 +1,67 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-    <!-- Reuse the head block from core/head -->
-    <th:block th:replace="~{core/head :: head}"></th:block>
 
-    <!-- Include your custom stylesheet for profile styling -->
+    <th:block th:replace="~{core/head :: head}"></th:block>
     <link rel="stylesheet" href="/css/profile.css" />
 </head>
 <body>
-<!-- Reuse the navbar block from core/navbar -->
+
 <nav th:replace="~{core/navbar :: div}"></nav>
 
 <div class="page-body">
-    <!-- Card 1: User Profile Information -->
-    <div class="card">
-        <h2>User Profile</h2>
-        <div class="card-body">
-            <p><strong>Username:</strong> <span th:text="${profileUser.username}">Username</span></p>
-            <p><strong>Address:</strong> <span th:text="${profileUser.address}">Address</span></p>
-        </div>
-    </div>
 
-    <!-- Card 2: Saved Schools -->
-    <div class="card">
-        <h2>Saved Schools</h2>
-        <div class="card-body">
-            <div th:if="${savedSchools.isEmpty()}">
-                <p>No saved schools found.</p>
-            </div>
-            <div th:each="school : ${savedSchools}" class="school">
-                <h3 th:text="${school.name}">School Name</h3>
-                <p th:text="${school.address}">School Description</p>
+    <div class="profile-container">
+
+        <div class="card user-profile-card">
+            <h2>User Profile</h2>
+            <div class="card-body">
+                <p><strong>Username:</strong> <span th:text="${profileUser.username}">Username</span></p>
+                <p><strong>Address:</strong> <span th:text="${profileUser.address}">Address</span></p>
             </div>
         </div>
-    </div>
 
-    <!-- Card 3: Reviews -->
-    <div class="card">
-        <h2>Your Reviews</h2>
-        <div class="card-body">
-            <div th:if="${userReviews.isEmpty()}">
-                <p>No reviews found.</p>
+
+        <div class="card saved-schools-card">
+            <h2>Saved Schools</h2>
+            <div class="card-body">
+                <div th:if="${savedSchools.isEmpty()}">
+                    <p>No saved schools found.</p>
+                </div>
+                <div th:each="school : ${savedSchools}" class="school">
+
+                    <a th:href="'/schools/' + ${school.id}" class="action-button">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+
+                    <div>
+                        <h3 th:text="${school.name}">School Name</h3>
+                        <p th:text="${school.address}">School Address</p>
+                    </div>
+                </div>
             </div>
-            <div th:each="review : ${userReviews}" class="review">
-                <p th:text="${review.schoolName}">Review School</p>
-                <p th:text="${review.content}">Review Content</p>
-                <p th:text="${review.role}">Reviewer's Role</p>
-                <p><strong>Created:</strong> <span th:text="${review.timeAgo}">Rating</span></p>
+        </div>
+
+
+        <div class="card your-contributions-card">
+            <h2>Your Contributions</h2>
+            <div class="card-body">
+                <div th:if="${userReviews.isEmpty()}">
+                    <p>No contributions found.</p>
+                </div>
+                <div th:each="review : ${userReviews}" class="review">
+
+                    <a th:href="'/schools/' + ${review.schoolId}" class="action-button">
+                        <i class="fa-solid fa-angle-right"></i>
+                    </a>
+
+                    <div>
+                        <p><strong>Review for:</strong> <span th:text="${review.schoolName}">School Name</span></p>
+                        <p th:text="${review.content}">Review Content</p>
+                        <p><strong>Role:</strong> <span th:text="${review.role}">Reviewer's Role</span></p>
+                        <p><strong>Created:</strong> <span th:text="${review.timeAgo}">Time Ago</span></p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
