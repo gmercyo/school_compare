@@ -1,10 +1,11 @@
-<form id="new-answer" onclick="toggleForm()" th:action="@{/answers}" class="input-card" th:object="${newAnswer}" method="POST">
-    <input type="hidden" th:field="*{schoolId}" th:value="${school.id}">
-    <input type="hidden" th:field="*{userId}" th:value="${userId}">
-    <input type="hidden" th:field="*{createdAt}">
+<form id="new-answer" onclick="toggleForm()" th:action="@{/answers}" class="input-card answer-form" th:object="${newAnswer}" method="POST">
+    <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
+    <input type="hidden" th:attr="name='questionId'" th:value="${question.id}">
+    <input type="hidden" th:attr="name='userId'" th:value="${userId}">
+    <input type="hidden" th:attr="name='createdAt'">
     <input type="text" class="new-question-input" th:field="*{content}" th:placeholder="'Answer this question yourself ' + (${answer.username != null ? answer.username : ''}) + '...'">
-    <div class="input-submit-line">
-        <input type="text" class="new-question-input" th:field="*{role}" th:value="${newAnswer.role != null ? newAnswer.role : ''}" th:placeholder="'I am knowledgeable about this because...'">
+    <div id="role" class="input-submit-line hidden">
+        <input type="text" class="new-question-input" th:field="*{role}" th:value="${newAnswer.role != null ? newAnswer.role : ''}" th:placeholder="'I know because because...'">
         <button type="submit" class="input-submit">
             <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
         </button>
@@ -30,6 +31,11 @@
             } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
               collapseForm();
             }
+        }
+
+        function expandAnswer() {
+            const roleInput = document.getElementById('role-input');
+            roleInput.classList.remove('hidden');
         }
     </script>
 </form>

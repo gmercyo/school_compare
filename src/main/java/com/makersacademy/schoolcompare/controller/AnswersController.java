@@ -2,6 +2,7 @@ package com.makersacademy.schoolcompare.controller;
 
 import com.makersacademy.schoolcompare.model.Answer;
 import com.makersacademy.schoolcompare.repository.AnswerRepository;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,10 +17,11 @@ public class AnswersController {
     AnswerRepository repository;
 
     @PostMapping("/answers")
-    public RedirectView create(@ModelAttribute Answer answer) {
+    public RedirectView create(@ModelAttribute Answer answer, HttpSession session) {
         answer.setCreatedAt(LocalDateTime.now());
+        System.out.println("lalalalala" + answer.getContent() + ">>>>>>>>>>>>>");
         repository.save(answer);
-        return new RedirectView("/schools/" + answer.getQuestionId() + "view=answers&sort_by=relevance");
+        return new RedirectView("/schools/" + answer.getSchoolId());
     }
 
 }
