@@ -19,6 +19,7 @@ public interface AnswerRepository extends CrudRepository<Answer, Long> {
             "JOIN Answer a ON a.questionId = q.id " +
             "JOIN User u ON u.id = a.userId " +
             "LEFT JOIN AnswerUpvote au ON au.answerId = a.id AND au.userId = :currentUser " +
-            "WHERE q.id = :questionId")
+            "WHERE q.id = :questionId " +
+            "ORDER BY (SELECT COUNT(aauu) FROM AnswerUpvote aauu WHERE aauu.answerId = a.id) DESC")
     List<AnswerWithData> findAnswersByRelevance(@Param("questionId") Long questionId, @Param("currentUser") Long currentUser);
 }

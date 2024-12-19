@@ -25,13 +25,15 @@
       </div>
     </div>
 
-<!--    <div th:if="${view == 'questions'}" class="questions-container">-->
-<!--      <form sec:authorize="isAuthenticated()"  th:replace="~{questions/new :: form}"></form>-->
-<!--      <div th:each="question: ${questions}" th:insert="~{questions/question :: div}"></div>-->
-<!--    </div>-->
+    <div th:if="${view == 'questions'}" class="questions-container">
+      <div class="input-card">
+        <h4 type="text" class="new-question-input border-none">Your questions feed. Questions about schools you've shortlisted appear here.</h4>
+      </div>
+      <div th:each="question: ${questions}" th:insert="~{questions/question :: div}" th:with="school=${question.school}, showSchoolName=true">></div>
+    </div>
     <div th:if="${view == 'reviews'}" class="questions-container">
       <div class="input-card">
-        <h4 type="text" class="new-question-input border-none">This is your reviews feed. Reviews of schools you've shortlisted will appear here.</h4>
+        <h4 type="text" class="new-question-input border-none">Your reviews feed. Reviews of schools you've shortlisted appear here.</h4>
       </div>
       <div th:if="${reviews.size() > 0}" class="card reviews-container">
         <h4 class="reviews-header" th:text="'All ' + ${reviews.size()} + ' reviews (sorted by ' + (${sortBy == 'relevance'} ? 'most upvotes' : 'most recent') + ')'"></h4>

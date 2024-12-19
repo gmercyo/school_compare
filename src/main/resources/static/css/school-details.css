@@ -185,6 +185,15 @@
     border: 1px solid var(--grey-blue);
 }
 
+.answer-input {
+    border-radius: 8px;
+    padding: 12px 16px;
+    border: 1px dashed var(--grey-blue);
+    display: flex;
+    gap: 24px;
+    margin: 24px 0;
+}
+
 /* QUESTIONS */
 .questions-container {
     display: flex;

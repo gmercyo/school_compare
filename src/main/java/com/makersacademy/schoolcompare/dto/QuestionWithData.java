@@ -1,6 +1,7 @@
 package com.makersacademy.schoolcompare.dto;
 
 import com.makersacademy.schoolcompare.model.Question;
+import com.makersacademy.schoolcompare.model.School;
 import com.makersacademy.schoolcompare.pojo.TimeAgo;
 
 import java.time.LocalDateTime;
@@ -11,17 +12,20 @@ public class QuestionWithData {
     private String username;
     private Long likes;
     private boolean likedByCurrentUser;
+    private School school;
     private LocalDateTime lastAnswerTimestamp;
     private List<AnswerWithData> answers;
 
     public QuestionWithData(Question question,
                             String username,
                             Long likes,
-                            boolean likedByCurrentUser) {
+                            boolean likedByCurrentUser,
+                            School school) {
         this.question = question;
         this.username = username;
         this.likes = likes;
         this.likedByCurrentUser = likedByCurrentUser;
+        this.school = school;
     }
 
     public QuestionWithData() {};
@@ -30,6 +34,7 @@ public class QuestionWithData {
     public String getUsername() { return username; }
     public Long getLikes() { return likes; }
     public boolean isLikedByCurrentUser() { return likedByCurrentUser; }
+    public School getSchool() { return school; }
     public LocalDateTime getLastAnswerTimestamp() { return lastAnswerTimestamp; }
     public List<AnswerWithData> getAnswers() { return answers; }
 
@@ -46,6 +51,7 @@ public class QuestionWithData {
     public void setUsername(String username) { this.username = username; }
     public void setLikes(Long likes) { this.likes = likes; }
     public void setLikedByCurrentUser(boolean likedByCurrentUser) { this.likedByCurrentUser = likedByCurrentUser; }
+    public void setSchool(School school) { this.school = school; }
     public void setLastAnswerTimestamp(LocalDateTime lastAnswerTimestamp) { this.lastAnswerTimestamp = lastAnswerTimestamp; }
     public void setAnswers(List<AnswerWithData> answers) { this.answers = answers; }
 }

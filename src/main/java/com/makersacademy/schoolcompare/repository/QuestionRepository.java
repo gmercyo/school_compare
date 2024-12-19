@@ -16,7 +16,8 @@ public interface QuestionRepository extends CrudRepository<Question, Long> {
 
     @Query("SELECT new com.makersacademy.schoolcompare.dto.QuestionWithData(" +
             "q, u.username, (SELECT COUNT(qqll) FROM QuestionLike qqll WHERE qqll.questionId = q.id), " +
-            "ql.userId IS NOT NULL) " +
+            "ql.userId IS NOT NULL, " +
+            "s) " +
             "FROM School s " +
             "JOIN Question q ON q.schoolId = s.id " +
             "JOIN User u ON u.id = q.userId " +

@@ -1,5 +1,5 @@
 <div class="answer-card">
-    <form sec:authorize="isAuthenticated()" th:replace="~{answers/upvote-button :: upvote-button(answerId=${answerId})}"></form>
+    <form sec:authorize="isAuthenticated()" th:replace="~{answers/upvote-button :: upvote-button}"></form>
     <h5>
         <span th:text="${answer.username} + ' ('"></span>
         <span th:text="${answer.role} + ') · '"></span>
