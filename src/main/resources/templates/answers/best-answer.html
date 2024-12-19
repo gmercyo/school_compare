@@ -1,10 +1,11 @@
-<div class="card answer-preview-card">
-    <p>Best answer (most upvotes):</p>
-    <p>
-        <span th:text="${answer.username} + ' · '"></span>
-        <span th:text="${answer.role} + ' · '"></span>
+<div class="card answer-card">
+    <form sec:authorize="isAuthenticated()" th:replace="~{answers/upvote-button :: upvote-button(answerId=${answerId})}"></form>
+    <h5 class="text-blue">Best answer (most upvotes):</h5>
+    <h5>
+        <span th:text="${answer.username} + ' ('"></span>
+        <span th:text="${answer.role} + ') · '"></span>
         <span th:text="${answer.timeAgo}"></span>
-    </p>
+    </h5>
+
     <p th:text="${answer.content}"></p>
-    <p>Upvotes: <span th:text="${answer.upvotes}"></span></p>
 </div>

@@ -1,7 +1,8 @@
-<div th:fragment="like-button">
+<div th:fragment="like-button" class="like">
     <form th:action="'/schools/' + ${school.id} + '/likes/' + ${question.id}" method="post">
-        <button type="submit" class="like-button"
-                th:text="${question.likedByCurrentUser ? 'Unlike' : 'Like'}">
+        <button type="submit" class="like-icon input-submit">
+            <i th:if="${question.likedByCurrentUser}" class="fa-solid fa-heart"></i>
+            <i th:unless="${question.likedByCurrentUser}" class="fa-regular fa-heart"></i>
         </button>
     </form>
 </div>

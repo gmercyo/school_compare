@@ -40,6 +40,7 @@ public class QuestionWithData {
     public String getContent() { return question.getContent(); }
     public LocalDateTime getCreatedAt() { return question.getCreatedAt(); }
     public String getTimeAgo() { return TimeAgo.calculate(question.getCreatedAt()); }
+    public String getAnsweredAgo() {return TimeAgo.calculate(lastAnswerTimestamp);}
 
     public void setQuestion(Question question) { this.question = question; }
     public void setUsername(String username) { this.username = username; }

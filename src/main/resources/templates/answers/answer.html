@@ -1,3 +1,9 @@
-<div class="answer">
+<div class="card answer-card">
+    <form sec:authorize="isAuthenticated()" th:replace="~{answers/upvote-button :: upvote-button(answerId=${answerId})}"></form>
+    <h5>
+        <span th:text="${answer.username} + ' ('"></span>
+        <span th:text="${answer.role} + ') · '"></span>
+        <span th:text="${answer.timeAgo}"></span>
+    </h5>
     <p th:text="${answer.content}"></p>
 </div>

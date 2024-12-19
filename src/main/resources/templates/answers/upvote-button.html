@@ -1,0 +1,9 @@
+<div th:fragment="upvote-button" class="upvote">
+    <form th:action="'/upvotes/' + ${answerId}" method="post">
+        <button type="submit" class="upvote-icon input-submit">
+            <span th:text="${answer.upvotes} + ' upvotes'"></span>
+            <i th:if="${answer.upvotedByCurrentUser}" class="fa-solid fa-caret-down"></i>
+            <i th:unless="${answer.upvotedByCurrentUser}" class="fa-solid fa-caret-up"></i>
+        </button>
+    </form>
+</div>

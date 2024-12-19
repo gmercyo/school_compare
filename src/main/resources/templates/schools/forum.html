@@ -25,8 +25,8 @@
             </div>
         </div>
 
-        <div th:if="${view == 'questions'}">
-            <form sec:authorize="isAuthenticated()" th:replace="~{questions/new :: form}"></form>
+        <div th:if="${view == 'questions'}" class="questions-container">
+            <form sec:authorize="isAuthenticated()"  th:replace="~{questions/new :: form}"></form>
             <div th:each="question: ${questions}" th:insert="~{questions/question :: div}"></div>
         </div>
 
