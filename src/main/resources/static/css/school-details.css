@@ -7,6 +7,7 @@
 }
 
 /* INFO */
+
 #school-info {
     background-color: var(--white);
     width: 624px;
@@ -94,6 +95,7 @@
 }
 
 /* FORUM */
+
 #school-forum {
     background-color: var(--salmon);
     max-width: calc(100vw - 624px);
@@ -130,6 +132,7 @@
 }
 
 /* CARDS */
+
 .card {
     border-radius: 8px;
     background-color: var(--white);
@@ -140,6 +143,7 @@
     gap: 8px;
     position: relative;
 }
+
 .input-card {
     border-radius: 8px;
     background-color: var(--white);
@@ -148,52 +152,36 @@
     display: flex;
     gap: 24px;
 }
+
 .input-card-expanded {
     flex-direction: column;
     gap: 8px !important;
 }
+
 .input-submit-line {
     display: flex;
     gap: 24px;
 }
 
-/* ANSWERS */
-.answers-container {
-    border-radius: 8px;
-    padding: 16px;
-    border: 1px solid var(--grey-blue);
-}
+/* ICONS AND BUTTONS */
 
-/* QUESTIONS */
-.questions-container {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.new-question-input{
-    flex-grow: 1;
-    border-radius: 8px;
-    padding: 8px 16px;
-    border: 1px solid var(--grey-blue);
-    color: var(--dark-blue);
-}
-.new-question-input::placeholder {
-    color: var(--grey-blue);
-}
 .input-submit {
     border: none;
     margin: 0;
     padding: 0;
     background-color: transparent;
 }
+
 .rotated-icon {
     transform: rotate(-90deg) scaleX(-1);
     margin-right: 8px;
 }
+
 .input-submit > i {
     font-size: 24px;
     color: var(--action-red);
 }
+
 .like-icon {
     position: absolute;
     top: 32px;
@@ -209,24 +197,21 @@
      align-items: center;
      gap: 4px;
 }
+
 .upvote-icon > h5 {
     color: var(--dark-text);
 }
+
 .upvote-icon > i {
     cursor: pointer;
 }
+
 .fa-caret-up {
     transform: scale(1, 1.26) translateY(2px) !important;
 }
+
 .fa-caret-down {
     transform: scale(1, 1.26) translateY(-2px) !important;
-}
-.answer-card {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-
 }
 
 .post-element {

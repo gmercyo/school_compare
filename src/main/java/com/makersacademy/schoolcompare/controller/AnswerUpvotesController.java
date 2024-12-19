@@ -9,15 +9,23 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.Optional;
+
 @Controller
 public class AnswerUpvotesController {
     @Autowired
     AnswerUpvoteRepository repository;
 
-    @PostMapping("/upvotes/{answerId}")
-    public RedirectView create(@PathVariable Long answerId, HttpSession session) {
+    @PostMapping("question/{questionID}/answer-upvotes/{answerId}")
+    public RedirectView create(@PathVariable Long questionId, @PathVariable Long answerId, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
-        repository.save(new AnswerUpvote(userId, answerId));
-        return new RedirectView("/"); // Once we move beyond MVP, this will not be a redirect anymore, so the path isn't important
+        Optional<AnswerUpvote> existingUpvote = repository.findByUserIdAndAnswerId(userId, answerId);
+        if (existingUpvote.isPresent()) {
+            repository.delete(existingUpvote.get());
+        } else {
+            AnswerUpvote newUpvote = new AnswerUpvote(userId, answerId);
+            repository.save(newUpvote);
+        }
+        return new RedirectView("/schools/" + questionId + "?view=answers&sort_by=relevance");
     }
 }

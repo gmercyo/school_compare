@@ -12,3 +12,16 @@
     justify-content: flex-start;
     align-items: flex-start;
 }
+
+.answers-container {
+    border-radius: 8px;
+    padding: 16px;
+    border: 1px solid var(--grey-blue);
+}
+
+.answer-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
