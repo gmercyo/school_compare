@@ -9,7 +9,7 @@
         <div onclick="toggleMenu()" class="menu-button">
             <i class="fa-solid fa-bars"></i>
             <ul sec:authorize="isAuthenticated()" id="menu-options" class="menu-links hidden">
-                <li><a href="#"><span sec:authentication="principal.attributes['nickname']"></span></a></li>
+                <li><a href="/profile"><span sec:authentication="principal.attributes['nickname']"></span></a></li>
                 <li><a href="/">Find schools</a></li>
                 <li><a href="/logout">Log Out</a></li>
             </ul>
