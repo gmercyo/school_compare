@@ -16,7 +16,7 @@ public class AnswerUpvotesController {
     @Autowired
     AnswerUpvoteRepository repository;
 
-    @PostMapping("question/{questionID}/answer-upvotes/{answerId}")
+    @PostMapping("questions/{questionID}/answer-upvotes/{answerId}")
     public RedirectView create(@PathVariable Long questionId, @PathVariable Long answerId, HttpSession session) {
         Long userId = (Long) session.getAttribute("userId");
         Optional<AnswerUpvote> existingUpvote = repository.findByUserIdAndAnswerId(userId, answerId);

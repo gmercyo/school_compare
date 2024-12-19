@@ -7,10 +7,10 @@
     <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}" th:id="'answers-container-' + ${question.id}" class="answers-container">
         <div th:replace="~{answers/best-answer :: div}"></div>
         <div th:if="${question.answers.size() > 1}">
-            <button th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
+            <button onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
 
             <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
-                <div class="hidden" th:replace="~{answers/new :: div}"></div>
+                <div th:replace="~{answers/new :: div}"></div>
                 <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
             </div>
         </div>

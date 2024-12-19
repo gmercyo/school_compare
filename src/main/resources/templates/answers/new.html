@@ -4,7 +4,7 @@
     <input type="hidden" th:field="*{createdAt}">
     <input type="text" class="new-question-input" th:field="*{content}" th:placeholder="'Answer this question yourself ' + (${answer.username != null ? answer.username : ''}) + '...'">
     <div class="input-submit-line">
-        <input type="text" class="new-question-input" th:field="*{role}" th:placeholder="'I am knowledgeable about this because...'">
+        <input type="text" class="new-question-input" th:field="*{role}" th:value="${newAnswer.role != null ? newAnswer.role : ''}" th:placeholder="'I am knowledgeable about this because...'">
         <button type="submit" class="input-submit">
             <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
         </button>
