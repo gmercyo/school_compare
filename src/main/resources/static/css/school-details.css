@@ -10,6 +10,7 @@
 #school-info {
     background-color: var(--white);
     width: 624px;
+    min-width: 624px;
     padding: 32px;
     display: flex;
     flex-direction: column;
@@ -146,7 +147,14 @@
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.25);
     display: flex;
     gap: 24px;
-
+}
+.input-card-expanded {
+    flex-direction: column;
+    gap: 8px !important;
+}
+.input-submit-line {
+    display: flex;
+    gap: 24px;
 }
 
 /* ANSWERS */
@@ -167,7 +175,7 @@
     border-radius: 8px;
     padding: 8px 16px;
     border: 1px solid var(--grey-blue);
-    color: var(--grey-blue);
+    color: var(--dark-blue);
 }
 .new-question-input::placeholder {
     color: var(--grey-blue);
@@ -205,7 +213,13 @@
     color: var(--dark-text);
 }
 .upvote-icon > i {
-    transform: scale(1, 1.26) translateY(1px);
+    cursor: pointer;
+}
+.fa-caret-up {
+    transform: scale(1, 1.26) translateY(2px) !important;
+}
+.fa-caret-down {
+    transform: scale(1, 1.26) translateY(-2px) !important;
 }
 .answer-card {
     position: relative;
@@ -214,3 +228,10 @@
     gap: 8px;
 
 }
+
+.post-element {
+     position: relative;
+     display: flex;
+     flex-direction: column;
+     gap: 8px;
+ }
