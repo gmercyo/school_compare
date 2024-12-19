@@ -1,4 +1,4 @@
-<form th:action="'/schools/' + ${school.id} + '/review-upvotes/' + ${review.id}" method="POST">
+<form th:action="'/review-upvotes/' + ${review.id}" method="POST">
   <button type="submit" class="upvote-icon input-submit">
     <i th:if="${review.upvotedByCurrentUser}" class="fa-solid fa-caret-down"></i>
     <i th:unless="${review.upvotedByCurrentUser}" class="fa-solid fa-caret-up"></i>
