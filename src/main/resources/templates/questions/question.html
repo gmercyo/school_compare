@@ -1,4 +1,4 @@
-<div class="card" xmlns:th="http://www.w3.org/1999/xhtml">
+<div class="card" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
     <form sec:authorize="isAuthenticated()" th:replace="~{questions/like-button :: like-button(questionId=${question.id}, likedQuestionIds=${likedQuestionIds})}"></form>
     <h5>
         <span th:if="${showSchoolName}" th:text="${question.school.name} + ' · '" class="text-blue"></span>
@@ -18,10 +18,15 @@
         <div th:if="${question.answers.size() > 0}" th:with="answer=${question.answers[0]}">
             <div th:replace="~{answers/best-answer :: div}"></div>
         </div>
-        <button th:if="${userId != null or question.answers.size() > 1}" th:onclick="'toggleAnswers(' + ${question.id} + ')'">View more</button>
-        <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}" >
+        <div class="anchor">
+            <button class="expand-down" th:if="${userId != null or question.answers.size() > 1}" th:onclick="'toggleAnswers(' + ${question.id} + ')'">
+                <i class="fa-solid fa-chevron-down"></i>
+                <i class="fa-solid fa-chevron-up hidden"></i>
+            </button>
+        </div>
+        <div class="hidden" th:id="'expanded-answers-container-' + ${question.id}">
             <div sec:authorize="isAuthenticated()" th:insert="~{answers/new :: form}"></div>
-            <div th:if="${question.answers.size() > 1}">
+            <div class="more-answers" th:if="${question.answers.size() > 1}">
                 <h5 class="text-blue">More answers (sorted by most upvotes):</h5>
                 <div th:each="answer, iterStat: ${question.answers}" th:unless="${iterStat.index == 0}" th:insert="~{answers/answer :: div}"></div>
             </div>
@@ -33,6 +38,12 @@
         function toggleAnswers(questionId) {
             const answersContainer = document.getElementById(`expanded-answers-container-${questionId}`);
             answersContainer.classList.toggle('hidden');
+
+            const button = event.currentTarget;
+            console.log(button);
+            Array.from(button.children).forEach(child => {
+                child.classList.toggle('hidden');
+            });
         }
     </script>
 </div>

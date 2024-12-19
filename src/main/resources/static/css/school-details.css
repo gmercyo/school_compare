@@ -183,6 +183,7 @@
     border-radius: 8px;
     padding: 16px;
     border: 1px solid var(--grey-blue);
+    position: relative;
 }
 
 .answer-input {
@@ -192,6 +193,30 @@
     display: flex;
     gap: 24px;
     margin: 24px 0;
+}
+
+.best-answer {
+    margin-bottom: 16px;
+}
+
+.more-answers {
+    margin-top: 24px;
+}
+
+.more-answers > :first-child {
+    margin-bottom: 16px;
+}
+
+.expand-down {
+    border: none;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    cursor: pointer;
+    color: var(--action-red);
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
 
 /* QUESTIONS */
