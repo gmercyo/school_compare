@@ -1,4 +1,12 @@
 <div id="school-info">
+  <div id="back-button">
+    <a href="/">
+      <i class="fa-solid fa-arrow-left"></i>
+    </a>
+  </div>
+
+  <form sec:authorize="isAuthenticated()"  th:replace="~{schools/like-button :: form}"></form>
+
   <div>
     <h3 class="info-name" th:text="${school.name}"></h3>
     <p th:text="${school.address}"></p>
