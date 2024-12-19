@@ -1,0 +1,19 @@
+.reviews-container {
+    gap: 16px;
+    padding: 16px;
+    border: none !important;
+}
+
+.reviews-header {
+    padding: 16px 16px 0;
+    color: var(--deep-blue);
+}
+
+.review-card {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    border: 1px solid var(--grey-blue);
+    border-radius: 8px;
+    padding: 16px;
+}

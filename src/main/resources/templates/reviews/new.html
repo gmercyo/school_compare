@@ -1,0 +1,35 @@
+<form id="new-review" onclick="toggleForm()" th:action="@{/reviews}" class="input-card" th:object="${newReview}" method="POST">
+  <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
+  <input type="hidden" th:attr="name='userId'" th:value="${userId}">
+  <input type="hidden" th:attr="name='createdAt'" th:value="${null}">
+  <input type="text" class="new-question-input" th:field="*{content}" th:placeholder="'Leave a review about ' + ${school.name} + '...'">
+  <div class="input-submit-line">
+    <input type="text" class="new-question-input hidden" th:field="*{role}" th:placeholder="'I am knowledgeable about this because...'">
+    <button type="submit" class="input-submit">
+      <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
+    </button>
+  </div>
+
+  <script>
+    const form = document.getElementById('new-review');
+    const contentInput = document.getElementById('content');
+    const roleInput = document.getElementById('role');
+
+    function collapseForm() {
+        roleInput.classList.add('hidden');
+        form.classList.remove('input-card-expanded');
+        document.removeEventListener('click', collapseForm);
+    }
+
+    function toggleForm() {
+        event.stopPropagation();
+        if (roleInput.classList.contains('hidden')) {
+          form.classList.add('input-card-expanded');
+          roleInput.classList.remove('hidden');
+          document.addEventListener('click', collapseForm);
+        } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
+          collapseForm();
+        }
+    }
+  </script>
+</form>
