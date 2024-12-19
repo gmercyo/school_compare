@@ -1,0 +1,6 @@
+<form id="school-like" th:action="'/school-likes/' + ${school.id}" method="POST">
+  <button type="submit" class="input-submit">
+    <i th:if="${schoolLikedByCurrentUser}" class="fa-solid fa-bookmark"></i>
+    <i th:unless="${schoolLikedByCurrentUser}" class="fa-regular fa-bookmark"></i>
+  </button>
+</form>
