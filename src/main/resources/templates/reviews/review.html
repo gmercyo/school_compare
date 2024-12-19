@@ -1,5 +1,7 @@
-<div class="card review-card">
-  <p th:text="${review.username} + ' (' + ${review.role} + ') · ' + ${review.timeAgo}"></p>
-  <p th:text="${review.content}"></p>
-  <p th:text="'upvotes: ' + ${review.upvotes}"></p>
+<div class="review-card">
+  <div class="post-element">
+    <form sec:authorize="isAuthenticated()" th:replace="~{reviews/upvote-button :: form}"></form>
+    <h5 th:text="${review.username} + ' (' + ${review.role} + ') · ' + ${review.timeAgo}"></h5>
+    <p th:text="${review.content}"></p>
+  </div>
 </div>
