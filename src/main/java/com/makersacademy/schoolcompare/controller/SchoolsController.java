@@ -47,7 +47,7 @@ public class SchoolsController {
                             school.getLongitude());
                     return new NearbySchool(nearbySchool.getId(), nearbySchool.getName(), nearbySchool.getAddress(), distance);
                 })
-                .filter(nearbySchool -> nearbySchool.getDistance() <= 0.5)
+                .filter(nearbySchool -> nearbySchool.getDistance() <= 0.8)
                 .sorted(Comparator.comparingDouble(NearbySchool::getDistance))
                 .toList();
     }
