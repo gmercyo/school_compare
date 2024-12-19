@@ -95,7 +95,8 @@
 /* FORUM */
 #school-forum {
     background-color: var(--salmon);
-    width: calc(100vw - 624px);
+    max-width: calc(100vw - 624px);
+    flex-grow: 1;
     box-sizing: border-box;
 }
 

@@ -34,7 +34,7 @@ public class SchoolsTest {
     @Test
     public void createSchoolWithNoParams() {
         String nameOfSchool = "Highbury School";
-        com.makersacademy.schoolcompare.model.School school = new School();
+        School school = new School();
         school.setName(nameOfSchool);
         Assert.assertEquals(nameOfSchool, school.getName());
     }
