@@ -447,4 +447,16 @@ DELETE FROM answers;
 INSERT INTO answers (school_id, user_id, question_id, content, role)
 VALUES
 (2, 1, 24, 'There''s a uniform, but children are allowed to dress casually on a couple of days each term.', 'current parent'),
-(2, 2, 2, 'There are a bunch of after school clubs, the selection is based on student interests and varies each term. My son''s currently doing science club and drama. They''ll perform at Sadler''s Wells theatre later in the year!', 'my son goes to Gillespie');
+(2, 2, 2, 'There are a bunch of after school clubs, the selection is based on student interests and varies each term. My son''s currently doing science club and drama. They''ll perform at Sadler''s Wells theatre later in the year!', 'my son goes to Gillespie'),
+(2, 3, 2, 'This school offers a wide range of extracurricular clubs', 'former parent'),
+(2, 4, 9, 'They give the kids homework way too early! My 6 y.o. should not be stressing about her reading assignments!', 'Y2 parent'),
+(3, 5, 8, 'This school generally promotes good behaviour, and teachers reinforce the school values of kindness and respect. There is a counselor on site two days a week, she''s really wonderful and encourages the children to chat with her about all kinds of worries and problems they''re having.', 'parent of 2 St John children'),
+(3, 1, 3, 'Yes, her name is Ada and she''s lovely! Any child can go see her about anything, there''s no stigma and she gives them stickers!', 'heard from a neighbour'),
+(3, 4, 18, 'Just bumping this question... anybody know the answer???', 'interested to know!'),
+(4, 5, 14, 'Just bumping this question... anybody know the answer???', 'wanna know real bad!'),
+(4, 3, 19, 'Everybody learns Spanish and the students can learn French additionally in Y6. There are after-school clubs for some other languages, I think.', 'daughter goes here'),
+(4, 6, 19, 'They teach us Spanish and French', 'student'),
+(1, 1, 11, 'Seems like they''re really on top of this! On our school tour the headteacher boasted of how diverse and inclusive they are here. The school''s values emphasise that everybody can achieve and feel welcomed, and the curriculum is inclusive of all cultures.', 'toured this school'),
+(1, 7, 11, 'There are big red signs outside all the classrooms that say ''Give Racism the Red Card''', 'I go here'),
+(1, 1, 16, 'We try to strike a balance between avoiding too much screen time and also using the technology in interesting and productive ways. There are around 60 iPads which the students can access under close supervision once or twice a week to do educational activities.', 'teacher at Ambler'),
+(1, 5, 16, 'There''s too much screen time at this school. The teachers are lazy and just show videos.', 'concerned parent');
