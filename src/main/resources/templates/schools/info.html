@@ -19,7 +19,7 @@
   </div>
 
   <div id="top-review" th:if="${topReview}">
-    <p>"<span th:text="${topReview.content}"></span>"</p>
+    <p>“<span th:text="${topReview.content}"></span>”</p>
     <h5>Posted by <span th:text="${topReview.username}"></span> <span th:text="${topReview.timeAgo}"></span> · <span th:text="${topReview.upvotes}"></span> upvotes</h5>
   </div>
 
