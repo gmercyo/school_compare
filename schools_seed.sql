@@ -521,3 +521,21 @@ VALUES
 (15, 1),
 (15, 2),
 (15, 3);
+
+DELETE FROM reviews;
+
+INSERT INTO reviews (school_id, user_id, role, content)
+VALUES
+(5, 5, 'parent of current student', 'The oversight body has just recommended to the council that they close this school. Parents are lobbying to keep it open. Sign our petition!!'),
+(5, 3, 'parent of former students', 'The problems with this school are just too numerous to list. Read the Ofsted report, it gives a good summary. Don''t send your children here!!'),
+(5, 6, 'goes to school here', 'This school is pretty good.'),
+(5, 1, 'son is starting school next year', 'I didn''t even tour this school. Why would you consider it when there are so many excellent alternatives in this neighbourhood?'),
+(1, 2, 'daughter loves it here!!', 'This school is amazing! So diverse and really supportive. The fantastic teachers get all the kids reading really early and instil a really positive mindset and love of learning.'),
+(2, 5, 'parent of fmr students', 'There''s a reason why this school is so oversubscribed, frankly. The headteacher has been here for ages and is really proactive at funding special programmes that enhance the learning experience. You can''t rely on the council to do that!'),
+(2, 2, 'son goes here', 'The science programme here is really amazing. They have a dedicated teacher to leads nature walks and does fun activities both during school and as extracurriculars. The music teaching is excellent, too!'),
+(3, 1, 'parent', 'This is a really warm, caring school. The academics are decent, but its real strength is the degree of pastoral care. Unfortunately, you can’t rely on getting a place for extended day care. They get booked extremely fast.'),
+(3, 6, 'student', 'This school sucks!'),
+(4, 6, 'student', 'This school sucks!'),
+(4, 2, 'son in reception', 'The headteacher has been here for ages and she''s a little old-fashioned. Discipline is very strict, the teachers are always telling me all the things my son was scolded for during the day. C''mon, he''s only 5! Give the kid a break!!'),
+(5, 7, 'student', 'This school is lousy!'),
+(1, 8, 'student', 'This school is frkking awesome!');
