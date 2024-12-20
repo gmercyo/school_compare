@@ -1,4 +1,4 @@
-<form id="new-answer" onclick="toggleForm()" th:action="@{/answers}" class="answer-input" th:object="${newAnswer}" method="POST">
+<form th:id="${'new-answer-' + question.id}" th:onclick="'toggleForm(' + ${question.id} + ')'" th:action="@{/answers}" class="answer-input" th:object="${newAnswer}" method="POST">
   <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
   <input type="hidden" th:attr="name='userId'" th:value="${userId}">
   <input type="hidden" th:attr="name='questionId'" th:value="${question.id}">
@@ -12,25 +12,27 @@
   </div>
 
   <script>
-    const form = document.getElementById('new-answer');
-    const contentInput = document.getElementById('content');
-    const roleInput = document.getElementById('role');
 
-    function collapseForm() {
+
+    function collapseForm(form, roleInput) {
         roleInput.classList.add('hidden');
         form.classList.remove('input-card-expanded');
         document.removeEventListener('click', collapseForm);
     }
 
-    function toggleForm() {
-        event.stopPropagation();
-        if (roleInput.classList.contains('hidden')) {
-          form.classList.add('input-card-expanded');
-          roleInput.classList.remove('hidden');
-          document.addEventListener('click', collapseForm);
-        } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
-          collapseForm();
-        }
+    function toggleForm(questionId) {
+      const form = document.getElementById(`new-answer-${questionId}`);
+      const contentInput = form.querySelector('#content');
+      const roleInput = form.querySelector('#role');
+
+      event.stopPropagation();
+      if (roleInput.classList.contains('hidden')) {
+        form.classList.add('input-card-expanded');
+        roleInput.classList.remove('hidden');
+        document.addEventListener('click', collapseForm);
+      } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
+        collapseForm(form, roleInput);
+      }
     }
   </script>
 </form>

@@ -1,4 +1,23 @@
 -- This is a very abbreviated seed. Will vastly expand it later, but wanted to test with just a few schools.
+DELETE FROM users;
+
+INSERT INTO users (username, auth0_id)
+VALUES
+('godsmercy37', 'fake'),
+('tobi_da_man', 'fake'),
+('knowledgeable_lewis', 'fake'),
+('highbury_parent_88', 'fake'),
+('susie-from-hackney', 'fake'),
+('cool_kid_44', 'fake'),
+('naughty_kid_72', 'fake'),
+('worried_kid_04', 'fake'),
+('crazy_kid_69', 'fake'),
+('nerdy_kid_22', 'fake'),
+('introvert_28', 'fake'),
+('friendly_kid_58', 'fake'),
+('good_kid_51', 'fake'),
+('popular_kid_77', 'fake');
+
 DELETE FROM schools;
 
 INSERT INTO schools (name, address, longitude, latitude, catchment_radius, ofsted_rating, ofsted_url, type, gender, sen_availability, religious_affiliation, website)
@@ -295,3 +314,137 @@ VALUES (
     'n/a',
     'community',
     'https://www.highburygrove.cola.org.uk/');
+
+
+
+DELETE FROM questions;
+
+INSERT INTO questions (school_id, user_id, content)
+VALUES
+(1, 1, 'What is the student-to-teacher ratio at this school?'),
+(2, 1, 'What extracurricular activities are offered here?'),
+(3, 1, 'Is there a school counselor available for students?'),
+(4, 1, 'What are the school’s academic performance metrics?'),
+(5, 1, 'Are there any upcoming school events or open houses?'),
+
+(5, 2, 'What is the average class size for each grade?'),
+(4, 2, 'Does the school offer a gifted and talented program?'),
+(3, 2, 'How does the school handle bullying incidents?'),
+(2, 2, 'What is the policy on student homework and grading?'),
+(1, 2, 'Are there any after-school tutoring programs available?'),
+
+(1, 3, 'What is the school’s approach to inclusive education?'),
+(2, 3, 'What is the average SAT score of graduating students?'),
+(3, 3, 'How often do parent-teacher meetings occur?'),
+(4, 3, 'Are there any programs to support students with special needs?'),
+(5, 3, 'What is the school’s attendance policy?'),
+
+(1, 4, 'How does the school incorporate technology into learning?'),
+(2, 4, 'What sports programs are available for students?'),
+(3, 4, 'What is the school’s policy on student discipline?'),
+(4, 4, 'Does the school offer any foreign language courses?'),
+(5, 4, 'What is the process for transferring credits from other schools?'),
+
+(5, 5, 'What are the school’s resources for mental health support?'),
+(4, 5, 'How does the school prepare students for college applications?'),
+(3, 5, 'What career preparation programs are available for students?'),
+(2, 5, 'What is the dress code policy at this school?'),
+(1, 5, 'How does the school handle field trips and excursions?');
+
+DELETE FROM question_likes;
+
+INSERT INTO question_likes (question_id, user_id)
+VALUES
+(18, 1),
+(18, 2),
+(18, 3),
+(18, 4),
+(18, 5),
+(18, 6),
+(18, 7),
+(18, 8),
+(3, 1),
+(3, 2),
+(3, 3),
+(3, 4),
+(3, 5),
+(3, 6),
+(24, 1),
+(24, 2),
+(24, 3),
+(24, 4),
+(24, 5),
+(24, 6),
+(24, 7),
+(24, 8),
+(24, 9),
+(24, 10),
+(2, 1),
+(2, 2),
+(2, 3),
+(2, 4),
+(2, 5),
+(2, 6),
+(2, 7),
+(2, 8),
+(9, 1),
+(9, 2),
+(9, 3),
+(14, 3),
+(14, 4),
+(14, 5),
+(14, 6),
+(14, 7),
+(14, 8),
+(14, 9),
+(19, 1),
+(19, 2),
+(19, 3),
+(19, 4),
+(5, 1),
+(5, 2),
+(5, 3),
+(5, 4),
+(5, 5),
+(5, 6),
+(5, 7),
+(6, 1),
+(6, 2),
+(6, 3),
+(6, 4),
+(6, 5),
+(6, 6),
+(16, 1),
+(16, 2),
+(16, 3),
+(16, 4),
+(16, 5),
+(16, 6),
+(16, 7),
+(16, 8),
+(16, 9),
+(16, 10),
+(16, 11),
+(11, 1),
+(11, 2),
+(11, 3),
+(11, 4),
+(11, 5),
+(11, 6),
+(11, 7),
+(11, 8),
+(11, 9),
+(11, 10),
+(11, 11),
+(11, 12),
+(1, 1),
+(1, 2),
+(1, 3),
+(1, 4);
+
+DELETE FROM answers;
+
+INSERT INTO answers (school_id, user_id, question_id, content, role)
+VALUES
+(2, 1, 24, 'There''s a uniform, but children are allowed to dress casually on a couple of days each term.', 'current parent'),
+(2, 2, 2, 'There are a bunch of after school clubs, the selection is based on student interests and varies each term. My son''s currently doing science club and drama. They''ll perform at Sadler''s Wells theatre later in the year!', 'my son goes to Gillespie');
