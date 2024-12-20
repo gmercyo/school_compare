@@ -1,7 +1,10 @@
 <div class="review-card">
   <div class="post-element">
     <form sec:authorize="isAuthenticated()" th:replace="~{reviews/upvote-button :: form}"></form>
-    <h5 th:text="${review.username} + ' (' + ${review.role} + ') · ' + ${review.timeAgo}"></h5>
+    <h5>
+      <span th:if="${showSchoolName}" th:text="${review.school.name} + ' · '" class="text-blue"></span>
+      <span th:text="${review.username} + ' (' + ${review.role} + ') · ' + ${review.timeAgo}"></span>
+    </h5>
     <p th:text="${review.content}"></p>
   </div>
 </div>

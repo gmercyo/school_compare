@@ -61,12 +61,20 @@ a {
 }
 
 .hidden {
-    display: none;
+    display: none !important;
+}
+
+.anchor {
+    position: relative;
 }
 
 .flex {
     display: flex;
     align-items: center;
+}
+
+.border-none {
+    border: none !important;
 }
 
 .action-button {

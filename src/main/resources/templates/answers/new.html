@@ -1,0 +1,38 @@
+<form th:id="${'new-answer-' + question.id}" th:onclick="'toggleForm(' + ${question.id} + ')'" th:action="@{/answers}" class="answer-input" th:object="${newAnswer}" method="POST">
+  <input type="hidden" th:attr="name='schoolId'" th:value="${school.id}">
+  <input type="hidden" th:attr="name='userId'" th:value="${userId}">
+  <input type="hidden" th:attr="name='questionId'" th:value="${question.id}">
+  <input type="hidden" th:attr="name='createdAt'" th:value="${null}">
+  <input type="text" class="new-question-input" th:field="*{content}" th:placeholder="'Answer this question yourself, ' + ${#authentication.principal.attributes.nickname} + '...'" />
+  <div class="input-submit-line">
+    <input type="text" class="new-question-input hidden" th:field="*{role}" th:placeholder="'I am knowledgeable about this because...'" />
+    <button type="submit" class="input-submit">
+      <i class="fa-solid fa-arrow-turn-up rotated-icon"></i>
+    </button>
+  </div>
+
+  <script>
+
+
+    function collapseForm(form, roleInput) {
+        roleInput.classList.add('hidden');
+        form.classList.remove('input-card-expanded');
+        document.removeEventListener('click', collapseForm);
+    }
+
+    function toggleForm(questionId) {
+      const form = document.getElementById(`new-answer-${questionId}`);
+      const contentInput = form.querySelector('#content');
+      const roleInput = form.querySelector('#role');
+
+      event.stopPropagation();
+      if (roleInput.classList.contains('hidden')) {
+        form.classList.add('input-card-expanded');
+        roleInput.classList.remove('hidden');
+        document.addEventListener('click', collapseForm);
+      } else if (![contentInput, roleInput].contains(event.target)) { // unless user clicks input field
+        collapseForm(form, roleInput);
+      }
+    }
+  </script>
+</form>

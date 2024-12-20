@@ -280,7 +280,10 @@
                 zoom: 15.5
             });
 
-            const homeMarker = new mapboxgl.Marker({ color: 'blue' }) // initialize a new marker
+            const homeElement = document.createElement('div');
+            homeElement.innerHTML = '<img src="/images/home.svg" alt="Home Icon" fill="blue" width="40" height="40">';
+
+            const homeMarker = new mapboxgl.Marker(homeElement) // initialize a new marker
                 .setLngLat(coordinates)
                 .addTo(map);
 

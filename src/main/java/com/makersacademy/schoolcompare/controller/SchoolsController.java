@@ -9,6 +9,8 @@ import com.makersacademy.schoolcompare.pojo.CalculateDistance;
 import com.makersacademy.schoolcompare.repository.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.oidc.user.DefaultOidcUser;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -136,4 +138,73 @@ public class SchoolsController {
         return ResponseEntity.ok(filteredSchools);
     }
 
+    @GetMapping("/profile")
+    public ModelAndView userProfile(HttpSession session,
+                                    @AuthenticationPrincipal DefaultOidcUser principal,
+                                    @RequestParam(value = "view", defaultValue = "questions") String view,
+                                    @RequestParam(value = "sort_by", defaultValue = "relevance") String sortBy) {
+
+        ModelAndView modelAndView = new ModelAndView("/users/profile");
+
+        // Get the current user's ID from the session
+        Long currentUserId = (Long) session.getAttribute("userId");
+
+        // Check if the user ID is valid and fetch the user details
+        Optional<User> activeUser = userRepository.findById(currentUserId);
+        if (activeUser.isEmpty()) {
+            throw new IllegalArgumentException("User not found with id: " + currentUserId);
+        }
+
+        // Fetch the active user's profile with saved schools
+        User profileUser = activeUser.get();
+
+        // Fetch the username
+        String username = profileUser.getUsername();
+
+        // Fetch saved schools
+        List<School> savedSchools = schoolLikeRepository.findSchoolsByUserId(currentUserId);
+
+        // Fetch reviews written by the profile user
+        List<ReviewWithData> userReviews = reviewRepository.findByUserId(currentUserId);
+
+        // Add all the necessary data to the model
+        modelAndView.addObject("activeUser", activeUser.orElse(null));
+        modelAndView.addObject("profileUser", profileUser);
+        modelAndView.addObject("username", username);
+        modelAndView.addObject("savedSchools", savedSchools);
+        modelAndView.addObject("userReviews", userReviews);
+
+        // code for feed:
+        modelAndView.addObject("view", view);
+        modelAndView.addObject("sortBy", sortBy);
+
+        if (view.equals("questions")) {
+            List<QuestionWithData> questions = new ArrayList<QuestionWithData>();
+
+            for (School school: savedSchools) {
+                questions.addAll(questionRepository.findQuestionsBySchoolId(school.getId(), currentUserId));
+            }
+            fetchAnswers(questions, currentUserId);
+            if (sortBy.equals("relevance")) {
+                questions.sort(Comparator.comparingLong(QuestionWithData::getLikes).reversed());
+            } else if (sortBy.equals("recent")) {
+                questions.sort(Comparator.comparing(QuestionWithData::getQuestion, Comparator.comparing(Question::getCreatedAt)).reversed());
+            }
+            modelAndView.addObject("questions", questions);
+            modelAndView.addObject("newAnswer", new Answer());
+        } else if (view.equals("reviews")) {
+            List<ReviewWithData> reviews = new ArrayList<ReviewWithData>();
+
+            for (School school: savedSchools) {
+                reviews.addAll(reviewRepository.findReviewsByRecent(school.getId(), currentUserId));
+            }
+            if (sortBy.equals("relevance")) {
+                reviews.sort(Comparator.comparingLong(ReviewWithData::getUpvotes).reversed());
+            } else if (sortBy.equals("recent")) {
+                reviews.sort(Comparator.comparing(ReviewWithData::getReview, Comparator.comparing(Review::getCreatedAt)).reversed());
+            }
+            modelAndView.addObject("reviews", reviews);
+        }
+        return modelAndView;
+    }
 }

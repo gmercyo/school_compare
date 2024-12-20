@@ -1,0 +1,44 @@
+<div id="school-forum">
+  <div id="forum-container">
+    <div id="forum-options">
+      <div id="view-options">
+        <h4>View:</h4>
+        <div th:if="${view == 'questions'}" class="options">
+          <h4>Questions</h4>
+          <h4 class="text-salmon"><a th:href="'/profile?view=reviews&sort_by=' + ${sortBy}">Reviews</a></h4>
+        </div>
+        <div th:if="${view == 'reviews'}" class="options">
+          <h4 class="text-salmon"><a th:href="'/profile?view=questions&sort_by=' + ${sortBy}">Questions</a></h4>
+          <h4>Reviews</h4>
+        </div>
+      </div>
+      <div id="sort-options">
+        <h4>Sort by:</h4>
+        <div th:if="${sortBy == 'relevance'}" class="options">
+          <h4>Most relevant</h4>
+          <h4 class="text-salmon"><a th:href="'/profile?view=' + ${view} + '&sort_by=recent'">Most recent</a></h4>
+        </div>
+        <div th:if="${sortBy == 'recent'}" class="options">
+          <h4 class="text-salmon"><a th:href="'/profile?view=' + ${view} + '&sort_by=relevance'">Most relevant</a></h4>
+          <h4>Most recent</h4>
+        </div>
+      </div>
+    </div>
+
+    <div th:if="${view == 'questions'}" class="questions-container">
+      <div class="input-card">
+        <h4 type="text" class="new-question-input border-none">Your questions feed. Questions about schools you've shortlisted appear here.</h4>
+      </div>
+      <div th:each="question: ${questions}" th:insert="~{questions/question :: div}" th:with="school=${question.school}, showSchoolName=true">></div>
+    </div>
+    <div th:if="${view == 'reviews'}" class="questions-container">
+      <div class="input-card">
+        <h4 type="text" class="new-question-input border-none">Your reviews feed. Reviews of schools you've shortlisted appear here.</h4>
+      </div>
+      <div th:if="${reviews.size() > 0}" class="card reviews-container">
+        <h4 class="reviews-header" th:text="'All ' + ${reviews.size()} + ' reviews (sorted by ' + (${sortBy == 'relevance'} ? 'most upvotes' : 'most recent') + ')'"></h4>
+        <div th:each="review: ${reviews}" th:insert="~{reviews/review :: div}" th:with="school=${review.school}, showSchoolName=true"></div>
+      </div>
+    </div>
+  </div>
+</div>
